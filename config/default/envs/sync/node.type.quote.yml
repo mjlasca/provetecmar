@@ -1,0 +1,17 @@
+uuid: 370a0113-e117-4f67-a53e-9f89d6972366
+langcode: es
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Cotización
+type: quote
+description: 'Tipo de contenido para crear cotizaciones'
+help: null
+new_revision: false
+preview_mode: 1
+display_submitted: false

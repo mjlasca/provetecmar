@@ -1,0 +1,23 @@
+uuid: 30f29429-209c-4014-ab8f-fc620aab6da8
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_cant
+    - paragraphs.paragraphs_type.items
+id: paragraph.items.field_cant
+field_name: field_cant
+entity_type: paragraph
+bundle: items
+label: Cantidad
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

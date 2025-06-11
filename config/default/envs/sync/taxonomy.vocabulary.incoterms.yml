@@ -1,0 +1,9 @@
+uuid: 899d07df-58a3-4b9d-b2ff-01035f5bec91
+langcode: es
+status: true
+dependencies: {  }
+name: Incoterms
+vid: incoterms
+description: 'Clasificación de los Incoterms'
+weight: 0
+new_revision: false

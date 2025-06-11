@@ -1,0 +1,10 @@
+uuid: 7ef16c16-6efa-4d82-945e-152223106050
+langcode: es
+status: true
+dependencies: {  }
+id: items
+label: Item
+icon_uuid: null
+icon_default: null
+description: 'Tipo de paragraph para agregar items que se cotizarán'
+behavior_plugins: {  }

@@ -1,0 +1,9 @@
+uuid: 4cfe202b-670e-4012-a4be-60e6095a6189
+langcode: es
+status: true
+dependencies: {  }
+name: 'Unidad de medida'
+vid: unit_of_measurement
+description: 'Unidades que describe el producto'
+weight: 0
+new_revision: false

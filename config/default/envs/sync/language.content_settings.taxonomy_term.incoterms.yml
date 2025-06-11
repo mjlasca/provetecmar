@@ -1,0 +1,11 @@
+uuid: 1b77086a-92e3-4704-8a66-3aa24bb8bce8
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.incoterms
+id: taxonomy_term.incoterms
+target_entity_type_id: taxonomy_term
+target_bundle: incoterms
+default_langcode: site_default
+language_alterable: false

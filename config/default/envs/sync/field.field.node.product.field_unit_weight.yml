@@ -1,0 +1,23 @@
+uuid: 783015f3-f6bb-4090-8f3e-fab6ba75452c
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_unit_weight
+    - node.type.product
+id: node.product.field_unit_weight
+field_name: field_unit_weight
+entity_type: node
+bundle: product
+label: 'Peso por unidad'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

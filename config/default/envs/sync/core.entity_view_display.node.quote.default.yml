@@ -1,0 +1,66 @@
+uuid: 8c3f9af0-5202-435e-82dd-ead81839ba8b
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.node.quote.field_company
+    - field.field.node.quote.field_customer
+    - field.field.node.quote.field_description
+    - field.field.node.quote.field_products
+    - field.field.node.quote.field_purchase_currency
+    - node.type.quote
+  module:
+    - entity_reference_revisions
+    - user
+id: node.quote.default
+targetEntityType: node
+bundle: quote
+mode: default
+content:
+  field_company:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_customer:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_description:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_products:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_purchase_currency:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

@@ -3,7 +3,13 @@ langcode: es
 status: true
 dependencies:
   config:
+    - field.field.node.product.field_description
+    - field.field.node.product.field_product_type
     - field.field.node.product.field_provider
+    - field.field.node.product.field_purchase_currency
+    - field.field.node.product.field_unit
+    - field.field.node.product.field_unit_cost
+    - field.field.node.product.field_unit_weight
     - node.type.product
   module:
     - user
@@ -12,6 +18,21 @@ targetEntityType: node
 bundle: product
 mode: default
 content:
+  field_description:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_product_type:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
   field_provider:
     type: entity_reference_label
     label: above
@@ -19,6 +40,42 @@ content:
       link: true
     third_party_settings: {  }
     weight: 101
+    region: content
+  field_purchase_currency:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_unit:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_unit_cost:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_unit_weight:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 106
     region: content
   links:
     settings: {  }

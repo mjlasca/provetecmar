@@ -1,0 +1,22 @@
+uuid: f87b89df-5cb4-418c-9303-580dae5b8e4d
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.quote
+id: node.quote.promote
+field_name: promote
+entity_type: node
+bundle: quote
+label: 'Promocionado a la página principal'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Activado
+  off_label: Desactivado
+field_type: boolean

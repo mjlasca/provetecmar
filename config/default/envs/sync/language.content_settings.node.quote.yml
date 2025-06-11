@@ -1,0 +1,11 @@
+uuid: 9cb7590c-803a-4ffa-9f82-fa880ea0df0c
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.quote
+id: node.quote
+target_entity_type_id: node
+target_bundle: quote
+default_langcode: site_default
+language_alterable: false

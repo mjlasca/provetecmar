@@ -1,0 +1,9 @@
+uuid: 5eae9c59-7084-486a-ad2a-76660f3b44cd
+langcode: es
+status: true
+dependencies: {  }
+name: 'Región de entrega'
+vid: delivery_region
+description: 'Clasificación de las diferentes regiones de entrega'
+weight: 0
+new_revision: false

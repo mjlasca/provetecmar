@@ -1,0 +1,29 @@
+uuid: 3b838838-c603-4718-ba50-8321d37fa71f
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_purchase_currency
+    - node.type.product
+    - taxonomy.vocabulary.currency
+id: node.product.field_purchase_currency
+field_name: field_purchase_currency
+entity_type: node
+bundle: product
+label: 'Moneda de compra'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      currency: currency
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
