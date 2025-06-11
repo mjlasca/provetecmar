@@ -1,0 +1,19 @@
+uuid: 84b8a3ec-2452-4dd3-836a-f21b436b8330
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_phone
+    - node.type.custommer
+id: node.custommer.field_phone
+field_name: field_phone
+entity_type: node
+bundle: custommer
+label: 'Teléfono principal'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

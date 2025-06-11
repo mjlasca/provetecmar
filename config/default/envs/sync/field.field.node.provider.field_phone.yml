@@ -1,0 +1,19 @@
+uuid: 9333fe63-d236-492e-b981-017ff966e047
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_phone
+    - node.type.provider
+id: node.provider.field_phone
+field_name: field_phone
+entity_type: node
+bundle: provider
+label: 'Teléfono principal'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

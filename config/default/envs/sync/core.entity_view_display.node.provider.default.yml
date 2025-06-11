@@ -1,0 +1,46 @@
+uuid: 095ca2d9-43e7-4730-b4e7-b455ddd2f545
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.node.provider.field_email
+    - field.field.node.provider.field_phone
+    - field.field.node.provider.field_purchase_currency
+    - node.type.provider
+  module:
+    - user
+id: node.provider.default
+targetEntityType: node
+bundle: provider
+mode: default
+content:
+  field_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_phone:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_purchase_currency:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

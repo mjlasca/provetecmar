@@ -1,0 +1,87 @@
+uuid: 960bde47-a882-4b0c-a321-3f15dd6ce039
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.node.custommer.field_address
+    - field.field.node.custommer.field_customer_segment
+    - field.field.node.custommer.field_email
+    - field.field.node.custommer.field_nit
+    - field.field.node.custommer.field_phone
+    - field.field.node.custommer.field_purchase_currency
+    - field.field.node.custommer.field_web
+    - node.type.custommer
+  module:
+    - link
+    - user
+id: node.custommer.default
+targetEntityType: node
+bundle: custommer
+mode: default
+content:
+  field_address:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_customer_segment:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_nit:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_phone:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_purchase_currency:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_web:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

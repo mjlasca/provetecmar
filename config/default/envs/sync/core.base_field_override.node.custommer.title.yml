@@ -1,0 +1,18 @@
+uuid: b3130520-0f26-43cc-be5e-5fc27e91bfa8
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.custommer
+id: node.custommer.title
+field_name: title
+entity_type: node
+bundle: custommer
+label: Nombre
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,23 @@
+uuid: 9108064c-3611-4b86-8716-42d5b4437f6d
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_web
+    - node.type.custommer
+  module:
+    - link
+id: node.custommer.field_web
+field_name: field_web
+entity_type: node
+bundle: custommer
+label: 'Página web'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 16
+field_type: link

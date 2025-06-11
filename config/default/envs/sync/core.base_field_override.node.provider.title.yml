@@ -1,0 +1,18 @@
+uuid: 38be6a66-4dfc-4c9a-9a06-b587240e890c
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.provider
+id: node.provider.title
+field_name: title
+entity_type: node
+bundle: provider
+label: 'Nombre empresa'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

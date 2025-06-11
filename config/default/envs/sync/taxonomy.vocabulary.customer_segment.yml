@@ -1,0 +1,9 @@
+uuid: 9248c2bb-382b-442b-812d-b0c36948e39e
+langcode: es
+status: true
+dependencies: {  }
+name: 'Segmento del cliente'
+vid: customer_segment
+description: 'Categorización del segmento de clientes'
+weight: 0
+new_revision: false

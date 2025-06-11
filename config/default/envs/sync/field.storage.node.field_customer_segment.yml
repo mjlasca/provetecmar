@@ -1,0 +1,20 @@
+uuid: 69b7f0b9-7fbf-4055-ba09-51249bd7d1b5
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.field_customer_segment
+field_name: field_customer_segment
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

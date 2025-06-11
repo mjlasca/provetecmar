@@ -1,0 +1,11 @@
+uuid: 461640c4-b087-4504-b2b0-54e8b9f2b0f8
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.brand_line
+id: taxonomy_term.brand_line
+target_entity_type_id: taxonomy_term
+target_bundle: brand_line
+default_langcode: site_default
+language_alterable: false

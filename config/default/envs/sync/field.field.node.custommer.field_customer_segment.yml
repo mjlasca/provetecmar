@@ -1,0 +1,29 @@
+uuid: 4e3a114e-ca4e-4e1e-815f-2a3069848fd6
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_customer_segment
+    - node.type.custommer
+    - taxonomy.vocabulary.customer_segment
+id: node.custommer.field_customer_segment
+field_name: field_customer_segment
+entity_type: node
+bundle: custommer
+label: 'Segmento del cliente'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      customer_segment: customer_segment
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

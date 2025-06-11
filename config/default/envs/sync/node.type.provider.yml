@@ -1,0 +1,17 @@
+uuid: d5a879b3-b63b-4eeb-9094-3db29895d54f
+langcode: es
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Proveedor
+type: provider
+description: 'Tipo de contenido para crear proveedores'
+help: null
+new_revision: false
+preview_mode: 1
+display_submitted: false

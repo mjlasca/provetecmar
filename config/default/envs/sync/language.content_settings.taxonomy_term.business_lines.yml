@@ -1,0 +1,11 @@
+uuid: 3b310664-ac7b-4cf4-9c2f-8b840110a79a
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.business_lines
+id: taxonomy_term.business_lines
+target_entity_type_id: taxonomy_term
+target_bundle: business_lines
+default_langcode: site_default
+language_alterable: false

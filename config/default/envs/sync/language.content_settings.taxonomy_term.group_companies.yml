@@ -1,0 +1,11 @@
+uuid: 29aeabcd-874a-47c2-8e76-27115631bb23
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.group_companies
+id: taxonomy_term.group_companies
+target_entity_type_id: taxonomy_term
+target_bundle: group_companies
+default_langcode: site_default
+language_alterable: false

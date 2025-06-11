@@ -1,0 +1,9 @@
+uuid: f979c459-ca5f-40c6-bc66-efba7529eb39
+langcode: es
+status: true
+dependencies: {  }
+name: 'Tipo producto'
+vid: product_type
+description: 'Categorización de los tipos de productos'
+weight: 0
+new_revision: false

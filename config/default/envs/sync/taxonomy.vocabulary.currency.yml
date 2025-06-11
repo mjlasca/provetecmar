@@ -1,0 +1,9 @@
+uuid: 6432332d-5297-4d78-a4e7-76cc40846d9f
+langcode: es
+status: true
+dependencies: {  }
+name: Moneda
+vid: currency
+description: 'Tipos de monedas disponibles'
+weight: 0
+new_revision: false

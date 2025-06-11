@@ -1,0 +1,9 @@
+uuid: 9830aa9f-52c1-4dd1-91e4-df7ef84416a1
+langcode: es
+status: true
+dependencies: {  }
+name: Marca/Línea
+vid: brand_line
+description: 'Las diferentes marcas y líneas que se disponen'
+weight: 0
+new_revision: false

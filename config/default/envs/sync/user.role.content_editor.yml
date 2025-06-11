@@ -1,0 +1,32 @@
+uuid: a8ed3853-a92c-4ae7-8898-1f247ebb00f4
+langcode: es
+status: true
+dependencies:
+  module:
+    - comment
+    - contextual
+    - file
+    - node
+    - path
+    - system
+    - toolbar
+_core:
+  default_config_hash: e_wG1u7SrGaJbY2-Szgbgl-c8T3kdirU3uTNq2c_QJQ
+id: content_editor
+label: 'Editor de contenido'
+weight: 2
+is_admin: false
+permissions:
+  - 'access administration pages'
+  - 'access content overview'
+  - 'access contextual links'
+  - 'access files overview'
+  - 'access toolbar'
+  - 'administer url aliases'
+  - 'create url aliases'
+  - 'delete own files'
+  - 'edit own comments'
+  - 'revert all revisions'
+  - 'view all revisions'
+  - 'view own unpublished content'
+  - 'view the administration theme'

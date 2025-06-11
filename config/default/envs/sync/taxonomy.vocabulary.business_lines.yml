@@ -1,0 +1,9 @@
+uuid: f0f2527c-c86b-40ea-919c-d0133f7c5869
+langcode: es
+status: true
+dependencies: {  }
+name: 'Líneas de negocio'
+vid: business_lines
+description: 'Categorización de las líneas de negocio'
+weight: 0
+new_revision: false

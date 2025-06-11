@@ -1,0 +1,11 @@
+uuid: 5936ae84-ab21-4102-883d-0d344d5b1506
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.custommer
+id: node.custommer
+target_entity_type_id: node
+target_bundle: custommer
+default_langcode: site_default
+language_alterable: false

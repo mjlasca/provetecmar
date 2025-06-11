@@ -1,0 +1,11 @@
+uuid: 423e72aa-4df6-4b87-ac8a-a73c39bd2ea0
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.customer_segment
+id: taxonomy_term.customer_segment
+target_entity_type_id: taxonomy_term
+target_bundle: customer_segment
+default_langcode: site_default
+language_alterable: false

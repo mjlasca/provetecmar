@@ -1,0 +1,29 @@
+uuid: 76ff758a-ec40-49e5-ab92-d769837bce23
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_currency
+    - taxonomy.vocabulary.currency
+    - taxonomy.vocabulary.group_companies
+id: taxonomy_term.group_companies.field_currency
+field_name: field_currency
+entity_type: taxonomy_term
+bundle: group_companies
+label: Moneda
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      currency: currency
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
