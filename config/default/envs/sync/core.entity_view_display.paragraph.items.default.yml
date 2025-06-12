@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.paragraph.items.field_cant
     - field.field.paragraph.items.field_product
+    - field.field.paragraph.items.field_total
     - paragraphs.paragraphs_type.items
 id: paragraph.items.default
 targetEntityType: paragraph
@@ -29,5 +30,14 @@ content:
       link: true
     third_party_settings: {  }
     weight: 0
+    region: content
+  field_total:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 2
     region: content
 hidden: {  }

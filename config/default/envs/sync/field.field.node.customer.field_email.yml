@@ -1,14 +1,14 @@
-uuid: 7bf031ae-9dd5-41f0-9b83-8c22afec7ad0
+uuid: d300e555-b50a-4bfb-baa4-ad327b0e67de
 langcode: es
 status: true
 dependencies:
   config:
     - field.storage.node.field_email
-    - node.type.custommer
-id: node.custommer.field_email
+    - node.type.customer
+id: node.customer.field_email
 field_name: field_email
 entity_type: node
-bundle: custommer
+bundle: customer
 label: 'Email principal'
 description: ''
 required: false

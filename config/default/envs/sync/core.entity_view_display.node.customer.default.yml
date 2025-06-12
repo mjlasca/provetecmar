@@ -1,22 +1,23 @@
-uuid: 960bde47-a882-4b0c-a321-3f15dd6ce039
+uuid: 5605312a-6406-4e84-844c-2da97f8187e1
 langcode: es
 status: true
 dependencies:
   config:
-    - field.field.node.custommer.field_address
-    - field.field.node.custommer.field_customer_segment
-    - field.field.node.custommer.field_email
-    - field.field.node.custommer.field_nit
-    - field.field.node.custommer.field_phone
-    - field.field.node.custommer.field_purchase_currency
-    - field.field.node.custommer.field_web
-    - node.type.custommer
+    - field.field.node.customer.field_address
+    - field.field.node.customer.field_customer_segment
+    - field.field.node.customer.field_document
+    - field.field.node.customer.field_document_type
+    - field.field.node.customer.field_email
+    - field.field.node.customer.field_phone
+    - field.field.node.customer.field_purchase_currency
+    - field.field.node.customer.field_web
+    - node.type.customer
   module:
     - link
     - user
-id: node.custommer.default
+id: node.customer.default
 targetEntityType: node
-bundle: custommer
+bundle: customer
 mode: default
 content:
   field_address:
@@ -35,20 +36,28 @@ content:
     third_party_settings: {  }
     weight: 107
     region: content
+  field_document:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 109
+    region: content
+  field_document_type:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 108
+    region: content
   field_email:
     type: basic_string
     label: above
     settings: {  }
     third_party_settings: {  }
     weight: 105
-    region: content
-  field_nit:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 101
     region: content
   field_phone:
     type: string

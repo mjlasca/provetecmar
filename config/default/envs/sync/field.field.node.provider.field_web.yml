@@ -1,16 +1,16 @@
-uuid: 9108064c-3611-4b86-8716-42d5b4437f6d
+uuid: ea7db99a-34c3-4ba5-a03e-879c48937d3a
 langcode: es
 status: true
 dependencies:
   config:
     - field.storage.node.field_web
-    - node.type.custommer
+    - node.type.provider
   module:
     - link
-id: node.custommer.field_web
+id: node.provider.field_web
 field_name: field_web
 entity_type: node
-bundle: custommer
+bundle: provider
 label: 'Página web'
 description: ''
 required: false

@@ -1,13 +1,13 @@
-uuid: 40f79ec2-8d63-43dd-ad1a-ad88c0de909f
+uuid: a468c97a-4e18-4980-a337-32d4e7a85b3c
 langcode: es
 status: true
 dependencies:
   config:
-    - node.type.custommer
-id: node.custommer.promote
+    - node.type.customer
+id: node.customer.promote
 field_name: promote
 entity_type: node
-bundle: custommer
+bundle: customer
 label: 'Promocionado a la página principal'
 description: ''
 required: false

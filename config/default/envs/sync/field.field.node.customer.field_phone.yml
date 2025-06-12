@@ -1,14 +1,14 @@
-uuid: 84b8a3ec-2452-4dd3-836a-f21b436b8330
+uuid: 93eec908-aec8-4807-b881-80b2e27225fb
 langcode: es
 status: true
 dependencies:
   config:
     - field.storage.node.field_phone
-    - node.type.custommer
-id: node.custommer.field_phone
+    - node.type.customer
+id: node.customer.field_phone
 field_name: field_phone
 entity_type: node
-bundle: custommer
+bundle: customer
 label: 'Teléfono principal'
 description: ''
 required: false

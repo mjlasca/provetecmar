@@ -1,0 +1,19 @@
+uuid: 8e447202-1456-4a22-b808-918d1f42b319
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_document
+    - node.type.customer
+id: node.customer.field_document
+field_name: field_document
+entity_type: node
+bundle: customer
+label: Documento
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

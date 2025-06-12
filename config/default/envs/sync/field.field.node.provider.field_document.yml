@@ -1,15 +1,15 @@
-uuid: db02ed4b-4af2-41d1-a551-789284db8c28
+uuid: 83f7cdc7-2d37-4a31-ae27-697971cf70db
 langcode: es
 status: true
 dependencies:
   config:
-    - field.storage.node.field_phone
+    - field.storage.node.field_document
     - node.type.provider
-id: node.provider.field_phone
-field_name: field_phone
+id: node.provider.field_document
+field_name: field_document
 entity_type: node
 bundle: provider
-label: 'Teléfono principal'
+label: Documento
 description: ''
 required: false
 translatable: false

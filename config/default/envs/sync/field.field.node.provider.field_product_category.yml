@@ -1,18 +1,18 @@
-uuid: b2104af2-e0f6-4603-86fc-73f289050815
+uuid: 6c97f2b7-cf8a-416c-8fee-6761896fd60d
 langcode: es
 status: true
 dependencies:
   config:
-    - field.storage.node.field_purchase_currency
+    - field.storage.node.field_product_category
     - node.type.provider
-    - taxonomy.vocabulary.currency
-id: node.provider.field_purchase_currency
-field_name: field_purchase_currency
+    - taxonomy.vocabulary.product_type
+id: node.provider.field_product_category
+field_name: field_product_category
 entity_type: node
 bundle: provider
-label: 'Moneda de compra'
+label: 'Categoría de producto'
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -20,7 +20,7 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      currency: currency
+      product_type: product_type
     sort:
       field: name
       direction: asc

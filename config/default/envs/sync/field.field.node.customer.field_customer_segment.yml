@@ -1,18 +1,18 @@
-uuid: b2104af2-e0f6-4603-86fc-73f289050815
+uuid: 12b1a862-5d2d-4a2a-aa10-3fbc1ac31453
 langcode: es
 status: true
 dependencies:
   config:
-    - field.storage.node.field_purchase_currency
-    - node.type.provider
-    - taxonomy.vocabulary.currency
-id: node.provider.field_purchase_currency
-field_name: field_purchase_currency
+    - field.storage.node.field_customer_segment
+    - node.type.customer
+    - taxonomy.vocabulary.customer_segment
+id: node.customer.field_customer_segment
+field_name: field_customer_segment
 entity_type: node
-bundle: provider
-label: 'Moneda de compra'
+bundle: customer
+label: 'Segmento del cliente'
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -20,7 +20,7 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      currency: currency
+      customer_segment: customer_segment
     sort:
       field: name
       direction: asc

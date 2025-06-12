@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_customer
-    - node.type.custommer
+    - node.type.customer
     - node.type.quote
 id: node.quote.field_customer
 field_name: field_customer
@@ -20,7 +20,7 @@ settings:
   handler: 'default:node'
   handler_settings:
     target_bundles:
-      custommer: custommer
+      customer: customer
     sort:
       field: _none
       direction: ASC

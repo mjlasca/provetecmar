@@ -1,14 +1,14 @@
-uuid: b3130520-0f26-43cc-be5e-5fc27e91bfa8
+uuid: 1be130bf-53d6-4212-856c-717170e9f2dc
 langcode: es
 status: true
 dependencies:
   config:
-    - node.type.custommer
-id: node.custommer.title
+    - node.type.customer
+id: node.customer.title
 field_name: title
 entity_type: node
-bundle: custommer
-label: Nombre
+bundle: customer
+label: 'Nombre de la empresa'
 description: ''
 required: true
 translatable: true

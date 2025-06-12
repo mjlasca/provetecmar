@@ -1,4 +1,4 @@
-uuid: 38be6a66-4dfc-4c9a-9a06-b587240e890c
+uuid: 67b77bc4-d953-4f67-a9ec-e309747e1cd6
 langcode: es
 status: true
 dependencies:
@@ -8,7 +8,7 @@ id: node.provider.title
 field_name: title
 entity_type: node
 bundle: provider
-label: 'Nombre empresa'
+label: 'Nombre de la empresa'
 description: ''
 required: true
 translatable: true

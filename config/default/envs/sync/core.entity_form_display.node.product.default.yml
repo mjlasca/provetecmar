@@ -12,6 +12,7 @@ dependencies:
     - field.field.node.product.field_unit_weight
     - node.type.product
   module:
+    - content_moderation
     - path
 id: node.product.default
 targetEntityType: node
@@ -33,14 +34,10 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_product_type:
-    type: entity_reference_autocomplete
+    type: options_select
     weight: 122
     region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
   field_provider:
     type: entity_reference_autocomplete
@@ -53,24 +50,16 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_purchase_currency:
-    type: entity_reference_autocomplete
+    type: options_select
     weight: 126
     region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
   field_unit:
-    type: entity_reference_autocomplete
+    type: options_select
     weight: 124
     region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
   field_unit_cost:
     type: number
@@ -92,6 +81,12 @@ content:
     region: content
     settings:
       include_locked: true
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    region: content
+    settings: {  }
     third_party_settings: {  }
   path:
     type: path

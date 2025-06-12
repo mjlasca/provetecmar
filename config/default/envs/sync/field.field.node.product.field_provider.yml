@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.storage.node.field_provider
     - node.type.product
-    - node.type.provider
 id: node.product.field_provider
 field_name: field_provider
 entity_type: node
@@ -19,8 +18,7 @@ default_value_callback: ''
 settings:
   handler: 'default:node'
   handler_settings:
-    target_bundles:
-      provider: provider
+    target_bundles: {  }
     sort:
       field: _none
       direction: ASC

@@ -1,15 +1,15 @@
-uuid: db02ed4b-4af2-41d1-a551-789284db8c28
+uuid: bf62ed3f-b53c-4f6a-9c32-50c24e18a038
 langcode: es
 status: true
 dependencies:
   config:
-    - field.storage.node.field_phone
+    - field.storage.node.field_cotact_name
     - node.type.provider
-id: node.provider.field_phone
-field_name: field_phone
+id: node.provider.field_cotact_name
+field_name: field_cotact_name
 entity_type: node
 bundle: provider
-label: 'Teléfono principal'
+label: 'Nombre del contacto'
 description: ''
 required: false
 translatable: false

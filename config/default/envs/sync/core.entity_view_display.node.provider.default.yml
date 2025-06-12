@@ -1,19 +1,58 @@
-uuid: 095ca2d9-43e7-4730-b4e7-b455ddd2f545
+uuid: ce69332a-910c-45e8-a904-fd47a1cf6db4
 langcode: es
 status: true
 dependencies:
   config:
+    - field.field.node.provider.field_address
+    - field.field.node.provider.field_cotact_name
+    - field.field.node.provider.field_document
+    - field.field.node.provider.field_document_type
     - field.field.node.provider.field_email
     - field.field.node.provider.field_phone
+    - field.field.node.provider.field_product_category
     - field.field.node.provider.field_purchase_currency
+    - field.field.node.provider.field_web
     - node.type.provider
   module:
+    - link
     - user
 id: node.provider.default
 targetEntityType: node
 bundle: provider
 mode: default
 content:
+  field_address:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_cotact_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 110
+    region: content
+  field_document:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 109
+    region: content
+  field_document_type:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 108
+    region: content
   field_email:
     type: basic_string
     label: above
@@ -29,6 +68,14 @@ content:
     third_party_settings: {  }
     weight: 103
     region: content
+  field_product_category:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 111
+    region: content
   field_purchase_currency:
     type: entity_reference_label
     label: above
@@ -36,6 +83,18 @@ content:
       link: true
     third_party_settings: {  }
     weight: 106
+    region: content
+  field_web:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 104
     region: content
   links:
     settings: {  }

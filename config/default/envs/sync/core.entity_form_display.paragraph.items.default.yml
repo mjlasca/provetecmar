@@ -5,7 +5,35 @@ dependencies:
   config:
     - field.field.paragraph.items.field_cant
     - field.field.paragraph.items.field_product
+    - field.field.paragraph.items.field_total
     - paragraphs.paragraphs_type.items
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_dive:
+      children:
+        - field_cant
+        - field_product
+        - field_total
+      label: dive
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: flex
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
 id: paragraph.items.default
 targetEntityType: paragraph
 bundle: items
@@ -20,12 +48,19 @@ content:
     third_party_settings: {  }
   field_product:
     type: entity_reference_autocomplete
-    weight: 0
+    weight: 2
     region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
       size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_total:
+    type: number
+    weight: 3
+    region: content
+    settings:
       placeholder: ''
     third_party_settings: {  }
 hidden:

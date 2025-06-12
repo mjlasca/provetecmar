@@ -1,0 +1,14 @@
+uuid: fa8c2fb8-2552-43b3-83f5-f679d204974f
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.engineer
+  module:
+    - user
+id: user_remove_role_action.engineer
+label: 'Elimina el rol Ingeniero(a) cotizador(a) al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: engineer

@@ -1,0 +1,9 @@
+uuid: 41bc1c50-e1c3-4fae-8ed9-fb2a7dac6b65
+langcode: es
+status: true
+dependencies: {  }
+name: 'Tipo de documento'
+vid: document_type
+description: null
+weight: 0
+new_revision: false

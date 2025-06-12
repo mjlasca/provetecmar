@@ -1,4 +1,4 @@
-uuid: 3cf6c9ec-99af-46e9-9c6c-2685ec834f80
+uuid: c58cb52a-b3ba-44cf-aa48-803108a0cfd6
 langcode: es
 status: true
 dependencies:
@@ -9,7 +9,7 @@ third_party_settings:
     available_menus: {  }
     parent: ''
 name: Cliente
-type: custommer
+type: customer
 description: 'Tipo de contenido para crear clientes'
 help: null
 new_revision: false

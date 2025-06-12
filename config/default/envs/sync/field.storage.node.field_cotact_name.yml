@@ -1,11 +1,11 @@
-uuid: 4396e183-f08b-43a9-a6a6-210e0ac6b4b1
+uuid: ab28168f-8dda-460d-85d3-7bfcc189c70e
 langcode: es
 status: true
 dependencies:
   module:
     - node
-id: node.field_nit
-field_name: field_nit
+id: node.field_cotact_name
+field_name: field_cotact_name
 entity_type: node
 type: string
 settings:

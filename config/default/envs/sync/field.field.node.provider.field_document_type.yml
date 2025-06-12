@@ -1,16 +1,16 @@
-uuid: 4e3a114e-ca4e-4e1e-815f-2a3069848fd6
+uuid: 95244fd2-2b4f-4a25-9141-7a0be4127316
 langcode: es
 status: true
 dependencies:
   config:
-    - field.storage.node.field_customer_segment
-    - node.type.custommer
-    - taxonomy.vocabulary.customer_segment
-id: node.custommer.field_customer_segment
-field_name: field_customer_segment
+    - field.storage.node.field_document_type
+    - node.type.provider
+    - taxonomy.vocabulary.document_type
+id: node.provider.field_document_type
+field_name: field_document_type
 entity_type: node
-bundle: custommer
-label: 'Segmento del cliente'
+bundle: provider
+label: 'Tipo de documento'
 description: ''
 required: false
 translatable: false
@@ -20,7 +20,7 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      customer_segment: customer_segment
+      document_type: document_type
     sort:
       field: name
       direction: asc
