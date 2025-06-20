@@ -25,6 +25,8 @@
         "drupal/field_permissions": "^1.4",
         "drupal/gin": "^4.0",
         "drupal/paragraphs": "^1.19",
+        "drupal/smtp": "^1.4",
+        "drupal/workbench_email": "^3.0",
         "drush/drush": "^13.6"
     },
     "conflict": {
