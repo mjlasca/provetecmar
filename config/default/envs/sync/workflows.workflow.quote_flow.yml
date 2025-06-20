@@ -11,31 +11,84 @@ label: 'Flujo de cotización'
 type: content_moderation
 type_settings:
   states:
+    assignment:
+      label: Asignación
+      weight: -2
+      published: false
+      default_revision: true
     draft:
-      label: Draft
-      weight: 0
+      label: 'Sin asignar'
+      weight: -3
       published: false
       default_revision: false
+    offer_ready:
+      label: 'Oferta lista'
+      weight: 0
+      published: false
+      default_revision: true
+    price_change:
+      label: 'Cambio de precio'
+      weight: -1
+      published: false
+      default_revision: true
     published:
-      label: Published
+      label: 'Orden de compra'
       weight: 1
       published: true
       default_revision: true
   transitions:
+    assignment_price_change:
+      label: 'Pasar a cambio de precios'
+      from:
+        - assignment
+      to: price_change
+      weight: 3
     create_new_draft:
-      label: 'Create New Draft'
+      label: 'Dejar sin asignar'
       from:
         - draft
         - published
       to: draft
       weight: 0
-    publish:
-      label: Publish
+    draft_assignment:
+      label: 'Asignar a ingeniero'
       from:
         - draft
-        - published
+      to: assignment
+      weight: 2
+    offer_published:
+      label: 'Pasar a orden de compra'
+      from:
+        - offer_ready
       to: published
-      weight: 1
+      weight: 5
+    price_change_offer:
+      label: 'Pasar a oferta'
+      from:
+        - price_change
+      to: offer_ready
+      weight: 4
+    quitar_asignacion:
+      label: 'Quitar asignación'
+      from:
+        - assignment
+        - offer_ready
+        - price_change
+      to: draft
+      weight: 6
+    return_to_price_change:
+      label: 'Devolver a cambio de precios'
+      from:
+        - offer_ready
+      to: price_change
+      weight: 8
+    return_to_quote:
+      label: 'Devolver a ingeniero cotizador'
+      from:
+        - offer_ready
+        - price_change
+      to: assignment
+      weight: 7
   entity_types:
     node:
       - quote

@@ -7,7 +7,9 @@ dependencies:
     - node.type.product
     - node.type.provider
     - node.type.quote
+    - workflows.workflow.quote_flow
   module:
+    - content_moderation
     - node
     - system
     - toolbar
@@ -16,8 +18,10 @@ label: 'Ingeniero(a) cotizador(a)'
 weight: 4
 is_admin: false
 permissions:
+  - 'access content'
   - 'access content overview'
   - 'access toolbar'
+  - 'access user profiles'
   - 'create customer content'
   - 'create product content'
   - 'create provider content'
@@ -28,8 +32,11 @@ permissions:
   - 'edit own product content'
   - 'edit own provider content'
   - 'edit own quote content'
+  - 'use quote_flow transition assignment_price_change'
   - 'view all revisions'
+  - 'view any unpublished content'
   - 'view customer revisions'
+  - 'view latest version'
   - 'view own unpublished content'
   - 'view product revisions'
   - 'view provider revisions'

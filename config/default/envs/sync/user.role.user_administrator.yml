@@ -28,6 +28,7 @@ weight: 5
 is_admin: false
 permissions:
   - 'access administration pages'
+  - 'access content'
   - 'access content overview'
   - 'access taxonomy overview'
   - 'access toolbar'

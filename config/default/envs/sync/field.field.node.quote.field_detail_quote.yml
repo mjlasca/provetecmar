@@ -1,0 +1,24 @@
+uuid: 10439396-7d54-4431-93c0-fb99fa6b4ee0
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_detail_quote
+    - filter.format.basic_html
+    - node.type.quote
+  module:
+    - text
+id: node.quote.field_detail_quote
+field_name: field_detail_quote
+entity_type: node
+bundle: quote
+label: 'Detalle del cliente'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

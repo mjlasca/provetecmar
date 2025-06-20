@@ -38,3 +38,4 @@ cloneable_entities:
   - date_format
   - workflow
   - content_moderation_state
+  - workbench_email_template

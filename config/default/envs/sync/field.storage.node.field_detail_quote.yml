@@ -1,0 +1,19 @@
+uuid: cca17a61-7f6f-4f5a-8e2b-01e75685f86f
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_detail_quote
+field_name: field_detail_quote
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

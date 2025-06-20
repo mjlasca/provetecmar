@@ -6,17 +6,24 @@ dependencies:
     - field.field.node.quote.field_company
     - field.field.node.quote.field_customer
     - field.field.node.quote.field_description
+    - field.field.node.quote.field_detail_quote
     - field.field.node.quote.field_products
     - field.field.node.quote.field_purchase_currency
     - node.type.quote
   module:
     - entity_reference_revisions
+    - text
     - user
 id: node.quote.default
 targetEntityType: node
 bundle: quote
 mode: default
 content:
+  content_moderation_control:
+    settings: {  }
+    third_party_settings: {  }
+    weight: -20
+    region: content
   field_company:
     type: entity_reference_label
     label: above
@@ -39,6 +46,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 103
+    region: content
+  field_detail_quote:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 108
     region: content
   field_products:
     type: entity_reference_revisions_entity_view
