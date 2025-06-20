@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for My Admin Styles module.
+ */
+
+use Drupal\Core\Asset\AttachedAssetsInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_page_attachments().
+ */
+function core_provetecmar_page_attachments(array &$attachments) {
+  $theme_name = \Drupal::theme()->getActiveTheme()->getName();
+  if ($theme_name === 'gin') {
+    $attachments['#attached']['library'][] = 'core_provetecmar/admin-theme-style';
+  }
+}
+
+function core_provetecmar_theme($existing, $type, $theme, $path) {
+  return [
+    'node__quote' => [
+      'render element' => 'elements',
+      'base hook' => 'node',
+      'template' => 'node--quote',
+      'path' => \Drupal::service('extension.list.module')->getPath('core_provetecmar') . '/templates',
+    ],
+  ];
+}

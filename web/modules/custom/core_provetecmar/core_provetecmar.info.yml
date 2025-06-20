@@ -1,0 +1,5 @@
+name: 'Core Provetecmar'
+type: module
+description: 'Module featured for provetecmar'
+package: Provetecmar
+core_version_requirement: ^10 || ^11

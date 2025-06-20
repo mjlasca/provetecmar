@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.field_product
-    - node.type.product
     - paragraphs.paragraphs_type.items
 id: paragraph.items.field_product
 field_name: field_product
@@ -17,13 +16,10 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: 'default:node'
+  handler: views
   handler_settings:
-    target_bundles:
-      product: product
-    sort:
-      field: _none
-      direction: ASC
-    auto_create: false
-    auto_create_bundle: ''
+    view:
+      view_name: reference_content_type
+      display_name: entity_reference_1
+      arguments: {  }
 field_type: entity_reference

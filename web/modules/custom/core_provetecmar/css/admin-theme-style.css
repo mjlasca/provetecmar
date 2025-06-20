@@ -1,0 +1,47 @@
+.region-sticky{
+    background-color: #FFC700 !important;
+}
+
+.toolbar-menu-administration .menu-item__tools{
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #eee;
+}
+
+/* logo */
+.menu-item__tools img{
+    width: 40px !important;
+    background-color: #FFC700;
+    padding: 5px;
+}
+
+.provetecmar h1{
+    font-size: 52px;
+    font-weight: 600;
+    line-height: 15px;
+}
+
+.provetecmar h3{
+    font-weight: 400;
+}
+
+.provetecmar p{
+    line-height: 10px;
+}
+
+.provetecmar table{
+    max-width: 1080px;
+}
+
+.provetecmar .quote{
+    margin-top: 60px;
+}
+
+.provetecmar .quote-header--number{
+    text-align: right;
+    padding-right: 25px;
+}
+
+.provetecmar .quote-header{
+    max-width: 550px;
+}

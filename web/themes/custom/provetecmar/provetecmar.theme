@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * Implements hook_theme_suggestions_page_alter().
+ */
+function provetecmar_suggestions_page_alter(array &$suggestions, array $variables) {
+  // Obtener la ruta actual (sin parámetros)
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  // Agregar sugerencia por nombre de ruta
+  $suggestions[] = 'page__' . strtr($route_name, '.', '_');
+
+  // También puedes agregar por parámetro, por ejemplo por nodo:
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    // Agregar sugerencia por tipo de contenido
+    $suggestions[] = 'page__node__' . $node->getType();
+    // O por ID
+    $suggestions[] = 'page__node__' . $node->id();
+  }
+}
