@@ -7,7 +7,7 @@ dependencies:
     - workflows.workflow.quote_flow
 id: assignment
 label: Asignación
-format: plain_text
+format: html
 subject: 'Tienes una asignación para cotizar de Provetecmar'
 recipient_types:
   author:
