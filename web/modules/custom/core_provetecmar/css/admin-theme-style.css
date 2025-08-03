@@ -45,3 +45,11 @@
 .provetecmar .quote-header{
     max-width: 550px;
 }
+
+.paragraphs-subform .flex{
+    display: flex;
+}
+
+.node--unpublished{
+    background-color: transparent !important;
+}

@@ -107,6 +107,7 @@
         <thead>
           <tr>
             <th><h3>Detalle</h3></th>
+            <th><h3>Empresa</h3></th>
             <th><h3>Cantidad/Unidad</h3></th>
             <th><h3>Precio</h3></th>
           </tr>
@@ -118,6 +119,9 @@
                 <b>{{ paragraph.entity.field_product.entity.title.value }}</b>
                 <br>
                 {{ paragraph.entity.field_product.entity.field_description.value }}
+              </td>
+              <td>
+                {{ paragraph.entity.field_company.entity.name.value }}
               </td>
               <td>
                 {{ paragraph.entity.field_cant.value }} / {{ paragraph.entity.field_product.entity.field_unit.entity.name.value }}
