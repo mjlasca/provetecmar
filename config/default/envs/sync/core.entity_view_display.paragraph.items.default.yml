@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.items.field_cant
+    - field.field.paragraph.items.field_company
     - field.field.paragraph.items.field_product
     - field.field.paragraph.items.field_total
     - paragraphs.paragraphs_type.items
@@ -22,6 +23,14 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_company:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
     region: content
   field_product:
     type: entity_reference_label

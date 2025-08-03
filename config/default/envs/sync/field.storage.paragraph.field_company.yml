@@ -1,0 +1,20 @@
+uuid: fd50d0ac-11ba-4500-b736-23826051951c
+langcode: es
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - taxonomy
+id: paragraph.field_company
+field_name: field_company
+entity_type: paragraph
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

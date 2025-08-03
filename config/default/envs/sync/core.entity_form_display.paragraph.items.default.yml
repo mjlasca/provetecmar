@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.items.field_cant
+    - field.field.paragraph.items.field_company
     - field.field.paragraph.items.field_product
     - field.field.paragraph.items.field_total
     - paragraphs.paragraphs_type.items
@@ -15,6 +16,7 @@ third_party_settings:
       children:
         - field_cant
         - field_product
+        - field_company
         - field_total
       label: dive
       region: content
@@ -46,6 +48,12 @@ content:
     settings:
       placeholder: ''
     third_party_settings: {  }
+  field_company:
+    type: options_select
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_product:
     type: entity_reference_autocomplete
     weight: 2
@@ -58,7 +66,7 @@ content:
     third_party_settings: {  }
   field_total:
     type: number
-    weight: 3
+    weight: 4
     region: content
     settings:
       placeholder: ''
