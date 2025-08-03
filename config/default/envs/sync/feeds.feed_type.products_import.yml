@@ -1,0 +1,82 @@
+uuid: 0be37df4-0ce2-4686-9783-ea550bc76758
+langcode: es
+status: true
+dependencies:
+  config:
+    - core.base_field_override.node.product.title
+    - field.field.node.product.field_id_unique
+    - field.field.node.product.field_purchase_currency
+    - node.type.product
+  module:
+    - node
+label: 'Importar productos'
+id: products_import
+description: ''
+help: ''
+import_period: -1
+fetcher: upload
+fetcher_configuration:
+  allowed_extensions: 'txt csv tsv xml opml xlsx'
+  directory: 'public://feeds'
+parser: csv
+parser_configuration:
+  delimiter: ','
+  no_headers: false
+  line_limit: 100
+processor: 'entity:node'
+processor_configuration:
+  values:
+    type: product
+  langcode: es
+  insert_new: 1
+  update_existing: 2
+  update_non_existent: _keep
+  skip_hash_check: false
+  skip_validation: false
+  skip_validation_types: {  }
+  authorize: true
+  revision: false
+  expire: -1
+  owner_feed_author: true
+  owner_id: 0
+custom_sources:
+  id_unique:
+    value: id_unique
+    label: id_unique
+    machine_name: id_unique
+    type: csv
+  nombre:
+    value: nombre
+    label: nombre
+    machine_name: nombre
+    type: csv
+  moneda:
+    value: moneda
+    label: moneda
+    machine_name: moneda
+    type: csv
+mappings:
+  -
+    target: field_id_unique
+    map:
+      value: id_unique
+    settings:
+      language: null
+    unique:
+      value: 1
+  -
+    target: title
+    map:
+      value: nombre
+    settings:
+      language: null
+    unique: {  }
+  -
+    target: field_purchase_currency
+    map:
+      target_id: moneda
+    settings:
+      language: null
+      reference_by: name
+      autocreate: false
+      autocreate_bundle: currency

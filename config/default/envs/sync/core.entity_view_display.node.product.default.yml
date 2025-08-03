@@ -3,7 +3,9 @@ langcode: es
 status: true
 dependencies:
   config:
+    - field.field.node.product.feeds_item
     - field.field.node.product.field_description
+    - field.field.node.product.field_id_unique
     - field.field.node.product.field_product_type
     - field.field.node.product.field_provider
     - field.field.node.product.field_purchase_currency
@@ -24,6 +26,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 103
+    region: content
+  field_id_unique:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 107
     region: content
   field_product_type:
     type: entity_reference_label
@@ -83,4 +93,5 @@ content:
     weight: 100
     region: content
 hidden:
+  feeds_item: true
   langcode: true

@@ -39,3 +39,6 @@ cloneable_entities:
   - workflow
   - content_moderation_state
   - workbench_email_template
+  - feeds_feed
+  - feeds_subscription
+  - feeds_feed_type

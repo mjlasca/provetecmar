@@ -1,0 +1,19 @@
+uuid: 3ddd2b1e-6f75-4d97-ae32-33c41e0236a2
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_id_unique
+    - node.type.product
+id: node.product.field_id_unique
+field_name: field_id_unique
+entity_type: node
+bundle: product
+label: 'ID Único'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

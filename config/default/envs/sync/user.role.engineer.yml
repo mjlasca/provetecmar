@@ -3,6 +3,7 @@ langcode: es
 status: true
 dependencies:
   config:
+    - feeds.feed_type.products_import
     - node.type.customer
     - node.type.product
     - node.type.provider
@@ -10,6 +11,7 @@ dependencies:
     - workflows.workflow.quote_flow
   module:
     - content_moderation
+    - feeds
     - node
     - system
     - toolbar
@@ -20,14 +22,20 @@ is_admin: false
 permissions:
   - 'access content'
   - 'access content overview'
+  - 'access feed overview'
   - 'access toolbar'
   - 'access user profiles'
   - 'create customer content'
   - 'create product content'
+  - 'create products_import feeds'
   - 'create provider content'
   - 'create quote content'
   - 'delete own customer content'
   - 'delete own provider content'
+  - 'edit any customer content'
+  - 'edit any product content'
+  - 'edit any provider content'
+  - 'edit any quote content'
   - 'edit own customer content'
   - 'edit own product content'
   - 'edit own provider content'
