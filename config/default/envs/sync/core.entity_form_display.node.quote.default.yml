@@ -3,10 +3,10 @@ langcode: es
 status: true
 dependencies:
   config:
-    - field.field.node.quote.field_company
     - field.field.node.quote.field_customer
     - field.field.node.quote.field_description
     - field.field.node.quote.field_detail_quote
+    - field.field.node.quote.field_items_import
     - field.field.node.quote.field_products
     - field.field.node.quote.field_purchase_currency
     - node.type.quote
@@ -14,6 +14,7 @@ dependencies:
   module:
     - content_moderation
     - field_group
+    - file
     - paragraphs
     - path
     - text
@@ -43,6 +44,7 @@ third_party_settings:
         - field_company
         - field_purchase_currency
         - field_description
+        - field_items_import
       label: 'Datos Generales'
       region: content
       parent_name: group_cotizacion
@@ -99,12 +101,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_company:
-    type: options_select
-    weight: 3
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_customer:
     type: entity_reference_autocomplete
     weight: 2
@@ -130,6 +126,13 @@ content:
     settings:
       rows: 5
       placeholder: ''
+    third_party_settings: {  }
+  field_items_import:
+    type: file_generic
+    weight: 6
+    region: content
+    settings:
+      progress_indicator: throbber
     third_party_settings: {  }
   field_products:
     type: paragraphs
@@ -176,7 +179,7 @@ content:
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 4
+    weight: 5
     region: content
     settings:
       display_label: true

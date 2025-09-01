@@ -1,0 +1,9 @@
+uuid: cc6dba81-cd6a-4fb8-8f51-2c023d8c9f8d
+langcode: es
+status: true
+dependencies: {  }
+name: 'Tipo de contenedor'
+vid: container_type
+description: null
+weight: 0
+new_revision: false

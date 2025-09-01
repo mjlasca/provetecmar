@@ -1,0 +1,11 @@
+uuid: 452f63c0-d0c7-4350-9867-81a28594cb18
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.container_delivery
+id: taxonomy_term.container_delivery
+target_entity_type_id: taxonomy_term
+target_bundle: container_delivery
+default_langcode: site_default
+language_alterable: false

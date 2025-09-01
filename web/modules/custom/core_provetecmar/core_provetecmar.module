@@ -9,6 +9,26 @@ use Drupal\Core\Asset\AttachedAssetsInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
+ * Implementa hook_form_alter().
+ */
+function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if ($form_id === 'node_quote_edit_form' || $form_id === 'node_quote_form') {
+    $form['actions']['submit']['#submit'][] = '_quote_submit_custom';
+  }
+}
+
+
+/**
+ * Submit custom quote
+ */
+function _quote_submit_custom($form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  // Ejemplo: obtener el nodo.
+  $node = $form_state->getFormObject()->getEntity();
+  $service = \Drupal::service('core_provetecmar.importxlsx');
+  $service->importXlsx($node, 'field_items_import');
+}
+
+/**
  * Implements hook_page_attachments().
  */
 function core_provetecmar_page_attachments(array &$attachments) {

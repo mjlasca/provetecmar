@@ -13,7 +13,7 @@ field_name: field_products
 entity_type: node
 bundle: quote
 label: Insumos
-description: ''
+description: '<a href="" onclick="sendS" class="button js-form-submit form-submit">Enviar solicitudes</a>'
 required: false
 translatable: false
 default_value: {  }

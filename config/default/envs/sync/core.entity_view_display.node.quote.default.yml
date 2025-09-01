@@ -3,15 +3,16 @@ langcode: es
 status: true
 dependencies:
   config:
-    - field.field.node.quote.field_company
     - field.field.node.quote.field_customer
     - field.field.node.quote.field_description
     - field.field.node.quote.field_detail_quote
+    - field.field.node.quote.field_items_import
     - field.field.node.quote.field_products
     - field.field.node.quote.field_purchase_currency
     - node.type.quote
   module:
     - entity_reference_revisions
+    - file
     - text
     - user
 id: node.quote.default
@@ -23,14 +24,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: -20
-    region: content
-  field_company:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 102
     region: content
   field_customer:
     type: entity_reference_label
@@ -53,6 +46,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 108
+    region: content
+  field_items_import:
+    type: file_default
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    weight: 109
     region: content
   field_products:
     type: entity_reference_revisions_entity_view

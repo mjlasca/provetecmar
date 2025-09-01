@@ -1,0 +1,21 @@
+uuid: ed35fee0-badb-4910-8dba-13f4f98b5700
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_check
+    - paragraphs.paragraphs_type.items
+id: paragraph.items.field_check
+field_name: field_check
+entity_type: paragraph
+bundle: items
+label: '-'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Activado
+  off_label: Desactivado
+field_type: boolean

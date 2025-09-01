@@ -1,0 +1,11 @@
+uuid: f11e2e46-01b3-4d4f-9be0-bdb701084b2f
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.trm_a_usd
+id: taxonomy_term.trm_a_usd
+target_entity_type_id: taxonomy_term
+target_bundle: trm_a_usd
+default_langcode: site_default
+language_alterable: false

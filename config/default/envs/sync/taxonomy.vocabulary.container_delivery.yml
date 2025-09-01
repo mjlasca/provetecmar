@@ -1,0 +1,9 @@
+uuid: 2be1c243-37db-42e7-a413-bb59bc797afc
+langcode: es
+status: true
+dependencies: {  }
+name: 'Entrega contenedor'
+vid: container_delivery
+description: null
+weight: 0
+new_revision: false

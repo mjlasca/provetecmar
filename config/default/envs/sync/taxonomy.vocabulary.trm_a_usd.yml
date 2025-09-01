@@ -1,0 +1,9 @@
+uuid: 27917201-f380-4f7f-ade3-faf4f78a4f44
+langcode: es
+status: true
+dependencies: {  }
+name: 'TRM a USD'
+vid: trm_a_usd
+description: null
+weight: 0
+new_revision: false

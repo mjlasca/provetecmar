@@ -1,16 +1,16 @@
-uuid: dbb3ee6b-a61b-436d-ace4-d21a287aa7e4
+uuid: 8ad8e344-a642-4d27-8057-42e16d1266ba
 langcode: es
 status: true
 dependencies:
   module:
-    - node
     - taxonomy
-id: node.field_company
-field_name: field_company
-entity_type: node
-type: entity_reference
+id: taxonomy_term.field_representative_rate
+field_name: field_representative_rate
+entity_type: taxonomy_term
+type: decimal
 settings:
-  target_type: taxonomy_term
+  precision: 10
+  scale: 2
 module: core
 locked: false
 cardinality: 1

@@ -48,7 +48,18 @@
 
 .paragraphs-subform .flex{
     display: flex;
+    gap: 5px;
 }
+
+.paragraphs-subform .field--type-boolean{
+    display: flex;
+    align-items: center;
+}
+
+.paragraphs-subform .field--type-boolean label{
+    display: none;
+}
+
 
 .node--unpublished{
     background-color: transparent !important;

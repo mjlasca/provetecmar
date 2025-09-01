@@ -1,0 +1,23 @@
+uuid: e6239a60-bf82-46ec-a365-acce4fe7469a
+langcode: es
+status: true
+dependencies:
+  module:
+    - file
+    - node
+id: node.field_items_import
+field_name: field_items_import
+entity_type: node
+type: file
+settings:
+  target_type: file
+  display_field: false
+  display_default: false
+  uri_scheme: public
+module: file
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,23 @@
+uuid: fa188228-cf13-4767-ab41-5563774cad6d
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_conversion
+    - taxonomy.vocabulary.trm_a_usd
+id: taxonomy_term.trm_a_usd.field_conversion
+field_name: field_conversion
+entity_type: taxonomy_term
+bundle: trm_a_usd
+label: 'Valor de conversión'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

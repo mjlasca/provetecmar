@@ -3,7 +3,6 @@ langcode: es
 status: true
 dependencies:
   config:
-    - field.field.node.product.feeds_item
     - field.field.node.product.field_description
     - field.field.node.product.field_id_unique
     - field.field.node.product.field_product_type
@@ -143,5 +142,4 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-hidden:
-  feeds_item: true
+hidden: {  }

@@ -1,0 +1,9 @@
+uuid: 806f3431-82e7-4bb1-984e-604874a3b95c
+langcode: es
+status: true
+dependencies: {  }
+name: Gravamen
+vid: assessment
+description: null
+weight: 0
+new_revision: false

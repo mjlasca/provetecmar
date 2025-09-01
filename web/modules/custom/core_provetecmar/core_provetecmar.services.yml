@@ -1,0 +1,4 @@
+services:
+  core_provetecmar.importxlsx:
+    class: Drupal\core_provetecmar\Service\XlsxImportService
+    arguments: ['@http_client', '@logger.factory', '@entity_type.manager', '@file.repository', '@file_url_generator', '@file_system']

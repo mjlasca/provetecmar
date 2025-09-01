@@ -1,0 +1,11 @@
+uuid: 2b5972a2-fd44-4053-a3ca-abc73eb4a264
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.assessment
+id: taxonomy_term.assessment
+target_entity_type_id: taxonomy_term
+target_bundle: assessment
+default_langcode: site_default
+language_alterable: false

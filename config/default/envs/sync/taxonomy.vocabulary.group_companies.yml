@@ -2,7 +2,7 @@ uuid: 7a10fcbb-e915-4b78-b67e-e7c402001b60
 langcode: es
 status: true
 dependencies: {  }
-name: 'Empresas del grupo que cotizan'
+name: 'RFQ Empresas del grupo que cotizan'
 vid: group_companies
 description: 'Las diferentes empresas del grupo Provetecmar'
 weight: 0

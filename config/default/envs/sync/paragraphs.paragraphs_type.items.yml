@@ -3,7 +3,7 @@ langcode: es
 status: true
 dependencies: {  }
 id: items
-label: Item
+label: '-'
 icon_uuid: null
 icon_default: null
 description: 'Tipo de paragraph para agregar items que se cotizarán'

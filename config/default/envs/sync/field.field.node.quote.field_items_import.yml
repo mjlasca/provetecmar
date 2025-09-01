@@ -1,0 +1,27 @@
+uuid: 13f8f81e-44f0-4093-99a0-76e355cc0427
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_items_import
+    - node.type.quote
+  module:
+    - file
+id: node.quote.field_items_import
+field_name: field_items_import
+entity_type: node
+bundle: quote
+label: 'Importar productos'
+description: 'Al cargar el archivo se actualizarán o crearán los productos que estén registrados allí'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'xlsx csv'
+  max_filesize: 5MB
+  description_field: false
+field_type: file
