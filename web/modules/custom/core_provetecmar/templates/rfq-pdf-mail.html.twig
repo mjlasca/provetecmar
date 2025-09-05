@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no">
+  <title>Solicitud de cotización</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:AllowPNG/>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+  <style>
+    /* Resets */
+    html, body { margin:0 !important; padding:0 !important; height:100% !important; width:95% !important; }
+    * { -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; }
+    table, td { mso-table-lspace:0pt !important; mso-table-rspace:0pt !important; }
+    img { -ms-interpolation-mode:bicubic; }
+    a { text-decoration:none; }
+
+    /* Container */
+    .email-container { width:100%; background:#f4f6f8; }
+    .stack-column, .stack-column-cell { display:block !important; width:100% !important; }
+
+    /* Utilities */
+    .sm-hidden { display:none; max-height:0; overflow:hidden; }
+
+    /* Buttons fallbacks */
+    .btn { background:#ffc700; color:#000; display:inline-block; padding:12px 18px; font-weight:600; }
+    .btn:hover { filter:brightness(0.95); }
+
+    /* Media Queries */
+    @media screen and (max-width: 600px) {
+      .fluid { width:100% !important; max-width:100% !important; height:auto !important; }
+      .p-24 { padding:20px !important; }
+      .center { text-align:center !important; }
+      .sm-hidden { display:none !important; }
+      .stack { display:block !important; width:100% !important; }
+    }
+  </style>
+</head>
+<body width="100%" style="margin:0; padding:0 !important; mso-line-height-rule:exactly;">
+  <center role="article" aria-roledescription="email" lang="es" class="email-container">
+
+    <!-- Preheader (invisible) -->
+    <div style="display:none; font-size:1px; color:#f4f6f8; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all;">
+      Solicitud de cotización de {{company_name}} — referencia {{rfq_number}}.
+    </div>
+
+    <!--[if mso]>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center">
+    <![endif]-->
+
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="90%">
+      <tr>
+        <td>
+
+          <!-- Card -->
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" class="fluid" style="max-width:600px; background:#ffffff; overflow:hidden; box-shadow:0 2px 8px rgba(16,24,40,.06);">
+            <!-- Header -->
+            <tr>
+              <td style="background:#ffc700; padding:20px 24px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td align="left" style="color:#000; font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:24px; font-weight:600;">
+                      {{company_name}}
+                    </td>
+                    <td align="right" style="color:#000; font-family:Arial, Helvetica, sans-serif; font-size:12px;">
+                      Ref: {{rfq_number}}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Intro -->
+            <tr>
+              <td class="p-24" style="padding:24px; font-family:Arial, Helvetica, sans-serif; color:#101828;">
+                <h1 style="margin:0 0 8px; font-size:20px; line-height:28px;">Solicitud de cotización</h1>
+                <p style="margin:0 0 16px; font-size:14px; line-height:22px; color:#475467;">Hola {{data.provider}},</p>
+                <p style="margin:0 0 16px; font-size:14px; line-height:22px; color:#475467;">{{requester_name}} de <strong>{{company_name}}</strong> solicita su amable cotización para los siguientes productos. Le agradecemos indicar precios, tiempos de entrega, disponibilidad, condiciones de pago y garantías.</p>
+
+                <!-- Products Table -->
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #e5e7eb; overflow:hidden;">
+                  <thead>
+                    <tr style="background:#f1f5f9;">
+                      <th align="left" style="padding:10px 12px; font-size:12px; font-weight:700; color:#334155; border-bottom:1px solid #e5e7eb;">#</th>
+                      <th align="left" style="padding:10px 12px; font-size:12px; font-weight:700; color:#334155; border-bottom:1px solid #e5e7eb;">Producto / Descripción</th>
+                      <th align="left" style="padding:10px 12px; font-size:12px; font-weight:700; color:#334155; border-bottom:1px solid #e5e7eb;">Cantidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in items %}
+                      <tr>
+                        <td style="padding:10px 12px; font-size:12px; color:#111827; border-bottom:1px solid #e5e7eb;">{{loop.index}}</td>
+                        <td style="padding:10px 12px; font-size:12px; color:#111827; border-bottom:1px solid #e5e7eb;">
+                          {{item.field_product.entity.field_description.value}}
+                        </td>
+                        <td style="padding:10px 12px; font-size:12px; color:#111827; border-bottom:1px solid #e5e7eb;">
+                          {{item.field_cant.value}}
+                        </td>
+                      </tr>  
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+                <!-- Request Details -->
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:16px 0 0;">
+                  <tr>
+                    <td style="font-size:12px; color:#475467;">
+                      <strong>Condiciones requeridas:</strong>
+                      <ul style="margin:8px 0 0 18px; padding:0;">
+                        <li>Validez de la oferta mínima: {{validity_days}} días</li>
+                        <li>Tiempo de entrega estimado: {{lead_time}}</li>
+                        <li>Garantía mínima: {{warranty}}</li>
+                        <li>Moneda de cotización: {{currency}}</li>
+                        <li>Incluya costos de envío e impuestos aplicables</li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Divider -->
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0;">
+                  <tr><td style="border-top:1px solid #e5e7eb; height:1px; line-height:1px; font-size:0;">&nbsp;</td></tr>
+                </table>
+
+                <!-- Contact -->
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td class="stack" style="width:50%; vertical-align:top; padding:0 0 12px;">
+                      <p style="margin:0 0 6px; font-size:12px; color:#111827;"><strong>Contacto</strong></p>
+                      <p style="margin:0; font-size:12px; color:#475467;">{{requester_name}} — {{requester_role}}<br>
+                        Tel: 44456666<br>
+                        Email: <a href="mailto:">solicitudes@provetecmar.com</a>
+                      </p>
+                    </td>
+                    <td class="stack" style="width:50%; vertical-align:top;">
+                      <p style="margin:0 0 6px; font-size:12px; color:#111827;"><strong>Datos de la empresa</strong></p>
+                      <p style="margin:0; font-size:12px; color:#475467;">{{company_name}}<br>
+                        NIT: 555555555<br>
+                        Dirección: Calle falsa 123<br>
+                        Ciudad: Bogotá, Colombia</p>
+                    </td>
+                  </tr>
+                </table>
+
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td style="padding:16px 24px; background:#f8fafc; font-family:Arial, Helvetica, sans-serif; text-align:center;">
+                <p style="margin:0 0 6px; font-size:11px; color:#64748b;">Asunto sugerido: <em>Solicitud de cotización {{rfq_number}} — {{company_name}}</em></p>
+                <p style="margin:0; font-size:11px; color:#64748b;">Este mensaje fue enviado por {{company_name}}. Si recibió este correo por error, por favor elimínelo.</p>
+              </td>
+            </tr>
+          </table>
+          <!-- /Card -->
+
+        </td>
+      </tr>
+    </table>
+
+    <!--[if mso]></td></tr></table><![endif]-->
+
+  </center>
+</body>
+</html>

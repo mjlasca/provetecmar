@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function core_provetecmar_schema() {
+  $schema['mail_log'] = [
+    'description' => 'Stores logs of sent mails',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'uuid' => [
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+      ],
+      'to' => [
+        'type' => 'varchar',
+        'length' => 255,
+      ],
+      'subject' => [
+        'type' => 'varchar',
+        'length' => 255,
+      ],
+      'body' => [
+        'type' => 'text',
+        'size' => 'big',
+      ],
+      'status' => [
+        'type' => 'varchar',
+        'length' => 50,
+      ],
+      'rfq' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+      ],
+      'provider' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+      ],
+      'uid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['id'],
+    'unique keys' => [
+      'uuid' => ['uuid'],
+    ],
+    'indexes' => [
+      'rfq' => ['rfq'],
+      'provider' => ['provider'],
+      'uid' => ['uid'],
+    ],
+  ];
+  return $schema;
+}

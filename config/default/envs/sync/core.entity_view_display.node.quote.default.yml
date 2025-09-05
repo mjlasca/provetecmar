@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.quote.field_items_import
     - field.field.node.quote.field_products
     - field.field.node.quote.field_purchase_currency
+    - field.field.node.quote.field_requests_send
     - node.type.quote
   module:
     - entity_reference_revisions
@@ -71,6 +72,16 @@ content:
       link: true
     third_party_settings: {  }
     weight: 106
+    region: content
+  field_requests_send:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 110
     region: content
   links:
     settings: {  }

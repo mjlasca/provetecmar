@@ -7,6 +7,7 @@
 
 use Drupal\Core\Asset\AttachedAssetsInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\core_provetecmar\Controller\QuoteController;
 
 /**
  * Implementa hook_form_alter().
@@ -14,6 +15,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
   if ($form_id === 'node_quote_edit_form' || $form_id === 'node_quote_form') {
     $form['actions']['submit']['#submit'][] = '_quote_submit_custom';
+    $form['#attached']['library'][] = 'core_provetecmar/quote-requests';
   }
 }
 
@@ -26,6 +28,11 @@ function _quote_submit_custom($form, \Drupal\Core\Form\FormStateInterface $form_
   $node = $form_state->getFormObject()->getEntity();
   $service = \Drupal::service('core_provetecmar.importxlsx');
   $service->importXlsx($node, 'field_items_import');
+  $values = $form_state->getValues();
+  if (isset($values['field_requests_send']) && $node->field_requests_send->value == 1){
+    $sendRequests = \Drupal::service('core_provetecmar.mailsendrequest');
+    $sendRequests->proccess($node);
+  }
 }
 
 /**
@@ -46,5 +53,29 @@ function core_provetecmar_theme($existing, $type, $theme, $path) {
       'template' => 'node--quote',
       'path' => \Drupal::service('extension.list.module')->getPath('core_provetecmar') . '/templates',
     ],
+    'rfq_mail' => [
+      'variables' => [
+        'company_name' => NULL,
+        'rfq_number' => NULL,
+        'data' => NULL,
+        'items' => [],
+      ],
+    ],
+    'rfq_pdf_mail' => [
+      'variables' => [
+        'company_name' => NULL,
+        'rfq_number' => NULL,
+        'data' => NULL,
+        'items' => [],
+      ],
+    ],
   ];
+}
+
+function core_provetecmar_mail($key, &$message, $params) {
+  $message['subject'] = $params['subject'] ?? '';
+  $message['body'][] = $params['body'] ?? '';
+  if (!empty($params['headers']) && is_array($params['headers'])) {
+    $message['headers'] = array_merge($message['headers'], $params['headers']);
+  }
 }

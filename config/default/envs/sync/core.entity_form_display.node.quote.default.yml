@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.quote.field_items_import
     - field.field.node.quote.field_products
     - field.field.node.quote.field_purchase_currency
+    - field.field.node.quote.field_requests_send
     - node.type.quote
     - workflows.workflow.quote_flow
   module:
@@ -41,7 +42,6 @@ third_party_settings:
       children:
         - title
         - field_customer
-        - field_company
         - field_purchase_currency
         - field_description
         - field_items_import
@@ -61,6 +61,7 @@ third_party_settings:
     group_insumos:
       children:
         - field_products
+        - field_requests_send
       label: Insumos
       region: content
       parent_name: group_cotizacion
@@ -97,7 +98,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 3
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -157,6 +158,13 @@ content:
     weight: 4
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_requests_send:
+    type: boolean_checkbox
+    weight: 5
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   langcode:
     type: language_select

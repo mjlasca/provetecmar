@@ -1,0 +1,21 @@
+uuid: c2a65b47-6d5d-42e9-84d5-75b83c861021
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_requests_send
+    - node.type.quote
+id: node.quote.field_requests_send
+field_name: field_requests_send
+entity_type: node
+bundle: quote
+label: 'Enviar solicitudes'
+description: 'Al activar este campo, cuando se guarde la cotización se enviará las cotizaciones de los productos seleccionados'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Activado
+  off_label: Desactivado
+field_type: boolean

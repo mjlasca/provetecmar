@@ -2,3 +2,11 @@ services:
   core_provetecmar.importxlsx:
     class: Drupal\core_provetecmar\Service\XlsxImportService
     arguments: ['@http_client', '@logger.factory', '@entity_type.manager', '@file.repository', '@file_url_generator', '@file_system']
+
+  core_provetecmar.mailer:
+    class: Drupal\core_provetecmar\Service\MailerProv
+    arguments: ['@plugin.manager.mail', '@language_manager']
+
+  core_provetecmar.mailsendrequest:
+    class: Drupal\core_provetecmar\Service\MailSendRequests
+    arguments: ['@core_provetecmar.mailer', '@renderer', '@current_user', '@file_system']    
