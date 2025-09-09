@@ -14,6 +14,7 @@ use Drupal\core_provetecmar\Controller\QuoteController;
  */
 function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
   if ($form_id === 'node_quote_edit_form' || $form_id === 'node_quote_form') {
+    $form['field_requests_send']['widget']['#prefix'] = '<div class="loader-overlay" style="display:none;"><div class="spinner"></div></div><a id="send-request" href="#" class="button js-form-submit form-submit">Enviar Solicitudes</a>';
     $form['actions']['submit']['#submit'][] = '_quote_submit_custom';
     $form['#attached']['library'][] = 'core_provetecmar/quote-requests';
   }
@@ -32,6 +33,8 @@ function _quote_submit_custom($form, \Drupal\Core\Form\FormStateInterface $form_
   if (isset($values['field_requests_send']) && $node->field_requests_send->value == 1){
     $sendRequests = \Drupal::service('core_provetecmar.mailsendrequest');
     $sendRequests->proccess($node);
+    $node->set('field_requests_send',0);
+    $node->save();
   }
 }
 

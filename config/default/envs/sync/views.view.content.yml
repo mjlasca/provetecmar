@@ -420,7 +420,10 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
+              content_editor: '0'
               administrator: '0'
+              engineer: '0'
+              user_administrator: '0'
             reduce: false
           is_grouped: false
           group_info:

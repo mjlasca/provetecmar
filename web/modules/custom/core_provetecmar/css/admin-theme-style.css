@@ -60,7 +60,36 @@
     display: none;
 }
 
-
 .node--unpublished{
     background-color: transparent !important;
+}
+
+.js-form-item-field-requests-send-value .form-boolean--type-checkbox, .js-form-item-field-requests-send-value .form-item__label{
+    display: none !important;
+}
+
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.8);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 8px solid #ccc;
+  border-top: 8px solid #0074d9; /* color principal */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
 }

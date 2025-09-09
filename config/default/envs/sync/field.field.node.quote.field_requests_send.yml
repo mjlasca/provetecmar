@@ -10,7 +10,7 @@ field_name: field_requests_send
 entity_type: node
 bundle: quote
 label: 'Enviar solicitudes'
-description: 'Al activar este campo, cuando se guarde la cotización se enviará las cotizaciones de los productos seleccionados'
+description: ''
 required: false
 translatable: false
 default_value: {  }

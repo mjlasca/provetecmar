@@ -3,6 +3,14 @@
     attach: function (context) {
         const table = context.querySelector('.field-multiple-table');
         const submit = context.querySelector('input[name="op"]');
+        const sendRequests = context.querySelector('#edit-field-requests-send-value');
+        const buttonSend = context.querySelector('#send-request');
+        const loaderSpin = context.querySelector('.loader-overlay');
+        if(buttonSend){
+            buttonSend.addEventListener('click', function(){
+                sendRequests.click();
+            });
+        }
         function checks(content) {
             const lines = content.querySelectorAll('.form-checkbox');
             let checkCount = 0
@@ -14,7 +22,7 @@
             }
             return checkCount;
         }
-        const sendRequests = context.querySelector('#edit-field-requests-send-value');
+        
         if(sendRequests){
             sendRequests.addEventListener('change', () => {
                 if(checks(table) < 1){
@@ -24,7 +32,11 @@
                 }
                 if(sendRequests.checked){
                     sendRequests.checked = confirm('Al habilitar el envío, cuando se guarde la cotización se enviarán las solicitudes de productos seleccionadas')
-                    submit.click();
+                    if(sendRequests.checked){
+                        loaderSpin.style.display = 'flex';
+                        submit.click();
+                    }
+                        
                 }
                     
             });

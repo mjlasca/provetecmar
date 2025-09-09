@@ -37,6 +37,12 @@ type_settings:
       published: true
       default_revision: true
   transitions:
+    assignment_assignment:
+      label: 'Mantener en asignación'
+      from:
+        - assignment
+      to: assignment
+      weight: 9
     assignment_price_change:
       label: 'Pasar a cambio de precios'
       from:
@@ -73,7 +79,6 @@ type_settings:
       from:
         - assignment
         - offer_ready
-        - price_change
       to: draft
       weight: 6
     return_to_price_change:

@@ -105,6 +105,24 @@ class MailSendRequests {
         'filemime' => 'application/pdf',
       ];
       if($this->mailer->sendMail($to, "Solicitud de cotización RFQ-{$node->nid->value}", $html, $attach)){
+         $node = Node::create([
+            'type'        => 'requests',              // Machine name del tipo de contenido.
+            'title'       => 'Envío '.$node->nid->value.$node->created->value,
+            'uid'         => $this->currentUser->id(),                      // ID del autor (1 = admin).
+            'status'      => 1,                      // 1 = publicado, 0 = no publicado.
+            'field_html'        => [
+              'value' => $htmlPdf,
+              'format' => 'full_html',
+            ],
+            'field_provider' => [
+              'target_id' => $prov['provider']->id()
+            ]
+
+            
+          ]);
+
+          // Guardar el nodo.
+          $node->save();
       /*  $mailLog = MailLog::create([
                   'to' => $to,
                   'subject' => "Solicitud de cotización RFQ-{$node->nid->value}",
