@@ -10,6 +10,7 @@
 /web/sites/*/files
 /web/sites/*/private
 /web/sites/simpletest
+/web/sites/default/settings.php
 
 # Directories specific to this template
 /web/libraries
