@@ -1,0 +1,9 @@
+uuid: d6d7751b-e164-4573-b84a-04463b27c2ef
+langcode: es
+status: true
+dependencies: {  }
+name: Fabricante
+vid: manufacturer
+description: 'Lista de fabricantes asociados a uno o varios productos'
+weight: 0
+new_revision: false

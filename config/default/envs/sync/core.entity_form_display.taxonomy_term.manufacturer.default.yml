@@ -1,0 +1,24 @@
+uuid: a3a6c2f4-f515-4ac1-ab38-bcb07582722d
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.manufacturer
+id: taxonomy_term.manufacturer.default
+targetEntityType: taxonomy_term
+bundle: manufacturer
+mode: default
+content:
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  description: true
+  langcode: true
+  path: true
+  status: true

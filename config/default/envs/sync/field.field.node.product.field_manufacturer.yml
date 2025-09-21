@@ -1,18 +1,18 @@
-uuid: 22301822-f13d-4710-993c-20ed48fe773b
+uuid: bb1fcaaf-9182-4852-8975-224946ea5aca
 langcode: es
 status: true
 dependencies:
   config:
-    - field.storage.node.field_purchase_currency
-    - node.type.quote
-    - taxonomy.vocabulary.currency
-id: node.quote.field_purchase_currency
-field_name: field_purchase_currency
+    - field.storage.node.field_manufacturer
+    - node.type.product
+    - taxonomy.vocabulary.manufacturer
+id: node.product.field_manufacturer
+field_name: field_manufacturer
 entity_type: node
-bundle: quote
-label: Moneda
+bundle: product
+label: Fabricante
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -20,7 +20,7 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      currency: currency
+      manufacturer: manufacturer
     sort:
       field: name
       direction: asc

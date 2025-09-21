@@ -8,7 +8,7 @@ dependencies:
     - field.field.node.quote.field_detail_quote
     - field.field.node.quote.field_items_import
     - field.field.node.quote.field_products
-    - field.field.node.quote.field_purchase_currency
+    - field.field.node.quote.field_quoter
     - field.field.node.quote.field_requests_send
     - node.type.quote
     - workflows.workflow.quote_flow
@@ -42,6 +42,7 @@ third_party_settings:
       children:
         - title
         - field_customer
+        - field_quoter
         - field_purchase_currency
         - field_description
         - field_items_import
@@ -65,7 +66,7 @@ third_party_settings:
       label: Insumos
       region: content
       parent_name: group_cotizacion
-      weight: 4
+      weight: 5
       format_type: tab
       format_settings:
         classes: ''
@@ -98,7 +99,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 4
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -153,11 +154,15 @@ content:
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings: {  }
-  field_purchase_currency:
-    type: options_select
-    weight: 4
+  field_quoter:
+    type: entity_reference_autocomplete
+    weight: 3
     region: content
-    settings: {  }
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_requests_send:
     type: boolean_checkbox

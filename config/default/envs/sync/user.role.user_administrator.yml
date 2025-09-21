@@ -17,7 +17,11 @@ dependencies:
     - taxonomy.vocabulary.incoterms
     - taxonomy.vocabulary.product_type
     - taxonomy.vocabulary.unit_of_measurement
+    - workflows.workflow.editorial
+    - workflows.workflow.quote_flow
   module:
+    - content_moderation
+    - field_permissions
     - node
     - system
     - taxonomy
@@ -36,6 +40,7 @@ permissions:
   - 'administer nodes'
   - 'administer users'
   - 'create customer content'
+  - 'create field_quoter'
   - 'create product content'
   - 'create provider content'
   - 'create quote content'
@@ -115,8 +120,23 @@ permissions:
   - 'revert term revisions in incoterms'
   - 'revert term revisions in product_type'
   - 'revert term revisions in unit_of_measurement'
+  - 'use editorial transition create_new_draft'
+  - 'use quote_flow transition assignment_assignment'
+  - 'use quote_flow transition assignment_price_change'
+  - 'use quote_flow transition create_new_draft'
+  - 'use quote_flow transition draft_assignment'
+  - 'use quote_flow transition offer_published'
+  - 'use quote_flow transition price_change_offer'
+  - 'use quote_flow transition price_change_to_price_change'
+  - 'use quote_flow transition quitar_asignacion'
+  - 'use quote_flow transition return_to_price_change'
+  - 'use quote_flow transition return_to_quote'
   - 'view all revisions'
+  - 'view any unpublished content'
   - 'view customer revisions'
+  - 'view field_quoter'
+  - 'view latest version'
+  - 'view own field_quoter'
   - 'view own unpublished content'
   - 'view product revisions'
   - 'view provider revisions'

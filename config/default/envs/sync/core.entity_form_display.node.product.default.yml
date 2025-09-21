@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.field.node.product.field_description
     - field.field.node.product.field_id_unique
+    - field.field.node.product.field_manufacturer
+    - field.field.node.product.field_part
     - field.field.node.product.field_product_type
     - field.field.node.product.field_provider
     - field.field.node.product.field_purchase_currency
@@ -37,6 +39,24 @@ content:
   field_id_unique:
     type: string_textfield
     weight: 127
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_manufacturer:
+    type: entity_reference_autocomplete
+    weight: 128
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_part:
+    type: string_textfield
+    weight: 129
     region: content
     settings:
       size: 60

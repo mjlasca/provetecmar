@@ -8,7 +8,7 @@ dependencies:
     - field.field.node.quote.field_detail_quote
     - field.field.node.quote.field_items_import
     - field.field.node.quote.field_products
-    - field.field.node.quote.field_purchase_currency
+    - field.field.node.quote.field_quoter
     - field.field.node.quote.field_requests_send
     - node.type.quote
   module:
@@ -65,13 +65,13 @@ content:
     third_party_settings: {  }
     weight: 107
     region: content
-  field_purchase_currency:
+  field_quoter:
     type: entity_reference_label
     label: above
     settings:
       link: true
     third_party_settings: {  }
-    weight: 106
+    weight: 111
     region: content
   field_requests_send:
     type: boolean

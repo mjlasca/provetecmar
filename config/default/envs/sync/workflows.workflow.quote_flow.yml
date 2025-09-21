@@ -74,6 +74,12 @@ type_settings:
         - price_change
       to: offer_ready
       weight: 4
+    price_change_to_price_change:
+      label: 'Mantener en cambio de precio'
+      from:
+        - price_change
+      to: price_change
+      weight: 10
     quitar_asignacion:
       label: 'Quitar asignación'
       from:

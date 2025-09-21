@@ -10,6 +10,7 @@ dependencies:
     - workflows.workflow.quote_flow
   module:
     - content_moderation
+    - field_permissions
     - node
     - system
     - toolbar
@@ -25,22 +26,23 @@ permissions:
   - 'create customer content'
   - 'create product content'
   - 'create provider content'
-  - 'create quote content'
   - 'delete own customer content'
   - 'delete own provider content'
   - 'edit any customer content'
   - 'edit any product content'
   - 'edit any provider content'
-  - 'edit any quote content'
   - 'edit own customer content'
   - 'edit own product content'
   - 'edit own provider content'
   - 'edit own quote content'
+  - 'use quote_flow transition assignment_assignment'
   - 'use quote_flow transition assignment_price_change'
   - 'view all revisions'
   - 'view any unpublished content'
   - 'view customer revisions'
+  - 'view field_quoter'
   - 'view latest version'
+  - 'view own field_quoter'
   - 'view own unpublished content'
   - 'view product revisions'
   - 'view provider revisions'

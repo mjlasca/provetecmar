@@ -82,3 +82,26 @@ function core_provetecmar_mail($key, &$message, $params) {
     $message['headers'] = array_merge($message['headers'], $params['headers']);
   }
 }
+
+
+/**
+ * Implements hook_node_access().
+ */
+function core_provetecmar_node_access(\Drupal\node\NodeInterface $node, $op, \Drupal\Core\Session\AccountInterface $account) {
+  if ($op === 'update') {
+    if ($node->hasField('field_quoter')) {
+      $state = $node->get('moderation_state')->value;
+      if($state == "assignment"){
+        $autores = $node->get('field_quoter')->referencedEntities();
+        foreach ($autores as $autor) {
+          if ($autor->id() === $account->id()) {
+            return \Drupal\Core\Access\AccessResult::allowed()->addCacheableDependency($node);
+          }
+        }
+      }
+
+    }
+  }
+
+  return \Drupal\Core\Access\AccessResult::neutral();
+}

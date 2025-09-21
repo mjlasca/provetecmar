@@ -1,11 +1,18 @@
 uuid: 8247e969-fc54-40fe-a9f7-2e35c1ba5465
 langcode: es
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - field_permissions
 _core:
   default_config_hash: OeKGIkmZA_c-t6QLH81WNQx8gDCc1MRmxaTuQgxBByU
 id: administrator
 label: Administrador
 weight: 3
 is_admin: true
-permissions: {  }
+permissions:
+  - 'create field_quoter'
+  - 'edit field_quoter'
+  - 'edit own field_quoter'
+  - 'view field_quoter'
+  - 'view own field_quoter'
