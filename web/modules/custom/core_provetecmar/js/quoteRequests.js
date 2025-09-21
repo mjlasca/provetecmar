@@ -1,4 +1,4 @@
-(function ($, Drupal) {
+(function ($, Drupal, once) {
   Drupal.behaviors.sendRequests = {
     attach: function (context) {
         const table = context.querySelector('.field-multiple-table');
@@ -6,6 +6,17 @@
         const sendRequests = context.querySelector('#edit-field-requests-send-value');
         const buttonSend = context.querySelector('#send-request');
         const loaderSpin = context.querySelector('.loader-overlay');
+        const totalInput = context.querySelectorAll('input[name*="[field_total]"]');
+        const weightInput = context.querySelectorAll('input[name*="[field_weight_total]"]');
+
+        totalInput.forEach(input => {
+            input.readOnly = true;
+        });
+
+        weightInput.forEach(input => {
+            input.readOnly = true;
+        });
+
         if(buttonSend){
             buttonSend.addEventListener('click', function(){
                 sendRequests.click();
@@ -41,6 +52,26 @@
                     
             });
         }
+
+
+      const $productFields = $(context).find('input[name*="field_product"]:not(.processed-by-js)');
+
+      // Aplica el comportamiento a cada uno de los campos encontrados.
+      $productFields.each(function() {
+        const $this = $(this);
+        
+        // Agrega una clase para marcarlo como procesado.
+        $this.addClass('processed-by-js');
+
+        // Adjunta el evento autocompletechange.
+        $this.on('autocompletechange', function(event, ui) {
+          if (ui.item) {
+            const entityId = ui.item.value; 
+            console.log(`El ID de la entidad es: ${entityId}`);
+          }
+        });
+      });
+    
     },
   };
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);

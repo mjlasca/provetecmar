@@ -1,0 +1,21 @@
+uuid: ef008ca3-774a-45c5-9cd3-5871e219b9e1
+langcode: es
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.field_delivery_time
+field_name: field_delivery_time
+entity_type: paragraph
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

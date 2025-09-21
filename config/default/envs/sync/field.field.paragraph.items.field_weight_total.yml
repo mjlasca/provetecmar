@@ -1,0 +1,23 @@
+uuid: 529a7f4a-08a6-4d40-839a-8927ae76498e
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_weight_total
+    - paragraphs.paragraphs_type.items
+id: paragraph.items.field_weight_total
+field_name: field_weight_total
+entity_type: paragraph
+bundle: items
+label: 'Peso total'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

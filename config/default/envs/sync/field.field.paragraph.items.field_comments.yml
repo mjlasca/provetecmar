@@ -1,21 +1,19 @@
-uuid: ed35fee0-badb-4910-8dba-13f4f98b5700
+uuid: 00332721-026c-4573-a6cc-2a44e3a6009e
 langcode: es
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_check
+    - field.storage.paragraph.field_comments
     - paragraphs.paragraphs_type.items
-id: paragraph.items.field_check
-field_name: field_check
+id: paragraph.items.field_comments
+field_name: field_comments
 entity_type: paragraph
 bundle: items
-label: Solicitud
+label: Comentarios
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings:
-  on_label: '1'
-  off_label: '0'
-field_type: boolean
+settings: {  }
+field_type: string

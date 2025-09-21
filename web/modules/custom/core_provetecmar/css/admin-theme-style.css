@@ -49,6 +49,15 @@
 .paragraphs-subform .flex{
     display: flex;
     gap: 5px;
+    overflow-x: auto;
+}
+
+.paragraphs-subform .paragraph-type-label{
+    display: none;
+}
+
+.paragraphs-subform .field--name-field-check{
+    margin-top: -30px;
 }
 
 .paragraphs-subform .field--type-boolean{
@@ -58,6 +67,30 @@
 
 .paragraphs-subform .field--type-boolean label{
     display: none;
+}
+
+.paragraphs-subform .flex .field--widget-number{
+   width: 114px;
+}
+
+.paragraphs-subform .flex .field--widget-options-select{
+   width: 150px;
+}
+
+.paragraphs-subform .field--name-field-product{
+   width: 300px !important;
+}
+
+.paragraphs-subform .field--name-field-product .form-element--api-entity-autocomplete{
+   width: 300px !important;
+}
+
+.paragraphs-subform .field--name-field-delivery-time{
+    width: 250px;
+}
+
+.paragraphs-subform .field--name-field-comments{
+    width: 400px;
 }
 
 .node--unpublished{

@@ -1,0 +1,29 @@
+uuid: e7a623df-c0e8-4940-a735-bae69ce06b88
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_delivery_region
+    - paragraphs.paragraphs_type.items
+    - taxonomy.vocabulary.delivery_region
+id: paragraph.items.field_delivery_region
+field_name: field_delivery_region
+entity_type: paragraph
+bundle: items
+label: 'Región de entrega'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      delivery_region: delivery_region
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

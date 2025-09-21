@@ -1,0 +1,19 @@
+uuid: 0c6e2cc8-8f3f-45ab-8875-753eee86afd1
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_delivery_time
+    - paragraphs.paragraphs_type.items
+id: paragraph.items.field_delivery_time
+field_name: field_delivery_time
+entity_type: paragraph
+bundle: items
+label: 'Tiempo de entrega'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

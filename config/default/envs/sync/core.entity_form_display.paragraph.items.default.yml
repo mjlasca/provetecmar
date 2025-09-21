@@ -5,9 +5,14 @@ dependencies:
   config:
     - field.field.paragraph.items.field_cant
     - field.field.paragraph.items.field_check
+    - field.field.paragraph.items.field_comments
     - field.field.paragraph.items.field_company
+    - field.field.paragraph.items.field_delivery_region
+    - field.field.paragraph.items.field_delivery_time
+    - field.field.paragraph.items.field_incoterm
     - field.field.paragraph.items.field_product
     - field.field.paragraph.items.field_total
+    - field.field.paragraph.items.field_weight_total
     - paragraphs.paragraphs_type.items
   module:
     - field_group
@@ -15,15 +20,19 @@ third_party_settings:
   field_group:
     group_dive:
       children:
-        - field_check
         - field_cant
         - field_product
-        - field_company
+        - field_weight_total
         - field_total
+        - field_company
+        - field_delivery_region
+        - field_incoterm
+        - field_delivery_time
+        - field_comments
       label: dive
       region: content
       parent_name: ''
-      weight: 0
+      weight: 1
       format_type: html_element
       format_settings:
         classes: flex
@@ -45,19 +54,47 @@ mode: default
 content:
   field_cant:
     type: number
-    weight: 6
+    weight: 2
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_check:
     type: boolean_checkbox
-    weight: 5
+    weight: 0
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
+  field_comments:
+    type: string_textfield
+    weight: 10
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_company:
+    type: options_select
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_delivery_region:
+    type: options_select
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_delivery_time:
+    type: string_textfield
+    weight: 9
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_incoterm:
     type: options_select
     weight: 8
     region: content
@@ -65,17 +102,24 @@ content:
     third_party_settings: {  }
   field_product:
     type: entity_reference_autocomplete
-    weight: 7
+    weight: 3
     region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
-      size: 60
+      size: 300
       placeholder: ''
     third_party_settings: {  }
   field_total:
     type: number
-    weight: 9
+    weight: 5
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_weight_total:
+    type: number
+    weight: 4
     region: content
     settings:
       placeholder: ''

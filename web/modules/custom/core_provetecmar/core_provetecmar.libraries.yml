@@ -12,3 +12,4 @@ quote-requests:
     dependencies:
       - core/jquery
       - core/drupal
+      - core/once

@@ -1,0 +1,29 @@
+uuid: c3e99f01-e514-4384-8860-e12e295dda5b
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_incoterm
+    - paragraphs.paragraphs_type.items
+    - taxonomy.vocabulary.incoterms
+id: paragraph.items.field_incoterm
+field_name: field_incoterm
+entity_type: paragraph
+bundle: items
+label: Incoterm
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      incoterms: incoterms
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
