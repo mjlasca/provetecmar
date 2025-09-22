@@ -1,4 +1,4 @@
-(function ($, Drupal, once) {
+(function ($, Drupal) {
   Drupal.behaviors.sendRequests = {
     attach: function (context) {
         const table = context.querySelector('.field-multiple-table');
@@ -74,4 +74,4 @@
     
     },
   };
-})(jQuery, Drupal, once);
+})(jQuery, Drupal);

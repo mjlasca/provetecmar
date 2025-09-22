@@ -3,6 +3,10 @@ services:
     class: Drupal\core_provetecmar\Service\XlsxImportService
     arguments: ['@http_client', '@logger.factory', '@entity_type.manager', '@file.repository', '@file_url_generator', '@file_system']
 
+  core_provetecmar.importxlsx_validation:
+    class: Drupal\core_provetecmar\Service\XlsxImportServiceValidation
+    arguments: ['@http_client', '@logger.factory', '@entity_type.manager', '@file.repository', '@file_url_generator', '@file_system']
+
   core_provetecmar.mailer:
     class: Drupal\core_provetecmar\Service\MailerProv
     arguments: ['@plugin.manager.mail', '@language_manager']

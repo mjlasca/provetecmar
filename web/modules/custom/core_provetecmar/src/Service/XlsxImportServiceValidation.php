@@ -17,7 +17,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 /**
  * Service for import xlsx to create products
  */
-class XlsxImportService {
+class XlsxImportServiceValidation {
 
    /**
      * @param \GuzzleHttp\ClientInterface $http_client
@@ -92,14 +92,14 @@ class XlsxImportService {
    * @return bool
    *  Succes or not create products and paragraphs add
    */
-  public function importXlsx(Node $node, $field_name): array {
+  public function importXlsxValidation(Node $node, $field_name): array {
     try 
     {
       
       if (!$node->hasField($field_name) || $node->get($field_name)->isEmpty()) 
         return ['success' => TRUE, 'message' => ''];
       if(count($node->get('field_products')->getValue()) > 1)
-        return [];
+        return ['success' => TRUE, 'message' => ''];
 
       $file = $node->get($field_name)->entity;
       if (!$file) {
@@ -118,71 +118,41 @@ class XlsxImportService {
         return ['success' => FALSE, 'message' => 'El archivo debe ser xlsx o xls'];
       }
 
+      $message = '';
       foreach ($rows as $key => $row) {
-        
+
         if($key > 5 && !empty($row[2]) && !empty($row[3]) && !empty($row[4]) ){
+          if(empty($row[2]))
+              $message .= "<li>El código es obligatorio. Item #$row[1]</li>";
+          if(empty($row[3]))
+              $message .= "<li>El nombre es obligatorio. Item #$row[1]</li>";
+          if(empty($row[4]))
+              $message .= "<li>La descripción es obligatoria. Item #$row[1]</li>";
+          if(empty($row[6]))
+              $message .= "<li>El parte es obligatorio. Item #$row[1]</li>";
+          if(empty($row[7]))
+              $message .= "<li>La cantidad es obligatoria. Item #$row[1]</li>";
+          if(empty($row[8]))
+              $message .= "<li>La unidad de medida es obligatoria. Item #$row[1]</li>";
+          if(!empty($row[7]) && !is_numeric(trim($row[7])))
+            $message .= "<li>La cantidad no es un número. Item #$row[1]</li>";
           
-          $nids = $this->entityTypeManager
-            ->getStorage('node')
-            ->getQuery()
-            ->condition('type', 'product')
-            ->condition('field_id_unique', $row[2] ?? '')
-            ->accessCheck(FALSE)
-            ->execute();
-
-          if (!empty($nids)) {
-            $nid = reset($nids);
-            $product = $this->entityTypeManager
-              ->getStorage('node')
-              ->load($nid);
-          } else {
-            $product = $this->entityTypeManager
-              ->getStorage('node')
-              ->create([
-                'type' => 'product',
-                'field_id_unique' => $row[2] ?? '',
-              ]);
-          }
-
           $unit = $this->validateTaxonomy('unit_of_measurement',$row[8]);
-          if($unit != FALSE)
-            $product->set('field_unit',$unit);
+          if($unit == FALSE)
+            $message .= "<li>La unidad de medida $row[8] no es correcta. Item #$row[1]</li>";
           if(!empty($row[5])){
             $manufacturer = $this->validateTaxonomy('manufacturer',$row[5]);
-            if($manufacturer != FALSE)
-              $product->set('field_manufacturer',$manufacturer);
+            if($manufacturer == FALSE)
+              $message .= "<li>El fabricante $row[5] no es correcto. Item #$row[1]</li>";
           }  
-          $product->set('title', str_replace('"','', $row[3] ) ?? '');
-          $product->set('field_description', $row[4] ?? '');
-
-          
-          if($product->save()){
-            $paragraphProd = [
-              'type' => 'items', 
-              'field_product' => [
-                'target_id' => $product->id(),
-              ]
-            ];
-            if(!empty($row[7]) && $row[7])
-              $paragraphProd['field_cant'] = trim($row[7]);
-            if(!empty($row[9]) && $row[9])
-              $paragraphProd['field_comments'] = trim($row[9]);
-
-            $paragraph = Paragraph::create($paragraphProd);
-            if($paragraph->save()){
-              $arrayParagraph = $node->get('field_products')->getValue() ?? [];
-              $arrayParagraph[] = [
-                'target_id' => $paragraph->id(),
-                'target_revision_id' => $paragraph->getRevisionId(),
-              ];
-              $node->set('field_products', $arrayParagraph);
-              $node->save();
-            }
-          }
-          
         }
       }
-      return ['success' => TRUE, 'message' => 'Se generó correctamente la importación'];
+
+      if(!empty($message)){
+        return ['success' => FALSE, 'message' => $message];
+      }else{
+        return ['success' => TRUE, 'message' => 'Se generó correctamente la importación'];
+      }
     } catch (\Throwable $th) {
       $this->logger->error("Error import file ".$th->getMessage() );
       return ['success' => FALSE, 'message' => "Hubo un error en el proceso de importación ".$th->getMessage()];
@@ -190,6 +160,9 @@ class XlsxImportService {
   }
 
   private function validateTaxonomy($vid, $name){
+    $name = trim($name);
+    if(empty($name))
+      return FALSE;
     $tax = $this->entityTypeManager
               ->getStorage('taxonomy_term')
               ->loadByProperties([
@@ -204,8 +177,12 @@ class XlsxImportService {
 
   public function readXlsx(string $file_path): array {
     $rows = [];
-    $spreadsheet = IOFactory::load($file_path);
+    $reader = IOFactory::createReaderForFile($file_path);
+    $reader->setReadDataOnly(TRUE); // Solo valores, sin estilos
+    $reader->setReadEmptyCells(FALSE); // Ignora celdas vacías
+    $spreadsheet = $reader->load($file_path);
     $sheet = $spreadsheet->getActiveSheet();
+
 
     foreach ($sheet->getRowIterator() as $row) {
       $cellIterator = $row->getCellIterator();

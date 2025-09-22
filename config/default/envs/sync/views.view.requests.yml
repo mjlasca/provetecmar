@@ -394,7 +394,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: envios-de-solicitudes
+      path: admin/envios-de-solicitudes
     cache_metadata:
       max-age: -1
       contexts:

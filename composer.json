@@ -29,7 +29,8 @@
         "drupal/paragraphs": "^1.19",
         "drupal/smtp": "^1.4",
         "drupal/workbench_email": "^3.0",
-        "drush/drush": "^13.6"
+        "drush/drush": "^13.6",
+        "phpoffice/phpspreadsheet": "^5.1"
     },
     "conflict": {
         "drupal/drupal": "*"
