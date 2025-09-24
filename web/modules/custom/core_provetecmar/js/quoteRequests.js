@@ -53,25 +53,6 @@
             });
         }
 
-
-      const $productFields = $(context).find('input[name*="field_product"]:not(.processed-by-js)');
-
-      // Aplica el comportamiento a cada uno de los campos encontrados.
-      $productFields.each(function() {
-        const $this = $(this);
-        
-        // Agrega una clase para marcarlo como procesado.
-        $this.addClass('processed-by-js');
-
-        // Adjunta el evento autocompletechange.
-        $this.on('autocompletechange', function(event, ui) {
-          if (ui.item) {
-            const entityId = ui.item.value; 
-            console.log(`El ID de la entidad es: ${entityId}`);
-          }
-        });
-      });
-    
     },
   };
 })(jQuery, Drupal);

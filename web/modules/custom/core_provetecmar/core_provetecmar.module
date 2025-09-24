@@ -29,7 +29,7 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
     $form['field_requests_send']['widget']['#prefix'] = '<div class="loader-overlay" style="display:none;"><div class="spinner"></div></div><a id="send-request" href="#" class="button js-form-submit form-submit">Enviar Solicitudes</a>';
     $form['actions']['submit']['#validate'][] = '_quote_validation_custom';
     $form['actions']['submit']['#submit'][] = '_quote_submit_custom';
-    $form['#attached']['library'][] = 'core_provetecmar/quote-requests';
+    $form['#attached']['library'][] = 'core_provetecmar/quote';
   }
 }
 

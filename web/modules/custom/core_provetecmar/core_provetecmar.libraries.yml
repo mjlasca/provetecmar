@@ -3,12 +3,16 @@ admin-theme-style:
     theme:
       css/admin-theme-style.css: {}
 
-quote-requests:
+quote:
   js:
     js/quoteRequests.js:
       minified: true
       attributes:
         defer: true
+    js/quote.js:
+      minified: true
+      attributes:
+        defer: true        
     dependencies:
       - core/jquery
       - core/drupal
