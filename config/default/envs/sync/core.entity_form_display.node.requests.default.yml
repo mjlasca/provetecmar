@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.requests.field_html
     - field.field.node.requests.field_provider
+    - field.field.node.requests.field_quote
     - node.type.requests
   module:
     - content_moderation
@@ -32,6 +33,16 @@ content:
   field_provider:
     type: entity_reference_autocomplete
     weight: 121
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_quote:
+    type: entity_reference_autocomplete
+    weight: 122
     region: content
     settings:
       match_operator: CONTAINS

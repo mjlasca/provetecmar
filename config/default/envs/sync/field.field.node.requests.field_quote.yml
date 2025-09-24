@@ -1,0 +1,29 @@
+uuid: a307faf5-4c5b-421d-9c56-b564b2e731d3
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_quote
+    - node.type.quote
+    - node.type.requests
+id: node.requests.field_quote
+field_name: field_quote
+entity_type: node
+bundle: requests
+label: Cotización
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      quote: quote
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.requests.field_html
     - field.field.node.requests.field_provider
+    - field.field.node.requests.field_quote
     - node.type.requests
   module:
     - text
@@ -28,6 +29,14 @@ content:
       link: true
     third_party_settings: {  }
     weight: 101
+    region: content
+  field_quote:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 102
     region: content
   links:
     settings: {  }
