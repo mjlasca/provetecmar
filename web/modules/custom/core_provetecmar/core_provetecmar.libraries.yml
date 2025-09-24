@@ -9,10 +9,13 @@ quote:
       minified: true
       attributes:
         defer: true
-    js/quote.js:
+    js/process/dist/assets/app.js:
       minified: true
       attributes:
-        defer: true        
+        defer: true
     dependencies:
       - core/jquery
-      - core/drupal
+      - core/drupal        
+  css:
+    theme:
+      js/process/dist/assets/app.css: {}        

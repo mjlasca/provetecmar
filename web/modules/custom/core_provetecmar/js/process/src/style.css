@@ -1,0 +1,17 @@
+.overlay-modal{
+  position: fixed;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 500px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.199);
+}
+
+.product-success, .product-success:hover{
+  background-color: rgba(19, 139, 19, 0.349) !important;
+}
+
+.product-warning, .product-warning:hover{
+  background-color: rgba(255, 166, 0, 0.253) !important;
+}

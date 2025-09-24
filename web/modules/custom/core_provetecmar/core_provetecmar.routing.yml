@@ -5,3 +5,11 @@ core_provetecmar.send_mail_requests:
     _title: 'Send mail requests'
   requirements:
     _permission: 'access content'
+
+core_provetecmar.get_product_for_quote:
+  path: '/get-product-quote/{nid}'
+  defaults:
+    _controller: '\Drupal\core_provetecmar\Controller\QuoteController::getProduct'
+    _title: 'Get product'
+  requirements:
+    _permission: 'access content'
