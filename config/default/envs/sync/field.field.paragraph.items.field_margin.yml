@@ -1,0 +1,33 @@
+uuid: b14d33ca-7b99-4598-ae11-7556f96c1c7a
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_margin
+    - paragraphs.paragraphs_type.items
+    - taxonomy.vocabulary.margin
+  content:
+    - 'taxonomy_term:margin:bd3ee4c2-c0da-4861-b10e-3f63f0e9547b'
+id: paragraph.items.field_margin
+field_name: field_margin
+entity_type: paragraph
+bundle: items
+label: 'Margen (%)'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    target_uuid: bd3ee4c2-c0da-4861-b10e-3f63f0e9547b
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      margin: margin
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

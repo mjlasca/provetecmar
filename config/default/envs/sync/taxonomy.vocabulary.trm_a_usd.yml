@@ -4,6 +4,6 @@ status: true
 dependencies: {  }
 name: 'TRM a USD'
 vid: trm_a_usd
-description: null
+description: 'Lista de cambio monedas a dólares'
 weight: 0
 new_revision: false

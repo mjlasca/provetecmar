@@ -1,0 +1,11 @@
+uuid: 818366d4-fbe1-41ea-b4e1-e1c1dd84b66e
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.margin
+id: taxonomy_term.margin
+target_entity_type_id: taxonomy_term
+target_bundle: margin
+default_langcode: site_default
+language_alterable: false

@@ -1,0 +1,11 @@
+uuid: 2143f3a8-9c36-4cab-a108-b79fcd06ae52
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.destination
+id: taxonomy_term.destination
+target_entity_type_id: taxonomy_term
+target_bundle: destination
+default_langcode: site_default
+language_alterable: false

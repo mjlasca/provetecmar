@@ -27,9 +27,11 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
               $node->field_unit_cost->value != 0 &&
               $node->field_provider->target_id != ''
             ){
-              $settings[] = ['id' => 'edit-field-products-'.$delta, 'class' => 'product-success'];
+              $settings[$nid] = ['id' => 'edit-field-products-'.$delta, 'class' => 'product-success'];
+              $paragraph_item['#attributes']['class'][] = 'product-success';
             }else{
-              $settings[] = ['id' => 'edit-field-products-'.$delta, 'class' => 'product-warning'];
+              $settings[$nid] = ['id' => 'edit-field-products-'.$delta, 'class' => 'product-warning'];
+              $paragraph_item['#attributes']['class'][] = 'product-success';
             }
             $paragraph_item['subform']['field_product']['#prefix'] = '<a data-nid="'.$nid.'" href="/node/' . $nid . '/edit" class="show-product" target="_blank">+</a>';
           }
@@ -58,8 +60,21 @@ function _quote_validation_custom($form, \Drupal\Core\Form\FormStateInterface $f
       'field_items_import',
       Markup::create('<ul>' . $resultImport['message'] . '</ul>')
     );
-     
   }
+
+  $valQuote = \Drupal::service('core_provetecmar.validate_quote');
+  $resultVal = $valQuote->validateQuote($node, $form, $form_state);
+  if(!$resultVal['success'])
+  {
+    foreach ($resultVal['message'] as $value) {
+      $form_state->setErrorByName(
+        "field_products][{$value['k']}][subform][field_product",
+        Markup::create($value['msg'])
+      );  
+    }
+    
+  }
+
 }
 
 /**

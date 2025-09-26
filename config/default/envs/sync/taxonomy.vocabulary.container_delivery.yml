@@ -4,6 +4,6 @@ status: true
 dependencies: {  }
 name: 'Entrega contenedor'
 vid: container_delivery
-description: null
+description: 'Lugares de entrega contenedor'
 weight: 0
 new_revision: false

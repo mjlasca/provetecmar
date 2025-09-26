@@ -1,0 +1,68 @@
+uuid: c9f5581f-5eea-4889-a3b5-b099954f3e47
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.shipping_cost_origin.field_cost
+    - field.field.taxonomy_term.shipping_cost_origin.field_destination
+    - field.field.taxonomy_term.shipping_cost_origin.field_dimension
+    - field.field.taxonomy_term.shipping_cost_origin.field_origin
+    - field.field.taxonomy_term.shipping_cost_origin.field_shipping_method
+    - taxonomy.vocabulary.shipping_cost_origin
+  module:
+    - text
+id: taxonomy_term.shipping_cost_origin.default
+targetEntityType: taxonomy_term
+bundle: shipping_cost_origin
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_cost:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_destination:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_dimension:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_origin:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_shipping_method:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  langcode: true

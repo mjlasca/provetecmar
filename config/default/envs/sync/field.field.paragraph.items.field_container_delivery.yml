@@ -1,0 +1,29 @@
+uuid: 1aa59892-1e48-495f-902b-8bddbf724f21
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_container_delivery
+    - paragraphs.paragraphs_type.items
+    - taxonomy.vocabulary.container_delivery
+id: paragraph.items.field_container_delivery
+field_name: field_container_delivery
+entity_type: paragraph
+bundle: items
+label: 'Entrega contenedor'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      container_delivery: container_delivery
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

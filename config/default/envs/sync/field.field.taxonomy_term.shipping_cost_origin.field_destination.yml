@@ -1,0 +1,29 @@
+uuid: bc03349a-4679-47f0-bc32-190b374eca47
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_destination
+    - taxonomy.vocabulary.destination
+    - taxonomy.vocabulary.shipping_cost_origin
+id: taxonomy_term.shipping_cost_origin.field_destination
+field_name: field_destination
+entity_type: taxonomy_term
+bundle: shipping_cost_origin
+label: Destino
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      destination: destination
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

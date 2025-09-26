@@ -1,0 +1,66 @@
+uuid: 8c9b4d90-280d-4d2e-8528-4a5a6e12a70c
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.shipping_cost_origin.field_cost
+    - field.field.taxonomy_term.shipping_cost_origin.field_destination
+    - field.field.taxonomy_term.shipping_cost_origin.field_dimension
+    - field.field.taxonomy_term.shipping_cost_origin.field_origin
+    - field.field.taxonomy_term.shipping_cost_origin.field_shipping_method
+    - taxonomy.vocabulary.shipping_cost_origin
+id: taxonomy_term.shipping_cost_origin.default
+targetEntityType: taxonomy_term
+bundle: shipping_cost_origin
+mode: default
+content:
+  field_cost:
+    type: number
+    weight: 30
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_destination:
+    type: options_select
+    weight: 28
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_dimension:
+    type: options_select
+    weight: 29
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_origin:
+    type: options_select
+    weight: 27
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_shipping_method:
+    type: options_select
+    weight: 26
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 1
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+hidden:
+  description: true
+  langcode: true
+  path: true

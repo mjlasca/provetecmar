@@ -1,3 +1,5 @@
+import { QuoteUi } from "./quote-ui";
+
 /**
  * Clas for utilities quote
  */
@@ -7,7 +9,7 @@ export class Calculate {
         this.dataProduct = null;
         this.url = `https://provectecmar.ddev.site/get-product-quote/${nid}`;
         this.nid = nid;
-        console.log(this.nid);
+        this.init();
     }
 
     async init(){
@@ -49,16 +51,16 @@ export class Calculate {
 
     async process(nid){
         await this.init();
-        this.containerRow.querySelector('.show-product').href = `/node/${nid}/edit`;
+        this.costTotal();
+        this.weightTotal();
+        const lintProduct = this.containerRow.querySelector('.show-product');
+        console.log(lintProduct);
+        if(lintProduct) 
+            lintProduct.href = `/node/${nid}/edit`; 
+        else {
+            this.ui.linkProduct(nid, this.containerRow);
+        } 
         const dragCont = this.containerRow.closest('.paragraph-type--items');
-        if(dragCont.classList.contains('product-success'))
-            dragCont.classList.remove('product-success');
-        if(dragCont.classList.contains('product-warning'))
-            dragCont.classList.remove('product-warning');
-        if(this.dataProduct.weight > 0 && this.dataProduct.cost_unit > 0 && this.dataProduct.provider != '')
-            dragCont.classList.add('product-success');
-        else{
-            dragCont.classList.add('product-warning');
-        }
+        return QuoteUi.validateProduct(dragCont);
     }
 }

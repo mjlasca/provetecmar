@@ -4,6 +4,6 @@ status: true
 dependencies: {  }
 name: 'Tipo de contenedor'
 vid: container_type
-description: null
+description: 'Lista tipos de contenedores'
 weight: 0
 new_revision: false

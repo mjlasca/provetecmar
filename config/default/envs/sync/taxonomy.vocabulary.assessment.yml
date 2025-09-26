@@ -4,6 +4,6 @@ status: true
 dependencies: {  }
 name: Gravamen
 vid: assessment
-description: null
+description: 'Lista de valores a aplicar en gravamen'
 weight: 0
 new_revision: false

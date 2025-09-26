@@ -1,0 +1,9 @@
+uuid: 8d712ac9-3ada-495c-acf5-40c3f1d0544a
+langcode: es
+status: true
+dependencies: {  }
+name: Margen
+vid: margin
+description: 'Lista parametrizada de márgenes'
+weight: 0
+new_revision: false

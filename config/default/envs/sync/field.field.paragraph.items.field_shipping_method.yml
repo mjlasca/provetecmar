@@ -1,0 +1,29 @@
+uuid: db08789c-92e8-41a5-86f4-61b861c319dc
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_shipping_method
+    - paragraphs.paragraphs_type.items
+    - taxonomy.vocabulary.shipping_method
+id: paragraph.items.field_shipping_method
+field_name: field_shipping_method
+entity_type: paragraph
+bundle: items
+label: 'Tipo envío'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      shipping_method: shipping_method
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

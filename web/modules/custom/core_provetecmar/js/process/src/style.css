@@ -1,3 +1,7 @@
+.node-form{
+  max-width: 100% !important;
+}
+
 .overlay-modal{
   position: fixed;
   top: 50%;
@@ -9,9 +13,13 @@
 }
 
 .product-success, .product-success:hover{
-  background-color: rgba(19, 139, 19, 0.349) !important;
+  background-color: rgba(31, 236, 31, 0.144) !important;
 }
 
 .product-warning, .product-warning:hover{
-  background-color: rgba(255, 166, 0, 0.253) !important;
+  background-color: rgba(255, 166, 0, 0.144) !important;
+}
+
+.field--name-field-product{
+  display: flex;
 }

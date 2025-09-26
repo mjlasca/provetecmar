@@ -1,0 +1,29 @@
+uuid: 6baa5350-a6f9-4ceb-9c96-c2498b058ce4
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_shipping_method
+    - taxonomy.vocabulary.shipping_cost_origin
+    - taxonomy.vocabulary.shipping_method
+id: taxonomy_term.shipping_cost_origin.field_shipping_method
+field_name: field_shipping_method
+entity_type: taxonomy_term
+bundle: shipping_cost_origin
+label: 'Tipo de envío'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      shipping_method: shipping_method
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,9 @@
+uuid: 327b6ff9-67a9-4ea6-8d7d-5d89227bafa7
+langcode: es
+status: true
+dependencies: {  }
+name: 'Costo envío/origen'
+vid: shipping_cost_origin
+description: 'Listado de parametrización para obtener el costo en dólares del tipo de envío y su origen'
+weight: 0
+new_revision: false

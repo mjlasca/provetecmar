@@ -2,8 +2,8 @@
  * Class for ui quote
  */
 export class QuoteUi {
-    constructor(form) {
-        this.form = form;
+    constructor(settings) {
+        this.settings = settings ?? [];
     }
 
     modalMarkup(src) {
@@ -24,17 +24,45 @@ export class QuoteUi {
             this.form.appendChild(divModal);
         }
     }
-
-
-    showModal(showProduct){
-        console.log(showProduct.getAttribute('data-nid'));
-        const nid = showProduct.getAttribute('data-nid');
-        this.modalMarkup(`/node/${nid}/edit`);
+    
+    linkProduct(nid, container) {
+        if(!container.querySelector('.show-product')){
+            const aElement = document.createElement("a");
+            aElement.classList.add('show-product');
+            aElement.setAttribute('target','_blank');
+            aElement.setAttribute('data-nid',nid);
+            aElement.textContent = "+";
+            const divProduct = container.querySelector('.field--name-field-product');
+            divProduct.prepend(aElement);
+        }
     }
 
-    succesWarning(context, settings){
-        settings.forEach(el => {
-            context.querySelector('#'+el.id).closest('.paragraph-type--items').classList.add(el.class);
+    showModal(showProduct){
+        const nid = showProduct.getAttribute('data-nid');
+        if(nid){
+            this.modalMarkup(`/node/${nid}/edit`);
+        }
+    }
+
+    showContainer(container, show){
+        const conta =  container.querySelector('.quote-container');
+        const qty = conta.querySelector('[name*="field_qty"]');
+        if(!conta.classList.contains('quote-hide') && !show){
+            conta.classList.add('quote-hide');
+            qty.removeAttribute('required');
+        }else if( show ){
+            conta.classList.remove('quote-hide');
+            qty.setAttribute('required',true);
+        }
+    }
+
+    succesWarning(context){
+        Object.entries(this.settings).forEach((k,el) => {
+            if(context.querySelector(`[data-nid="${k}"]`)){
+                console.log(`[data-nid="${k}"]`);
+                console.log(context.querySelector(`[data-nid="${k}"]`));
+                context.querySelector(`[data-nid="${k}"]`).closest('.paragraph-type--items').classList.add(el.class);
+            }
         });
         /*this.containerRow.querySelector('.show-product').href = `/node/${nid}/edit`;
         const dragCont = this.containerRow.closest('.paragraph-type--items');
@@ -50,5 +78,37 @@ export class QuoteUi {
             dragCont.classList.add('product-warning');
         }*/
     }
+
+    static validateProduct(dragCont, sett){
+        const nid = dragCont.querySelector('.show-product');
+        if(dragCont.classList.contains('product-success'))
+            dragCont.classList.remove('product-success');
+        if(dragCont.classList.contains('product-warning')){
+            dragCont.classList.remove('product-warning');
+            sett.push({'class':'product-warning', 'id': nid.getAttribute('data-nid')})
+        }
+        if(this.dataProduct.weight > 0 && this.dataProduct.cost_unit > 0 && this.dataProduct.provider != ''){
+            dragCont.classList.add('product-success');
+            sett.push({'class':'product-success', 'id': nid.getAttribute('data-nid')})
+        }
+        else{
+            dragCont.classList.add('product-warning');
+            sett.push({'class':'product-warning', 'id': nid.getAttribute('data-nid')})
+        }
+        console.log(sett);
+        return sett;
+    }
+
+    cloneParagraph(conta){
+        const baseProduct = conta.querySelector(".paragraph-type--items");
+        console.log(baseProduct);
+        if (!baseProduct) {
+        console.warn("No hay producto base en el contenedor.");
+        return;
+        }
+        const newProduct = baseProduct.cloneNode(true);
+        conta.append(newProduct);
+    }
+
 
 }

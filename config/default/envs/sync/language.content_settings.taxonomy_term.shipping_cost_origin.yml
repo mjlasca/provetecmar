@@ -1,0 +1,11 @@
+uuid: 3a3401fe-badf-4baf-81b6-60322e888ad6
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.shipping_cost_origin
+id: taxonomy_term.shipping_cost_origin
+target_entity_type_id: taxonomy_term
+target_bundle: shipping_cost_origin
+default_langcode: site_default
+language_alterable: false

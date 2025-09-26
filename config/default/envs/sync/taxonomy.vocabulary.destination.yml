@@ -1,0 +1,9 @@
+uuid: d5ce19fe-70ad-4b3b-adfb-6e84388efba4
+langcode: es
+status: true
+dependencies: {  }
+name: Destino
+vid: destination
+description: 'Listado de lugares para llevar el producto'
+weight: 0
+new_revision: false

@@ -1,0 +1,29 @@
+uuid: 9496f953-1ac0-47cd-b266-5ec72b55eae2
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_dimension
+    - taxonomy.vocabulary.container_type
+    - taxonomy.vocabulary.shipping_cost_origin
+id: taxonomy_term.shipping_cost_origin.field_dimension
+field_name: field_dimension
+entity_type: taxonomy_term
+bundle: shipping_cost_origin
+label: Dimensiones
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      container_type: container_type
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,33 @@
+uuid: c6f0ea3d-4841-49ea-ad6b-a96d5caaa520
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_assessment
+    - paragraphs.paragraphs_type.items
+    - taxonomy.vocabulary.assessment
+  content:
+    - 'taxonomy_term:assessment:088b02bf-cadd-4cd8-970b-07eb95380a43'
+id: paragraph.items.field_assessment
+field_name: field_assessment
+entity_type: paragraph
+bundle: items
+label: 'Gravament (%)'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    target_uuid: 088b02bf-cadd-4cd8-970b-07eb95380a43
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      assessment: assessment
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

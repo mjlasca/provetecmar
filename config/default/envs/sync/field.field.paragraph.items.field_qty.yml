@@ -1,0 +1,23 @@
+uuid: 5ce6be1e-fcba-44df-ad3e-9120e0dd2de2
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_qty
+    - paragraphs.paragraphs_type.items
+id: paragraph.items.field_qty
+field_name: field_qty
+entity_type: paragraph
+bundle: items
+label: Qty
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 1
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

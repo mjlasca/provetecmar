@@ -2,7 +2,7 @@ uuid: 9ea57782-f589-4a38-b7a3-5c960c82f567
 langcode: es
 status: true
 dependencies: {  }
-name: 'Forma de envío'
+name: 'Tipo de envío'
 vid: shipping_method
 description: 'Lista de los diferentes tipo de envíos'
 weight: 0

@@ -1,0 +1,20 @@
+uuid: b0d7c74f-3345-483f-92f0-e751dfc70650
+langcode: es
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - taxonomy
+id: paragraph.field_assessment
+field_name: field_assessment
+entity_type: paragraph
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
