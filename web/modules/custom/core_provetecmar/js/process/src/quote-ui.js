@@ -3,7 +3,8 @@
  */
 export class QuoteUi {
     constructor(settings) {
-        this.settings = settings ?? [];
+        this.settings = settings.quote_settings ?? [];
+        this.parameters = settings.quote_settings.parameters ?? [];
     }
 
     modalMarkup(src) {
@@ -62,51 +63,63 @@ export class QuoteUi {
                 context.querySelector(`.valid-${el.nid}`).closest('.paragraph-type--items').classList.add(el.class);
             }
         });
-        /*this.containerRow.querySelector('.show-product').href = `/node/${nid}/edit`;
-        const dragCont = this.containerRow.closest('.paragraph-type--items');
-        
-        console.log(this.dataProduct);
-        if(dragCont.classList.contains('product-success'))
-            dragCont.classList.remove('product-success');
-        if(dragCont.classList.contains('product-warning'))
-            dragCont.classList.remove('product-warning');
-        if(this.dataProduct.weight > 0 && this.dataProduct.cost_unit > 0 && this.dataProduct.provider != '')
-            dragCont.classList.add('product-success');
-        else{
-            dragCont.classList.add('product-warning');
-        }*/
     }
 
     validateProduct(dragCont, confirm){
-        console.log(this.settings);
-        const nid = dragCont.querySelector('.show-product');
+        const nid = dragCont.querySelector('.show-product').getAttribute('data-nid');
+        const index = this.settings.findIndex(item => item.nid === nid);
+        let classSet = 'product-warning';
         if(dragCont.classList.contains('product-success'))
             dragCont.classList.remove('product-success');
         if(dragCont.classList.contains('product-warning')){
             dragCont.classList.remove('product-warning');
-            this.settings.push({'class':'product-warning', 'nid': nid.getAttribute('data-nid')})
+            classSet = 'product-success';
         }
         if(confirm){
             dragCont.classList.add('product-success');
-            this.settings.push({'class':'product-success', 'nid': nid.getAttribute('data-nid')})
+            classSet = 'product-success';
         }
         else{
             dragCont.classList.add('product-warning');
-            this.settings.push({'class':'product-warning', 'nid': nid.getAttribute('data-nid')})
+            classSet = 'product-warning';
         }
-        console.log(this.settings);
+        if(index !== -1)
+            this.settings[index].class = classSet;
+        else
+            this.settings.push({ nid: nid, class: classSet });
+        
     }
 
-    cloneParagraph(conta){
-        const baseProduct = conta.querySelector(".paragraph-type--items");
-        console.log(baseProduct);
-        if (!baseProduct) {
-        console.warn("No hay producto base en el contenedor.");
-        return;
-        }
-        const newProduct = baseProduct.cloneNode(true);
-        conta.append(newProduct);
-    }
+    parametersMarkup(){
+        let trms = "";
+        Object.values(this.parameters).forEach(term => {
+            trms += `<p class="span-left"><small>(${term.factor})</small> <b>${term.name}</b></p>
+                     <p class="span-${term.name}">
+                        $ 6.277 
+                     </p>
+                    `;
+        });
+        return `<div class="quote-parameters--bar">
+                    <div class="bar-left">
+                        <div class="total-trm">${trms}</div>
+                        <div class="quote-parameters--totals">
+                            <div class="total-quote">
+                                <p class="span-left"><b>TOTAL COSTO</b></p><p class="span-right">$ 6.277 USD</p>
+                            </div>
+                            <div class="total-quote">
+                                <p class="span-left"><b>PESO TOTAL</b></p><p class="span-right">19,50 kg</p>
+                            </div>
+                            <div class="total-quote">
+                                <p class="span-left"><b>TOTAL COTIZADO</b></p><p class="span-right">$ 9.114,15 USD</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-right">
 
+                    </div>
+                </div>
+                `;
+    }
+    
 
 }

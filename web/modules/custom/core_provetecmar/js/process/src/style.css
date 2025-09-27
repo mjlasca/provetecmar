@@ -23,3 +23,34 @@
 .field--name-field-product{
   display: flex;
 }
+
+.quote-parameters {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9999;
+  background: #fff;
+  padding: 10px 15px;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.quote-parameters .total-quote {
+    background-color: #00ffff2b;
+    line-height: 0.5;
+    padding: 10px 5px 0px 5px;
+    border: 1px solid #eee;
+}
+
+.total-quote, .total-trm{
+  text-align: right;
+}
+
+
+@media (max-width: 768px) {
+  .quote-parameters{
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+}

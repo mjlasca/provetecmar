@@ -1,17 +1,17 @@
-uuid: fa188228-cf13-4767-ab41-5563774cad6d
+uuid: bd6be007-3460-465e-a4c5-9addcd8e1866
 langcode: es
 status: true
 dependencies:
   config:
-    - field.storage.taxonomy_term.field_conversion
+    - field.storage.taxonomy_term.field_factor
     - taxonomy.vocabulary.trm_a_usd
-id: taxonomy_term.trm_a_usd.field_conversion
-field_name: field_conversion
+id: taxonomy_term.trm_a_usd.field_factor
+field_name: field_factor
 entity_type: taxonomy_term
 bundle: trm_a_usd
-label: 'Valor de conversión'
+label: Factor
 description: ''
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''

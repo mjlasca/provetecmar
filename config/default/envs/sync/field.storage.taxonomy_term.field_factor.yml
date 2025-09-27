@@ -1,11 +1,11 @@
-uuid: 7971027f-31b4-4d8d-8985-40b19ec33543
+uuid: d42f6d2e-8135-4695-a7e5-ac15b2ed7150
 langcode: es
 status: true
 dependencies:
   module:
     - taxonomy
-id: taxonomy_term.field_conversion
-field_name: field_conversion
+id: taxonomy_term.field_factor
+field_name: field_factor
 entity_type: taxonomy_term
 type: decimal
 settings:

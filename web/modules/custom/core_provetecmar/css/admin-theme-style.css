@@ -52,6 +52,19 @@
     overflow-x: auto;
 }
 
+@media only screen and (max-width: 768px) {
+    .paragraphs-subform .flex{
+        display: block;
+    }
+    .paragraphs-subform .js-form-wrapper{
+        width: 100% !important;
+    }
+
+    .quote-container{
+        display: block !important;
+    }
+}
+
 .paragraphs-subform .paragraph-type-label{
     display: none;
 }
@@ -134,3 +147,5 @@
 @keyframes spin {
   100% { transform: rotate(360deg); }
 }
+
+

@@ -7,16 +7,17 @@ import "./style.css";
   Drupal.behaviors.Quote = {
     attach: function (context, settings) {
         let Calc = null;
-        let QUi = new QuoteUi(settings.quote_settings);
-        
+        let QUi = new QuoteUi(settings);
+        const params = context.querySelector('.quote-parameters');
+        if(params)
+            params.innerHTML = QUi.parametersMarkup();
         const $form = $(context).find('form');
         if(context && $form){
-            console.log(QUi.settings);
             QUi.succesWarning(context);
           $form.on('click', (e) => {
             if(e.target && e.target.classList.contains('show-product')){
               Calc = new Calculate(e.target.closest('.paragraphs-subform'), e.target.getAttribute('data-nid'));
-              Calc.ui = QUi;
+              Calc.ui.settings = QUi.settings;
             }
           });
           $form.on('change', (e) => {
@@ -25,21 +26,6 @@ import "./style.css";
             }
           });
         }
-        /*const $form = context.querySelector('#field-products-values');
-        if($form){
-          const QUi = new QuoteUi($form);
-          QUi.succesWarning(context, settings.quote_settings);
-          $form.addEventListener('click', (e) => {
-            if(e.target && e.target.classList.contains('show-product')){
-              Calc = new Calculate(e.target.closest('.paragraphs-subform'), e.target.getAttribute('data-nid'));
-            }
-          });
-          $form.addEventListener('change', (e) => {
-            if(e.target && e.target.name.includes('field_shipping_method')){
-              QUi.showContainer(e.target.closest('.paragraphs-subform'), e.target.value == 120);
-            }
-          });
-        }*/
         const $productFields = $(context).find('input[name*="field_product"]:not(.processed-by-js)');
         $productFields.each(function(e) {
             const $this = $(this);
@@ -55,14 +41,14 @@ import "./style.css";
         
         function process(nid, container){
           Calc = new Calculate(container, nid);
-          Calc.ui = QUi;
-          QUi.settings = Calc.process(nid);
+          console.log(QUi.settings);
+          Calc.ui.settings = QUi.settings;
+          Calc.process(nid);
         }
-
         window.addEventListener("focus", () => {
           if(Calc){
-            Calc.ui = QUi;
-            QUi.settings = Calc.process(Calc.nid);
+            Calc.ui.settings = QUi.settings;
+            Calc.process(Calc.nid);
           }
         });
     },

@@ -4,13 +4,13 @@ import { QuoteUi } from "./quote-ui";
  * Clas for utilities quote
  */
 export class Calculate {
-    ui = null;
     constructor(containerRow, nid){
         this.containerRow = containerRow;
         this.dataProduct = null;
         this.url = `https://provectecmar.ddev.site/get-product-quote/${nid}`;
         this.nid = nid;
         this.init();
+        this.ui = new QuoteUi(null);
     }
 
     async init(){
@@ -55,7 +55,6 @@ export class Calculate {
         this.costTotal();
         this.weightTotal();
         const lintProduct = this.containerRow.querySelector('.show-product');
-        console.log(lintProduct);
         if(lintProduct) 
             lintProduct.href = `/node/${nid}/edit`; 
         else {
