@@ -10,12 +10,13 @@ import "./style.css";
         let QUi = new QuoteUi(settings.quote_settings);
         
         const $form = $(context).find('form');
-        if($form){
+        if(context && $form){
             console.log(QUi.settings);
             QUi.succesWarning(context);
           $form.on('click', (e) => {
             if(e.target && e.target.classList.contains('show-product')){
               Calc = new Calculate(e.target.closest('.paragraphs-subform'), e.target.getAttribute('data-nid'));
+              Calc.ui = QUi;
             }
           });
           $form.on('change', (e) => {
@@ -54,12 +55,15 @@ import "./style.css";
         
         function process(nid, container){
           Calc = new Calculate(container, nid);
+          Calc.ui = QUi;
           QUi.settings = Calc.process(nid);
         }
 
         window.addEventListener("focus", () => {
-          if(Calc)
+          if(Calc){
+            Calc.ui = QUi;
             QUi.settings = Calc.process(Calc.nid);
+          }
         });
     },
   };

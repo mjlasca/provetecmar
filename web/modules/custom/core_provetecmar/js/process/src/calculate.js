@@ -4,6 +4,7 @@ import { QuoteUi } from "./quote-ui";
  * Clas for utilities quote
  */
 export class Calculate {
+    ui = null;
     constructor(containerRow, nid){
         this.containerRow = containerRow;
         this.dataProduct = null;
@@ -61,6 +62,11 @@ export class Calculate {
             this.ui.linkProduct(nid, this.containerRow);
         } 
         const dragCont = this.containerRow.closest('.paragraph-type--items');
-        return QuoteUi.validateProduct(dragCont);
+        if(this.dataProduct.weight > 0 && this.dataProduct.cost_unit > 0 && this.dataProduct.provider != ''){
+            this.ui.validateProduct(dragCont, true);
+        }
+        else{
+            this.ui.validateProduct(dragCont, false);
+        }
     }
 }

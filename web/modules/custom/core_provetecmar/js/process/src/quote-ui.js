@@ -57,11 +57,9 @@ export class QuoteUi {
     }
 
     succesWarning(context){
-        Object.entries(this.settings).forEach((k,el) => {
-            if(context.querySelector(`[data-nid="${k}"]`)){
-                console.log(`[data-nid="${k}"]`);
-                console.log(context.querySelector(`[data-nid="${k}"]`));
-                context.querySelector(`[data-nid="${k}"]`).closest('.paragraph-type--items').classList.add(el.class);
+        Object.values(this.settings).forEach((el) => {
+            if(context.querySelector(`.valid-${el.nid}`)){
+                context.querySelector(`.valid-${el.nid}`).closest('.paragraph-type--items').classList.add(el.class);
             }
         });
         /*this.containerRow.querySelector('.show-product').href = `/node/${nid}/edit`;
@@ -79,24 +77,24 @@ export class QuoteUi {
         }*/
     }
 
-    static validateProduct(dragCont, sett){
+    validateProduct(dragCont, confirm){
+        console.log(this.settings);
         const nid = dragCont.querySelector('.show-product');
         if(dragCont.classList.contains('product-success'))
             dragCont.classList.remove('product-success');
         if(dragCont.classList.contains('product-warning')){
             dragCont.classList.remove('product-warning');
-            sett.push({'class':'product-warning', 'id': nid.getAttribute('data-nid')})
+            this.settings.push({'class':'product-warning', 'nid': nid.getAttribute('data-nid')})
         }
-        if(this.dataProduct.weight > 0 && this.dataProduct.cost_unit > 0 && this.dataProduct.provider != ''){
+        if(confirm){
             dragCont.classList.add('product-success');
-            sett.push({'class':'product-success', 'id': nid.getAttribute('data-nid')})
+            this.settings.push({'class':'product-success', 'nid': nid.getAttribute('data-nid')})
         }
         else{
             dragCont.classList.add('product-warning');
-            sett.push({'class':'product-warning', 'id': nid.getAttribute('data-nid')})
+            this.settings.push({'class':'product-warning', 'nid': nid.getAttribute('data-nid')})
         }
-        console.log(sett);
-        return sett;
+        console.log(this.settings);
     }
 
     cloneParagraph(conta){

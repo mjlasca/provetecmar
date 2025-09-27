@@ -27,12 +27,11 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
               $node->field_unit_cost->value != 0 &&
               $node->field_provider->target_id != ''
             ){
-              $settings[$nid] = ['id' => 'edit-field-products-'.$delta, 'class' => 'product-success'];
-              $paragraph_item['#attributes']['class'][] = 'product-success';
+              $settings[] = ['nid' => $nid, 'class' => 'product-success'];
             }else{
-              $settings[$nid] = ['id' => 'edit-field-products-'.$delta, 'class' => 'product-warning'];
-              $paragraph_item['#attributes']['class'][] = 'product-success';
+              $settings[] = ['nid' => $nid, 'class' => 'product-warning'];
             }
+            $paragraph_item['#attributes']['class'][] = 'valid-'.$nid;
             $paragraph_item['subform']['field_product']['#prefix'] = '<a data-nid="'.$nid.'" href="/node/' . $nid . '/edit" class="show-product" target="_blank">+</a>';
           }
         }
