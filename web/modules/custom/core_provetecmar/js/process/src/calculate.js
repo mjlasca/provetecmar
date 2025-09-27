@@ -8,7 +8,7 @@ export class Calculate extends QuoteUi {
         super({'quote_settings':[], 'parameters' : []});
         this.containerRow = containerRow;
         this.dataProduct = null;
-        this.url = `https://provectecmar.ddev.site/get-product-quote/${nid}`;
+        this.url = `/get-product-quote/${nid}`;
         this.nid = nid;
         this.init();
     }

@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - field.field.taxonomy_term.trm_a_usd.field_factor
-    - field.field.taxonomy_term.trm_a_usd.field_representative_rate
     - taxonomy.vocabulary.trm_a_usd
   module:
     - path
@@ -16,13 +15,6 @@ content:
   field_factor:
     type: number
     weight: 1
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_representative_rate:
-    type: number
-    weight: 2
     region: content
     settings:
       placeholder: ''

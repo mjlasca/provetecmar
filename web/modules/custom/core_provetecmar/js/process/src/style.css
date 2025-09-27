@@ -61,15 +61,15 @@
 }
 
 
-#toggle-sidebar:checked ~ .quote-parameters--bar {
+.collapse{
   width: 30px;
 }
 
-#toggle-sidebar:checked ~ .quote-parameters--bar .bar-left{
+.collapse .bar-left{
   display: none;
 }
 
-#toggle-sidebar:checked ~ .quote-parameters--bar .toggle-btn svg {
+.collapse .toggle-btn svg {
   transform: rotate(180deg);
   transition: transform 0.3s ease;
 }

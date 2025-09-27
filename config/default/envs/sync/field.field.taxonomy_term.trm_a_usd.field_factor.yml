@@ -9,7 +9,7 @@ id: taxonomy_term.trm_a_usd.field_factor
 field_name: field_factor
 entity_type: taxonomy_term
 bundle: trm_a_usd
-label: Factor
+label: 'TRM USD'
 description: ''
 required: true
 translatable: false

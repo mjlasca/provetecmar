@@ -99,8 +99,7 @@ export class QuoteUi {
                      </p>
                     `;
         });
-        return `<input type="checkbox" id="toggle-sidebar" hidden>
-                <div class="quote-parameters--bar">
+        return `<div class="quote-parameters--bar">
                     
                     <div class="bar-left">
                         <div class="total-trm">${trms}</div>
@@ -127,5 +126,11 @@ export class QuoteUi {
                 `;
     }
     
-
+    collapseBar(bar){
+        if(bar.classList.contains('collapse')){
+            bar.classList.remove('collapse');
+        }else{
+            bar.classList.add('collapse');
+        }
+    }
 }

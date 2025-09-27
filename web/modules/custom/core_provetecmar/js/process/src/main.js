@@ -9,8 +9,14 @@ import "./style.css";
         let Calc = null;
         let QUi = new QuoteUi(settings);
         const params = context.querySelector('.quote-parameters');
-        if(params)
-            params.innerHTML = QUi.parametersMarkup();
+        if(params){
+          params.innerHTML = QUi.parametersMarkup();
+          const barSvg = params.querySelector('.quote-parameters--bar .toggle-btn');
+          QUi.collapseBar(params.querySelector('.quote-parameters--bar'));
+          barSvg.addEventListener('click', () => {
+            QUi.collapseBar(params.querySelector('.quote-parameters--bar'));
+          });
+        }
         const $form = $(context).find('form');
         if(context && $form){
             QUi.succesWarning(context);
@@ -38,7 +44,6 @@ import "./style.css";
               }
             });
         });
-        
         function process(nid, container){
           Calc = new Calculate(container, nid);
           console.log(QUi.settings);
