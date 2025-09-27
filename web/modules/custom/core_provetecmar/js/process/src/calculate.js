@@ -3,14 +3,14 @@ import { QuoteUi } from "./quote-ui";
 /**
  * Clas for utilities quote
  */
-export class Calculate {
+export class Calculate extends QuoteUi {
     constructor(containerRow, nid){
+        super({'quote_settings':[], 'parameters' : []});
         this.containerRow = containerRow;
         this.dataProduct = null;
         this.url = `https://provectecmar.ddev.site/get-product-quote/${nid}`;
         this.nid = nid;
         this.init();
-        this.ui = new QuoteUi(null);
     }
 
     async init(){
@@ -58,14 +58,14 @@ export class Calculate {
         if(lintProduct) 
             lintProduct.href = `/node/${nid}/edit`; 
         else {
-            this.ui.linkProduct(nid, this.containerRow);
+            this.linkProduct(nid, this.containerRow);
         } 
         const dragCont = this.containerRow.closest('.paragraph-type--items');
         if(this.dataProduct.weight > 0 && this.dataProduct.cost_unit > 0 && this.dataProduct.provider != ''){
-            this.ui.validateProduct(dragCont, true);
+            this.validateProduct(dragCont, true);
         }
         else{
-            this.ui.validateProduct(dragCont, false);
+            this.validateProduct(dragCont, false);
         }
     }
 }

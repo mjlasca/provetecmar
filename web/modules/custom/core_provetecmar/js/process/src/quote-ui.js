@@ -3,7 +3,6 @@
  */
 export class QuoteUi {
     constructor(settings) {
-        console.log(settings);
         this.settings = settings.quote_settings ?? [];
         this.parameters = settings.parameters ?? [];
     }

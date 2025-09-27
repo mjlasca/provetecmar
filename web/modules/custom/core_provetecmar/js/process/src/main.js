@@ -17,7 +17,7 @@ import "./style.css";
           $form.on('click', (e) => {
             if(e.target && e.target.classList.contains('show-product')){
               Calc = new Calculate(e.target.closest('.paragraphs-subform'), e.target.getAttribute('data-nid'));
-              Calc.ui.settings = QUi.settings;
+              Calc.settings = QUi.settings;
             }
           });
           $form.on('change', (e) => {
@@ -42,12 +42,11 @@ import "./style.css";
         function process(nid, container){
           Calc = new Calculate(container, nid);
           console.log(QUi.settings);
-          Calc.ui.settings = QUi.settings;
+          Calc.settings = QUi.settings;
           Calc.process(nid);
         }
         window.addEventListener("focus", () => {
           if(Calc){
-            console.log(Calc.ui.settings);
             Calc.process(Calc.nid);
           }
         });
