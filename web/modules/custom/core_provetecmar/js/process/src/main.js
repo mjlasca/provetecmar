@@ -47,7 +47,7 @@ import "./style.css";
         }
         window.addEventListener("focus", () => {
           if(Calc){
-            Calc.ui.settings = QUi.settings;
+            console.log(Calc.ui.settings);
             Calc.process(Calc.nid);
           }
         });

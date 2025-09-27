@@ -3,8 +3,9 @@
  */
 export class QuoteUi {
     constructor(settings) {
+        console.log(settings);
         this.settings = settings.quote_settings ?? [];
-        this.parameters = settings.quote_settings.parameters ?? [];
+        this.parameters = settings.parameters ?? [];
     }
 
     modalMarkup(src) {
@@ -13,7 +14,7 @@ export class QuoteUi {
             divModal.classList.add('overlay-modal');
             divModal.id = 'modal-quote';
             divModal.innerHTML = `
-            <div class="content-modal">
+            <div class="content-modal"> 
             <iframe
                 class="modal-iframe"
                 src="${src}"
@@ -99,7 +100,9 @@ export class QuoteUi {
                      </p>
                     `;
         });
-        return `<div class="quote-parameters--bar">
+        return `<input type="checkbox" id="toggle-sidebar" hidden>
+                <div class="quote-parameters--bar">
+                    
                     <div class="bar-left">
                         <div class="total-trm">${trms}</div>
                         <div class="quote-parameters--totals">
@@ -115,7 +118,11 @@ export class QuoteUi {
                         </div>
                     </div>
                     <div class="bar-right">
-
+                        <label for="toggle-sidebar" class="toggle-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                            <polyline points="15 18 9 12 15 6" fill="none" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </label>
                     </div>
                 </div>
                 `;

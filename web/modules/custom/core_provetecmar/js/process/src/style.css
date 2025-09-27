@@ -47,6 +47,32 @@
   text-align: right;
 }
 
+.toggle-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  cursor: pointer;
+}
+
+.toggle-btn svg{
+  height: 40px;
+  width: 40px;
+}
+
+
+#toggle-sidebar:checked ~ .quote-parameters--bar {
+  width: 30px;
+}
+
+#toggle-sidebar:checked ~ .quote-parameters--bar .bar-left{
+  display: none;
+}
+
+#toggle-sidebar:checked ~ .quote-parameters--bar .toggle-btn svg {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
 
 @media (max-width: 768px) {
   .quote-parameters{
