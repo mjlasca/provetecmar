@@ -1,0 +1,20 @@
+uuid: da3cf0f7-a5bd-4cc3-ad41-e2ea59f55935
+langcode: es
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.field_tax
+field_name: field_tax
+entity_type: paragraph
+type: decimal
+settings:
+  precision: 10
+  scale: 2
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

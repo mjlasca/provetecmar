@@ -1,0 +1,23 @@
+uuid: ee45fdbd-0e2a-42df-84ed-87d40a820990
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_landed_cost
+    - paragraphs.paragraphs_type.items
+id: paragraph.items.field_landed_cost
+field_name: field_landed_cost
+entity_type: paragraph
+bundle: items
+label: 'Factor cost'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

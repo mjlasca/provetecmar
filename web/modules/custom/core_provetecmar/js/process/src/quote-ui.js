@@ -87,7 +87,6 @@ export class QuoteUi {
             this.settings[index].class = classSet;
         else
             this.settings.push({ nid: nid, class: classSet });
-        
     }
 
     parametersMarkup(){

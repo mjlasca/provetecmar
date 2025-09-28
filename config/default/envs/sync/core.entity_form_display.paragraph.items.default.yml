@@ -10,14 +10,18 @@ dependencies:
     - field.field.paragraph.items.field_company
     - field.field.paragraph.items.field_container_delivery
     - field.field.paragraph.items.field_container_type
+    - field.field.paragraph.items.field_cost
     - field.field.paragraph.items.field_delivery_region
     - field.field.paragraph.items.field_delivery_time
     - field.field.paragraph.items.field_incoterm
+    - field.field.paragraph.items.field_landed_cost
     - field.field.paragraph.items.field_margin
     - field.field.paragraph.items.field_product
     - field.field.paragraph.items.field_qty
     - field.field.paragraph.items.field_shipping_method
+    - field.field.paragraph.items.field_tax
     - field.field.paragraph.items.field_total
+    - field.field.paragraph.items.field_total_cost
     - field.field.paragraph.items.field_weight_total
     - paragraphs.paragraphs_type.items
   module:
@@ -131,6 +135,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_cost:
+    type: number
+    weight: 18
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   field_delivery_region:
     type: options_select
     weight: 9
@@ -150,6 +161,13 @@ content:
     weight: 10
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_landed_cost:
+    type: number
+    weight: 21
+    region: content
+    settings:
+      placeholder: ''
     third_party_settings: {  }
   field_margin:
     type: options_select
@@ -180,9 +198,23 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_tax:
+    type: number
+    weight: 20
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   field_total:
     type: number
     weight: 5
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_total_cost:
+    type: number
+    weight: 19
     region: content
     settings:
       placeholder: ''

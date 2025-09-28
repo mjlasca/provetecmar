@@ -1,0 +1,11 @@
+uuid: 5628847e-9b8e-4eda-8b14-48f217d8f804
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.taxes
+id: taxonomy_term.taxes
+target_entity_type_id: taxonomy_term
+target_bundle: taxes
+default_langcode: site_default
+language_alterable: false

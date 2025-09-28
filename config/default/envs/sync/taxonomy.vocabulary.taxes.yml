@@ -1,0 +1,9 @@
+uuid: 397b9b47-39a2-4967-928a-1a15b2f648c6
+langcode: es
+status: true
+dependencies: {  }
+name: Impuestos
+vid: taxes
+description: 'Lista de parámetros para impuestos de acuerdo a la empresa cotizadora y la región de entrega'
+weight: 0
+new_revision: false

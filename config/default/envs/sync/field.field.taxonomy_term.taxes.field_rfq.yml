@@ -1,18 +1,18 @@
-uuid: 3b838838-c603-4718-ba50-8321d37fa71f
+uuid: 4b791dc2-b3f7-44bf-93b7-faec95baab86
 langcode: es
 status: true
 dependencies:
   config:
-    - field.storage.node.field_purchase_currency
-    - node.type.product
-    - taxonomy.vocabulary.trm_a_usd
-id: node.product.field_purchase_currency
-field_name: field_purchase_currency
-entity_type: node
-bundle: product
-label: 'Moneda de compra'
+    - field.storage.taxonomy_term.field_rfq
+    - taxonomy.vocabulary.group_companies
+    - taxonomy.vocabulary.taxes
+id: taxonomy_term.taxes.field_rfq
+field_name: field_rfq
+entity_type: taxonomy_term
+bundle: taxes
+label: RFQ
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -20,7 +20,7 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      trm_a_usd: trm_a_usd
+      group_companies: group_companies
     sort:
       field: name
       direction: asc

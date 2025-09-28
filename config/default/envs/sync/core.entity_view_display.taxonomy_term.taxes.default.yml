@@ -1,0 +1,52 @@
+uuid: 4ec4ccb7-3e4f-4e04-a024-594df2ed0626
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.taxes.field_origin
+    - field.field.taxonomy_term.taxes.field_rfq
+    - field.field.taxonomy_term.taxes.field_tax
+    - taxonomy.vocabulary.taxes
+  module:
+    - text
+id: taxonomy_term.taxes.default
+targetEntityType: taxonomy_term
+bundle: taxes
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_origin:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_rfq:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_tax:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  langcode: true

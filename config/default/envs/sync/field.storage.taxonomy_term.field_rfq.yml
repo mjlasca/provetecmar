@@ -1,18 +1,18 @@
-uuid: fac96f09-cb4c-44f2-838b-ff3700d2253b
+uuid: 7f6aa78c-2dee-41c9-8bc6-dbcf7c19978a
 langcode: es
 status: true
 dependencies:
   module:
     - taxonomy
-id: taxonomy_term.field_currency
-field_name: field_currency
+id: taxonomy_term.field_rfq
+field_name: field_rfq
 entity_type: taxonomy_term
 type: entity_reference
 settings:
   target_type: taxonomy_term
 module: core
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

@@ -1,0 +1,23 @@
+uuid: 6fdfaeee-c1af-472b-82cd-5f3b6fd0e268
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_cost
+    - paragraphs.paragraphs_type.items
+id: paragraph.items.field_cost
+field_name: field_cost
+entity_type: paragraph
+bundle: items
+label: 'Costo Unitario USD'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

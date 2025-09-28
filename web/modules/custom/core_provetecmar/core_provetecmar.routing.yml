@@ -13,3 +13,11 @@ core_provetecmar.get_product_for_quote:
     _title: 'Get product'
   requirements:
     _permission: 'access content'
+
+core_provetecmar.get_parameters_for_quote:
+  path: '/get-parameters'
+  defaults:
+    _controller: '\Drupal\core_provetecmar\Controller\QuoteController::getParametersQuote'
+    _title: 'Get parameters for quote'
+  requirements:
+    _permission: 'access content'    

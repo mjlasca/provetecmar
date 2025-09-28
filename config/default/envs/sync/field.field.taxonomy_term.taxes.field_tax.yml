@@ -1,0 +1,23 @@
+uuid: 321dbbb4-8ca7-4bd5-a0ad-ad6289287881
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_tax
+    - taxonomy.vocabulary.taxes
+id: taxonomy_term.taxes.field_tax
+field_name: field_tax
+entity_type: taxonomy_term
+bundle: taxes
+label: 'Impuesto (%)'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

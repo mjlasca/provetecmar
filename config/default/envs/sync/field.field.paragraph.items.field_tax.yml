@@ -1,0 +1,23 @@
+uuid: 69b464f0-e93f-4bbd-b69b-a033858a0540
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_tax
+    - paragraphs.paragraphs_type.items
+id: paragraph.items.field_tax
+field_name: field_tax
+entity_type: paragraph
+bundle: items
+label: Impuesto(%)
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

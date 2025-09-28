@@ -1,0 +1,23 @@
+uuid: 2741d575-9009-494a-8dfd-75715f415989
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_tax
+    - taxonomy.vocabulary.delivery_region
+id: taxonomy_term.delivery_region.field_tax
+field_name: field_tax
+entity_type: taxonomy_term
+bundle: delivery_region
+label: 'Impuesto (%)'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

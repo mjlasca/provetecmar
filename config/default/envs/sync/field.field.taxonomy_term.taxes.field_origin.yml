@@ -1,18 +1,18 @@
-uuid: 76ff758a-ec40-49e5-ab92-d769837bce23
+uuid: 068131b6-223c-4358-9c5f-1a99114efd87
 langcode: es
 status: true
 dependencies:
   config:
-    - field.storage.taxonomy_term.field_currency
-    - taxonomy.vocabulary.currency
-    - taxonomy.vocabulary.group_companies
-id: taxonomy_term.group_companies.field_currency
-field_name: field_currency
+    - field.storage.taxonomy_term.field_origin
+    - taxonomy.vocabulary.delivery_region
+    - taxonomy.vocabulary.taxes
+id: taxonomy_term.taxes.field_origin
+field_name: field_origin
 entity_type: taxonomy_term
-bundle: group_companies
-label: Moneda
+bundle: taxes
+label: 'Región de entrega'
 description: ''
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -20,7 +20,7 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      currency: currency
+      delivery_region: delivery_region
     sort:
       field: name
       direction: asc

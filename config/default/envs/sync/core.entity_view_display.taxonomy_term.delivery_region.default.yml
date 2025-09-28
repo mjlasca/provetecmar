@@ -1,0 +1,34 @@
+uuid: d2de44a0-8334-41d4-8a12-cb247c2b9868
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.delivery_region.field_tax
+    - taxonomy.vocabulary.delivery_region
+  module:
+    - text
+id: taxonomy_term.delivery_region.default
+targetEntityType: taxonomy_term
+bundle: delivery_region
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_tax:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  langcode: true

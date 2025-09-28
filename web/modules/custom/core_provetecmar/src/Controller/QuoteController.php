@@ -65,6 +65,27 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
   }
 
   /**
+   * Get Parameters quote
+   * @return JsonResponse
+   */
+  public function getParametersQuote() : JsonResponse {
+    $result = [];
+    $taxes = $this->entityTypeManager->getStorage('taxonomy_term')->loadByProperties([
+      'vid' => 'taxes'
+    ]);
+    if(!empty($taxes)){
+      foreach ($taxes as $k => $tax) {
+        $result['taxes'][] = [
+          'rfq' => $tax->field_rfq->target_id,
+          'region' => $tax->field_origin->target_id,
+          'tax' => $tax->field_tax->value,
+        ];
+      }
+    }
+    return new JsonResponse(['success' => true, 'data' => $result], 200);
+  }
+
+  /**
    * Get product
    * @param int $nid
    *  Id node
@@ -77,6 +98,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
       $result['weight'] = $node->field_unit_weight->value ?? 0;
       $result['cost_unit'] = $node->field_unit_cost->value ?? 0;
       $result['provider'] = $node->field_provider->target_id ?? 0;
+      $result['currency'] = $node->field_purchase_currency->target_id ?? 0;
     }
     if(!empty($result))
       return new JsonResponse(['success' => TRUE, 'product' => $result], 200);

@@ -1,14 +1,22 @@
-uuid: d30fe425-def2-4cac-a02b-0cc9a0428703
+uuid: ed655fb6-83a6-4d26-b4e0-1367d990bf7d
 langcode: es
 status: true
 dependencies:
   config:
-    - taxonomy.vocabulary.group_companies
-id: taxonomy_term.group_companies.default
+    - field.field.taxonomy_term.delivery_region.field_tax
+    - taxonomy.vocabulary.delivery_region
+id: taxonomy_term.delivery_region.default
 targetEntityType: taxonomy_term
-bundle: group_companies
+bundle: delivery_region
 mode: default
 content:
+  field_tax:
+    type: number
+    weight: 1
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   name:
     type: string_textfield
     weight: 0
@@ -19,7 +27,7 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 1
+    weight: 2
     region: content
     settings:
       display_label: true
