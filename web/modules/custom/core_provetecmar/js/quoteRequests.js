@@ -8,19 +8,33 @@
         const loaderSpin = context.querySelector('.loader-overlay');
         const totalInput = context.querySelectorAll('input[name*="[field_total]"]');
         const weightInput = context.querySelectorAll('input[name*="[field_weight_total]"]');
+        const factCost = context.querySelectorAll('[name*="field_landed_cost"]');
+        const costUnit = context.querySelectorAll('[name*="field_cost"]');
+        const vrUnit = context.querySelectorAll('[name*="field_unit_sale"]');
+        const vrTotal = context.querySelectorAll('[name*="field_total_sale"]');
+        const factSale = context.querySelectorAll('[name*="field_sale_factor"]');
+        const taxCo = context.querySelectorAll('[name*="field_tax"]');
 
-        totalInput.forEach(input => {
-            input.readOnly = true;
-        });
-
-        weightInput.forEach(input => {
-            input.readOnly = true;
-        });
+        setReadOnly(totalInput);
+        setReadOnly(weightInput);
+        setReadOnly(factCost);
+        setReadOnly(costUnit);
+        setReadOnly(vrUnit);
+        setReadOnly(vrTotal);
+        setReadOnly(factSale);
+        setReadOnly(taxCo);
 
         if(buttonSend){
             buttonSend.addEventListener('click', function(){
                 sendRequests.click();
             });
+        }
+        function setReadOnly(content) {
+            if(content){
+                content.forEach(element => {
+                    element.readOnly = true;        
+                });
+            }
         }
         function checks(content) {
             const lines = content.querySelectorAll('.form-checkbox');

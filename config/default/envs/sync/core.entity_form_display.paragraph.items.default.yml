@@ -18,10 +18,13 @@ dependencies:
     - field.field.paragraph.items.field_margin
     - field.field.paragraph.items.field_product
     - field.field.paragraph.items.field_qty
+    - field.field.paragraph.items.field_sale_factor
     - field.field.paragraph.items.field_shipping_method
     - field.field.paragraph.items.field_tax
     - field.field.paragraph.items.field_total
     - field.field.paragraph.items.field_total_cost
+    - field.field.paragraph.items.field_total_sale
+    - field.field.paragraph.items.field_unit_sale
     - field.field.paragraph.items.field_weight_total
     - paragraphs.paragraphs_type.items
   module:
@@ -73,6 +76,33 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: 'quote-container quote-hide'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+    group_div_sale:
+      children:
+        - field_cost
+        - field_total_cost
+        - field_tax
+        - field_landed_cost
+        - field_unit_sale
+        - field_total_sale
+        - field_sale_factor
+      label: data-sale
+      region: content
+      parent_name: ''
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: quote-sale
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -137,7 +167,7 @@ content:
     third_party_settings: {  }
   field_cost:
     type: number
-    weight: 18
+    weight: 3
     region: content
     settings:
       placeholder: ''
@@ -164,7 +194,7 @@ content:
     third_party_settings: {  }
   field_landed_cost:
     type: number
-    weight: 21
+    weight: 6
     region: content
     settings:
       placeholder: ''
@@ -192,6 +222,13 @@ content:
     settings:
       placeholder: ''
     third_party_settings: {  }
+  field_sale_factor:
+    type: number
+    weight: 9
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   field_shipping_method:
     type: options_select
     weight: 13
@@ -200,7 +237,7 @@ content:
     third_party_settings: {  }
   field_tax:
     type: number
-    weight: 20
+    weight: 5
     region: content
     settings:
       placeholder: ''
@@ -214,7 +251,21 @@ content:
     third_party_settings: {  }
   field_total_cost:
     type: number
-    weight: 19
+    weight: 4
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_total_sale:
+    type: number
+    weight: 8
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_unit_sale:
+    type: number
+    weight: 7
     region: content
     settings:
       placeholder: ''

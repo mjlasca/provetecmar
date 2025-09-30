@@ -1,12 +1,12 @@
-uuid: 901c2f2a-01ab-41df-bdd0-3c91294c1f2e
+uuid: cfde6767-e13d-4912-912d-f61d6d387960
 langcode: es
 status: true
 dependencies:
   module:
-    - taxonomy
-id: taxonomy_term.field_cost
-field_name: field_cost
-entity_type: taxonomy_term
+    - paragraphs
+id: paragraph.field_sale_factor
+field_name: field_sale_factor
+entity_type: paragraph
 type: decimal
 settings:
   precision: 10

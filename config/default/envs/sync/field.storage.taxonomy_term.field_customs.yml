@@ -1,11 +1,11 @@
-uuid: 901c2f2a-01ab-41df-bdd0-3c91294c1f2e
+uuid: 78448367-bc13-4f97-a67f-836fd2caab2f
 langcode: es
 status: true
 dependencies:
   module:
     - taxonomy
-id: taxonomy_term.field_cost
-field_name: field_cost
+id: taxonomy_term.field_customs
+field_name: field_customs
 entity_type: taxonomy_term
 type: decimal
 settings:

@@ -1,0 +1,23 @@
+uuid: bfc59e28-72a6-44d1-a070-17c66d2174fe
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_customs
+    - taxonomy.vocabulary.container_delivery
+id: taxonomy_term.container_delivery.field_customs
+field_name: field_customs
+entity_type: taxonomy_term
+bundle: container_delivery
+label: Aduana
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

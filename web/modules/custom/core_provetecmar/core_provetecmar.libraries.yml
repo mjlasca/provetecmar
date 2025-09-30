@@ -18,4 +18,14 @@ quote:
       - core/drupal        
   css:
     theme:
-      js/process/dist/assets/app.css: {}        
+      js/process/dist/assets/app.css: {}
+
+quote_node:
+  js:
+    js/quote.js:
+      minified: true
+      attributes:
+        defer: true
+    dependencies:
+      - core/jquery
+      - core/drupal        

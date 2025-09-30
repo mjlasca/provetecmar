@@ -1,0 +1,31 @@
+uuid: 603ba17c-b0a8-4232-8d2c-5dd303f1bdaf
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.shipping_method.field_type_delivery
+    - taxonomy.vocabulary.shipping_method
+  module:
+    - options
+    - text
+id: taxonomy_term.shipping_method.default
+targetEntityType: taxonomy_term
+bundle: shipping_method
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_type_delivery:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  langcode: true

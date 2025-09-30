@@ -1,15 +1,15 @@
-uuid: 768c1e01-b81e-48b9-9026-9da81ce69b8a
+uuid: a42fad2f-194f-4f6c-af48-508e223a9bda
 langcode: es
 status: true
 dependencies:
   config:
-    - field.storage.taxonomy_term.field_cost
+    - field.storage.taxonomy_term.field_customs
     - taxonomy.vocabulary.shipping_cost_origin
-id: taxonomy_term.shipping_cost_origin.field_cost
-field_name: field_cost
+id: taxonomy_term.shipping_cost_origin.field_customs
+field_name: field_customs
 entity_type: taxonomy_term
 bundle: shipping_cost_origin
-label: Costo
+label: Aduana
 description: ''
 required: false
 translatable: false

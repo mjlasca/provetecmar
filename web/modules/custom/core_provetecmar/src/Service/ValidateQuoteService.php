@@ -9,10 +9,6 @@ use Drupal\file\FileRepositoryInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Core\File\FileSystemInterface;
-use Drupal\paragraphs\Entity\Paragraph;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-
-
 
 /**
  * Validate quote content type

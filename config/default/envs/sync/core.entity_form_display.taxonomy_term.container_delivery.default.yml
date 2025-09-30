@@ -1,0 +1,38 @@
+uuid: a0607aad-3c21-484e-9675-c70d69dfa7c4
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.container_delivery.field_customs
+    - taxonomy.vocabulary.container_delivery
+id: taxonomy_term.container_delivery.default
+targetEntityType: taxonomy_term
+bundle: container_delivery
+mode: default
+content:
+  field_customs:
+    type: number
+    weight: 1
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 2
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+hidden:
+  description: true
+  langcode: true
+  path: true

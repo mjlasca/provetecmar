@@ -1,0 +1,21 @@
+uuid: 74db898b-0bd7-444c-8a9b-9b24fb01465a
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_type_delivery
+    - taxonomy.vocabulary.shipping_method
+  module:
+    - options
+id: taxonomy_term.shipping_method.field_type_delivery
+field_name: field_type_delivery
+entity_type: taxonomy_term
+bundle: shipping_method
+label: Tipo
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

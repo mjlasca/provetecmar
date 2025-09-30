@@ -1,0 +1,22 @@
+uuid: b3013c86-d122-4bd0-ae27-6ef065952745
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.container_type
+  module:
+    - text
+id: taxonomy_term.container_type.default
+targetEntityType: taxonomy_term
+bundle: container_type
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  langcode: true

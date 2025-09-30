@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.taxonomy_term.shipping_cost_origin.field_cost
+    - field.field.taxonomy_term.shipping_cost_origin.field_customs
     - field.field.taxonomy_term.shipping_cost_origin.field_destination
     - field.field.taxonomy_term.shipping_cost_origin.field_dimension
     - field.field.taxonomy_term.shipping_cost_origin.field_origin
@@ -16,32 +17,39 @@ mode: default
 content:
   field_cost:
     type: number
-    weight: 30
+    weight: 4
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_customs:
+    type: number
+    weight: 6
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_destination:
     type: options_select
-    weight: 28
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   field_dimension:
     type: options_select
-    weight: 29
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
   field_origin:
     type: options_select
-    weight: 27
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
   field_shipping_method:
     type: options_select
-    weight: 26
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -55,7 +63,7 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 1
+    weight: 7
     region: content
     settings:
       display_label: true

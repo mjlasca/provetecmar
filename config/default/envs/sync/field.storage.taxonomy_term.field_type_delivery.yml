@@ -1,0 +1,30 @@
+uuid: 4e196106-ec4e-41c7-8420-5c2fbce5ceb5
+langcode: es
+status: true
+dependencies:
+  module:
+    - options
+    - taxonomy
+id: taxonomy_term.field_type_delivery
+field_name: field_type_delivery
+entity_type: taxonomy_term
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: aer
+      label: AER
+    -
+      value: mar
+      label: MAR
+    -
+      value: loc
+      label: LOC
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

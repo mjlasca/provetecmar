@@ -5,9 +5,6 @@
  * Primary module hooks for My Admin Styles module.
  */
 
-use Drupal\Core\Asset\AttachedAssetsInterface;
-use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\core_provetecmar\Controller\QuoteController;
 use Drupal\Core\Render\Markup;
 
 /**
@@ -41,7 +38,22 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
             'shipping_method' => $term->field_shipping_method->target_id,
             'origin' => $term->field_origin->target_id,
             'dimension' => $term->field_dimension->target_id,
-            'cost' => $term->field_cost->value
+            'cost' => $term->field_cost->value,
+            'customs' => $term->field_customs->value,
+            'type_delivery' => $term->field_shipping_method->entity->field_type_delivery->value ?? null
+          ];
+        }
+      }
+
+      $container_delivery = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
+        'vid' => 'container_delivery'
+      ]);
+      if(!empty($container_delivery)){
+        foreach ($container_delivery as $k => $term) {
+          $settings['container_delivery'][] = [
+            'name' => $term->name->value,
+            'shipping_method' => $term->field_customs->value,
+            'tid' => $term->tid->value
           ];
         }
       }
@@ -51,14 +63,29 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
           if (!empty($paragraph_item['subform']['field_product']['widget'][0]['target_id']['#default_value'])) {
             $node = $paragraph_item['subform']['field_product']['widget'][0]['target_id']['#default_value'];
             $nid = $node->id();
+         
             if(
               $node->field_unit_weight->value != 0 &&
               $node->field_unit_cost->value != 0 &&
               $node->field_provider->target_id != ''
             ){
-              $settings['quote_settings'][] = ['nid' => $nid, 'class' => 'product-success'];
+              $settings['quote_settings'][] = [
+                'nid' => $nid,
+                'class' => 'product-success',
+                'currency' => [
+                    'tid' => $node->field_purchase_currency->target_id ?? 0,
+                    'cost' => $paragraph_item['subform']['field_total']['widget'][0]['target_id']['#default_value'] ?? 0
+                  ]
+              ];
             }else{
-              $settings['quote_settings'][] = ['nid' => $nid, 'class' => 'product-warning'];
+              $settings['quote_settings'][] = [
+                'nid' => $nid,
+                'class' => 'product-warning',
+                'currency' => [
+                    'tid' => $node->field_purchase_currency->target_id ?? 0,
+                    'cost' => $paragraph_item['subform']['field_total']['widget'][0]['target_id']['#default_value'] ?? 0
+                  ]
+              ];
             }
             $paragraph_item['#attributes']['class'][] = 'valid-'.$nid;
             $paragraph_item['#attributes']['class'][] = 'product-part';
@@ -68,7 +95,7 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
         }
       }
     }
-    $form['field_requests_send']['widget']['#prefix'] = '<div class="loader-overlay" style="display:none;"><div class="spinner"></div></div><a id="send-request" href="#" class="button js-form-submit form-submit">Enviar Solicitudes</a>';
+    $form['field_requests_send']['widget']['#prefix'] = '<div class="loader-overlay" style="display:none;"><div class="spinner"></div></div>';
     $form['actions']['submit']['#validate'][] = '_quote_validation_custom';
     $form['actions']['submit']['#submit'][] = '_quote_submit_custom';
     $form['#attached']['drupalSettings'] = $settings;

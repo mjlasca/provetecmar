@@ -1,0 +1,34 @@
+uuid: ea76358b-1a85-4070-9b77-ef8535682b37
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.container_delivery.field_customs
+    - taxonomy.vocabulary.container_delivery
+  module:
+    - text
+id: taxonomy_term.container_delivery.default
+targetEntityType: taxonomy_term
+bundle: container_delivery
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_customs:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  langcode: true
