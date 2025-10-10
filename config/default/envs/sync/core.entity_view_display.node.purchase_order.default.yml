@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.purchase_order.field_description
     - field.field.node.purchase_order.field_products
     - field.field.node.purchase_order.field_provider
+    - field.field.node.purchase_order.field_quote
     - field.field.node.purchase_order.field_quoter
     - node.type.purchase_order
   module:
@@ -44,6 +45,14 @@ content:
       link: true
     third_party_settings: {  }
     weight: 101
+    region: content
+  field_quote:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 102
     region: content
   field_quoter:
     type: entity_reference_label

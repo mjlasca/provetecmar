@@ -21,4 +21,4 @@ services:
 
   core_provetecmar.quote_create_purchase:
     class: Drupal\core_provetecmar\Service\CreatePurchaseOrderService
-    arguments: []
+    arguments: ['@entity_type.manager']

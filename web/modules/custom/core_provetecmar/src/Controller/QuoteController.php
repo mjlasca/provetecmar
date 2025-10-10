@@ -75,10 +75,8 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     $this->mailer = $mailer;
     $this->languageManager = $language_manager;
     $this->entityTypeManager = $entityTypeManager;
-    $this->renderer = $renderer;
-    $this->fileSystem = $file_system;
     $this->messenger = $messenger;
-    $this->$createPurchaseService = $createPurchaseService;
+    $this->createPurchaseService = $createPurchaseService;
   }
 
   public static function create(ContainerInterface $container) {
@@ -244,14 +242,18 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
   function generatePurchase(int $nid) : RedirectResponse {
     $node = $this->entityTypeManager->getStorage('node')->load($nid);
     $response = new RedirectResponse("/node/{$node->nid->value}");
+    $msg = 'No se ha podido crear las órdenes de compra';
     if(!empty($node)){
       $res = $this->createPurchaseService->createPurchase($node);
-      if($res){
+      $msg = $res['msg'];
+      if($res['success']){
+        $this->messenger->addMessage("Se han creado las órdenes de compra de la cotización");
         $response = new RedirectResponse("/node/{$node->nid->value}");
-         $this->messenger->addMessage("Se ha creado las órdenes de compra de la cotización");
+      }
+      else{
+        $this->messenger->addError($msg);
       }
     }
-    $this->messenger->addError('No se ha podido crear las órdenes de compra');
     $response->send();
     return $response;
   }

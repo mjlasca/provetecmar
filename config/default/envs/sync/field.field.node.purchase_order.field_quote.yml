@@ -1,0 +1,29 @@
+uuid: 4ca1ea49-b393-492f-9a16-ce6fba7867bc
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_quote
+    - node.type.purchase_order
+    - node.type.quote
+id: node.purchase_order.field_quote
+field_name: field_quote
+entity_type: node
+bundle: purchase_order
+label: Cotización
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      quote: quote
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1417,7 +1417,7 @@ display:
           exposed: true
           expose:
             operator_id: field_quoter_target_id_op
-            label: 'Asignado a (field_quoter)'
+            label: 'Asignado a'
             description: ''
             use_operator: false
             operator: field_quoter_target_id_op
