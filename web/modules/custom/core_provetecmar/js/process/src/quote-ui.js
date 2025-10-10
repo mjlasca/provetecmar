@@ -119,39 +119,26 @@ export class QuoteUi {
                     `;
             }
         });
-        params.innerHTML = `<div class="quote-parameters--bar">
+        params.innerHTML = `<div class="parameters-body">
                         
                         <div class="bar-left">
                             <div class="total-trm">${trms}</div>
                             <div class="quote-parameters--totals">
                                 <div class="total-quote">
-                                    <p class="span-left"><b>TOTAL COSTO</b></p><p class="span-right">${ data.totals.cost ?? 0 } USD</p>
+                                    <p class="span-left"><b>TOTAL COSTO: </b></p><p class="span-right">${ data.totals.cost ?? 0 } USD</p>
                                 </div>
                                 <div class="total-quote">
-                                    <p class="span-left"><b>PESO TOTAL</b></p><p class="span-right">${ data.totals.weight ?? 0 } kg</p>
+                                    <p class="span-left"><b>PESO TOTAL: </b></p><p class="span-right">${ data.totals.weight ?? 0 } kg</p>
                                 </div>
                                 <div class="total-quote">
-                                    <p class="span-left"><b>TOTAL COTIZADO</b></p><p class="span-right">${ data.totals.total ?? 0 } USD</p>
+                                    <p class="span-left"><b>TOTAL COTIZADO: </b></p><p class="span-right">${ data.totals.total ?? 0 } USD</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="bar-right">
-                            <label for="toggle-sidebar" class="toggle-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-                                <polyline points="15 18 9 12 15 6" fill="none" stroke="currentColor" stroke-width="2"/>
-                                </svg>
-                            </label>
                         </div>
                     </div>
                     `;
 
-        const barSvg = params.querySelector(
-            ".quote-parameters--bar .toggle-btn"
-        );
-        this.collapseBar(params.querySelector(".quote-parameters--bar"));
-        barSvg.addEventListener("click", () => {
-            this.collapseBar(params.querySelector(".quote-parameters--bar"));
-        });
+       
     }
     
   }

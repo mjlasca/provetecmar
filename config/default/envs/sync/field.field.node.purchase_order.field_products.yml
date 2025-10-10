@@ -1,0 +1,31 @@
+uuid: 39d15e09-b73a-42a8-9d8c-fd9758a68fb6
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_products
+    - node.type.purchase_order
+    - paragraphs.paragraphs_type.items
+  module:
+    - entity_reference_revisions
+id: node.purchase_order.field_products
+field_name: field_products
+entity_type: node
+bundle: purchase_order
+label: Insumos
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      items: items
+    negate: 0
+    target_bundles_drag_drop:
+      items:
+        weight: 2
+        enabled: true
+field_type: entity_reference_revisions

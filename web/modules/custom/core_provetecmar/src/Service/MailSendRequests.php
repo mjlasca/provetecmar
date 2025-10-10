@@ -133,10 +133,10 @@ class MailSendRequests {
                   'uid' => $this->currentUser->id(),
                 ]);
         $mailLog->save();*/
-      }else{
-
       }
     }
+    if(!empty($pdfPath))
+      unlink($pdfPath);
     return true;
   }
 }

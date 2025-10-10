@@ -1,0 +1,25 @@
+uuid: 0a6be0a1-c892-450f-b499-e762fb576158
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_quoter
+    - node.type.purchase_order
+id: node.purchase_order.field_quoter
+field_name: field_quoter
+entity_type: node
+bundle: purchase_order
+label: 'Cotizado por'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: user_references
+      display_name: entity_reference_1
+      arguments: {  }
+field_type: entity_reference

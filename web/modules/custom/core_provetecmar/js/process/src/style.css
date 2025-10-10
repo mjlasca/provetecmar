@@ -29,25 +29,33 @@
 .quote-parameters {
   position: fixed;
   left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 9999;
-  background: #fff;
-  padding: 10px 15px;
-  border-radius: 0 8px 8px 0;
+  bottom: 0;
+  z-index: 2;
+  background: #ffffff6c;
+  border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .quote-parameters .total-quote {
   background-color: #00ffff2b;
-  line-height: 0.5;
-  padding: 10px 5px 0px 5px;
+  line-height: 1;
   border: 1px solid #eee;
 }
 
 .total-quote,
 .total-trm {
   text-align: right;
+  display: flex;
+  gap: 10px;
+  padding: 0px 5px;
+}
+
+.quote-parameters--totals{
+  display: flex;
+  gap:5px;
 }
 
 .toggle-btn {

@@ -42,6 +42,11 @@
     padding-right: 25px;
 }
 
+.provetecmar .purchase-header--number{
+    text-align: left;
+    margin-top: 20px;
+}
+
 .provetecmar .quote-header{
     max-width: 550px;
 }
@@ -151,13 +156,39 @@
 
 .quote-actions a{
     background-color: rgb(255 199 0);
-    padding: 5px 2px 0px 2px;
-    border-radius: 20px;
+    padding: 5px;
+    border-radius: 10px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.quote-actions a:hover{
+    background-color: #000;
+}
+
+.quote-actions a:hover svg{
+    fill: #fff;
 }
 
 .quote-actions svg{
-    max-width: 25px;
-    max-height: 25px;
+    max-width: 20px;
+    max-height: 20px;
+}
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    background-color: #eeeeee42;
+    z-index:99;
+    padding:1.5rem;
+}
+
+.modal-hide{
+    display: none;
 }
 
 @keyframes spin {

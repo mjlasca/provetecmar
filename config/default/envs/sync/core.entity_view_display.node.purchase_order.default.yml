@@ -1,0 +1,62 @@
+uuid: 12a12827-bc9f-4684-84de-8a313d863f39
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.node.purchase_order.field_description
+    - field.field.node.purchase_order.field_products
+    - field.field.node.purchase_order.field_provider
+    - field.field.node.purchase_order.field_quoter
+    - node.type.purchase_order
+  module:
+    - entity_reference_revisions
+    - user
+id: node.purchase_order.default
+targetEntityType: node
+bundle: purchase_order
+mode: default
+content:
+  content_moderation_control:
+    settings: {  }
+    third_party_settings: {  }
+    weight: -20
+    region: content
+  field_description:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_products:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_provider:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_quoter:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 111
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

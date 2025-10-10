@@ -28,4 +28,14 @@ quote_node:
         defer: true
     dependencies:
       - core/jquery
-      - core/drupal        
+      - core/drupal
+
+purchase_order_node:
+  js:
+    js/purchase-order.js:
+      minified: true
+      attributes:
+        defer: true
+    dependencies:
+      - core/jquery
+      - core/drupal

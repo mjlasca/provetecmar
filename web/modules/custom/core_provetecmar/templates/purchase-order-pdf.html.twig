@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Orden de Compra</title>
+  <style>
+    html, body { 
+      margin:0 !important; 
+      padding:0 !important; 
+      height:100% !important; 
+      width:95% !important; 
+      font-family: DejaVu Sans, sans-serif;
+      font-size: 12px;
+      mso-line-height-rule:exactly;
+    }
+
+    header {
+      position: fixed;
+      top: -60px;  /* distancia desde el borde del papel */
+      left: 0;
+      right: 0;
+      text-align: center;
+    }
+
+    .logo img {
+      width: 100%;
+    }
+
+    content{
+      display: flex;
+      justify-content: center;
+    }
+
+    content > div{
+      margin-left: 30px;
+      margin-top: 150px;
+    }
+
+    .title-section {
+      text-align: left;
+      padding: 20px;
+    }
+
+    .title-section h1 {
+      font-size: 34px;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .title-section .number {
+      font-size: 14px;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .meta {
+      padding: 0 20px 20px 20px;
+      font-size: 12px;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+      padding: 8px;
+      vertical-align: top;
+    }
+
+    .table th {
+      background: #f3f3f3;
+      text-align: center;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .item-title {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    
+    footer {
+      position: fixed;
+      bottom: -10px;
+      left: 0;
+      right: 0;
+      border-top: 1px solid #ccc;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .footer {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 15px 20px;
+      font-size: 11px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .total-row td {
+      font-weight: bold;
+    }
+
+    .highlight {
+      color: #fdd000;
+    }
+
+    
+
+  </style>
+</head>
+<body>
+
+  <!-- Encabezado -->
+  <header class="header">
+    <div class="logo">
+      <img src="{{ data.base64Logo }}" alt="Logo">
+    </div>
+  </header>
+
+  <content>
+    <div>
+        <!-- Título de Orden de Compra -->
+        <div class="title-section">
+          <h1>Orden de Compra</h1>
+          <div class="number">No. {{ data.nid }}</div>
+        </div>
+
+        <!-- Datos cliente -->
+        <div class="meta">
+          <div>Fecha: {{ data.date }}</div>
+          <div>Proveedor: <strong>{{ data.provider }}</strong></div>
+        </div>
+
+        <!-- Tabla de productos -->
+        <table class="table" style="border:0px;">
+          <thead>
+            <tr>
+              <th style="width:60%;text-align:left">Título OC</th>
+              <th style="width:20%">Cant./Unidad</th>
+              <th style="width:20%">Precio</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in data.items %}
+              <tr style="border-top:solid 1px #ddd;">
+                <td style="border-right:solid 1px #ddd;">
+                  <div class="item-title">{{ item.title }}</div>
+                  <div>{{ item.description }}</div>
+                </td>
+                <td style="text-align:center; border-right:solid 1px #ddd;">{{ item.cant }} / {{ item.unit }}</td>
+                <td style="text-align:right;">{{ item.price }}</td>
+              </tr>
+            {% endfor %}
+            <tr class="total-row" style="font-size:16px;">
+              <td colspan="2" >TOTAL</td>
+              <td style="text-align:right;">{{ data.total }}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </content>
+  
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer">
+      <div class="left"> Cra 44 #20-30 Bogotá - Colombia
+      </div>
+      <div class="right">
+        <span class="highlight">correo@provetecmar.com</span><br>
+        <span class="highlight">+57 320 256 3263</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

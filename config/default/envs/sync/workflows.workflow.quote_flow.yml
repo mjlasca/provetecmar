@@ -53,7 +53,6 @@ type_settings:
       label: 'Dejar sin asignar'
       from:
         - draft
-        - published
       to: draft
       weight: 0
     draft_assignment:
@@ -80,6 +79,18 @@ type_settings:
         - price_change
       to: price_change
       weight: 10
+    purchase_order_to_purchase:
+      label: 'Mantener en orden de compra'
+      from:
+        - published
+      to: published
+      weight: 11
+    purchase_order_to_purchase_offer:
+      label: 'Orden de compra a oferta lista'
+      from:
+        - published
+      to: offer_ready
+      weight: 12
     quitar_asignacion:
       label: 'Quitar asignación'
       from:

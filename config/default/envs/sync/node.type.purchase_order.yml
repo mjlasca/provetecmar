@@ -1,0 +1,17 @@
+uuid: d26c5595-ca17-41eb-9b34-9dde1ddc5430
+langcode: es
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: 'Orden de compra'
+type: purchase_order
+description: 'Tipo de contenido para el registro de órdenes de compra'
+help: null
+new_revision: false
+preview_mode: 1
+display_submitted: false

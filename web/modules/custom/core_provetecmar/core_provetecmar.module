@@ -196,6 +196,26 @@ function core_provetecmar_theme($existing, $type, $theme, $path) {
         'items' => [],
       ],
     ],
+    'quote_pdf' => [
+      'variables' => [
+        'data' => NULL,
+        'items' => [],
+      ],
+    ],
+    'node__purchase_order' => [
+      'variables' => [
+        'render element' => 'elements',
+        'base hook' => 'node',
+        'template' => 'node--purchase-order',
+        'path' => \Drupal::service('extension.list.module')->getPath('core_provetecmar') . '/templates',
+      ],
+    ],
+    'purchase_order_pdf' => [
+      'variables' => [
+        'data' => NULL,
+        'items' => [],
+      ],
+    ],
   ];
 }
 

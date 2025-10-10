@@ -1,0 +1,29 @@
+uuid: fa4b84b5-f420-4bb0-8ac6-5abaf2cccd33
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_provider
+    - node.type.provider
+    - node.type.purchase_order
+id: node.purchase_order.field_provider
+field_name: field_provider
+entity_type: node
+bundle: purchase_order
+label: Proveedor
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      provider: provider
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

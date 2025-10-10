@@ -17,12 +17,11 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\File\FileSystemInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\Core\Messenger\MessengerInterface;
-use Drupal\core_provetecmar\Service\CreatePurchaseOrderService;
 
 /**
  * Controller for feature quote's
  */
-class QuoteController extends ControllerBase implements ContainerInjectionInterface {
+class PurchaseOrderController extends ControllerBase implements ContainerInjectionInterface {
 
   /**
    * Drupal\Core\Render\RendererInterface;
@@ -54,13 +53,6 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
    */
   protected $messenger;  
 
-  /**
-   * Service createPurchase
-   *
-   * @var Drupal\core_provetecmar\Service\CreatePurchaseOrderService
-   */
-  protected $createPurchaseService;  
-
 
   public function __construct(
     MailerProv $mailer,
@@ -68,9 +60,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     EntityTypeManagerInterface $entityTypeManager,
     RendererInterface $renderer,
     FileSystemInterface $file_system,
-    MessengerInterface $messenger,
-    CreatePurchaseOrderService $createPurchaseService
-
+    MessengerInterface $messenger
     ) {
     $this->mailer = $mailer;
     $this->languageManager = $language_manager;
@@ -78,7 +68,6 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     $this->renderer = $renderer;
     $this->fileSystem = $file_system;
     $this->messenger = $messenger;
-    $this->$createPurchaseService = $createPurchaseService;
   }
 
   public static function create(ContainerInterface $container) {
@@ -88,69 +77,9 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
       $container->get('entity_type.manager'),
       $container->get('renderer'),
       $container->get('file_system'),
-      $container->get('messenger'),
-      $container->get('core_provetecmar.quote_create_purchase')
-    );
-  }
-
-  /**
-   * Send mail requests
-   * @param array $items
-   * @return array $results
-   */
-  public function sendMailRequests($items) : array {
-    $result = ['success' => false];
-    foreach ($items as $key => $item) {
+      $container->get('messenger')
       
-    }
-    if($this->mailer->sendMail(
-      'mjlasca@gmail.com',
-      'Saludo desde controller',
-      '<div><h1>Hola si</h1></div>',
-    )){
-    }
-    return $result;
-  }
-
-  /**
-   * Get Parameters quote
-   * @return JsonResponse
-   */
-  public function getParametersQuote() : JsonResponse {
-    $result = [];
-    $taxes = $this->entityTypeManager->getStorage('taxonomy_term')->loadByProperties([
-      'vid' => 'taxes'
-    ]);
-    if(!empty($taxes)){
-      foreach ($taxes as $k => $tax) {
-        $result['taxes'][] = [
-          'rfq' => $tax->field_rfq->target_id,
-          'region' => $tax->field_origin->target_id,
-          'tax' => $tax->field_tax->value,
-        ];
-      }
-    }
-    return new JsonResponse(['success' => true, 'data' => $result], 200);
-  }
-
-  /**
-   * Get product
-   * @param int $nid
-   *  Id node
-   * @return JsonResponse / RedirectResponse;
-   */
-  public function getProduct($nid) : mixed {
-    $node = $this->entityTypeManager->getStorage('node')->load($nid);
-    $result = [];
-    if(!empty($node)){
-      $result['weight'] = $node->field_unit_weight->value ?? 0;
-      $result['cost_unit'] = $node->field_unit_cost->value ?? 0;
-      $result['provider'] = $node->field_provider->target_id ?? 0;
-      $result['currency'] = $node->field_purchase_currency->target_id ?? 0;
-    }
-    if(!empty($result))
-      return new JsonResponse(['success' => TRUE, 'product' => $result], 200);
-    return new JsonResponse(['success' => 'invalid request method'], 400);
+    );
   }
 
   /**
@@ -186,11 +115,11 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     $base64Logo = 'data:image/jpeg;base64,' . base64_encode(file_get_contents("$base_path/assets/banner-provetecmar.jpg"));
 
     $build = [
-      '#theme' => 'quote_pdf',
+      '#theme' => 'purchase_order_pdf',
       '#data' => [
         'nid' => $node->nid->value,
         'date' => $date,
-        'client' => $node->field_customer->entity->title->value,
+        'provider' => $node->field_provider->entity->title->value,
         'items' => $items,
         'total' => $total,
         'base64Logo' => $base64Logo
@@ -211,18 +140,18 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
 
     
     if($return == 'mail'){
-      $pdfPath = 'public://cotización-' . $node->nid->value . '.pdf';
+      $pdfPath = 'public://Orden-de-compra-' . $node->nid->value . '.pdf';
       file_put_contents($this->fileSystem->realpath($pdfPath), $pdfContent);
       $attach = [
         'filepath' => $pdfPath,
-        'filename' => 'Cotización-' . $node->nid->value . '.pdf',
+        'filename' => 'Orden de compra-' . $node->nid->value . '.pdf',
         'filemime' => 'application/pdf',
       ];
-      $to = $node->field_customer->entity->field_email->value;
+      $to = $node->field_provider->entity->field_email->value;
 
-      if($this->mailer->sendMail($to, "Cotización-{$node->nid->value}", $htmlPdf, $attach)){
+      if($this->mailer->sendMail($to, "Orden de compra-{$node->nid->value}", $htmlPdf, $attach)){
         $response = new RedirectResponse("/node/{$node->nid->value}");
-         $this->messenger->addMessage("Se ha enviado PDF de cotización correctamente a {$to}");
+         $this->messenger->addMessage("Se ha enviado PDF de Orden de Compra correctamente a {$to}");
         $response->send();
       }
         
@@ -235,24 +164,4 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     return $response;
   }
 
-  /**
-   * Generate Purchase
-   * @param int $nid
-   *  Id node quote
-   * @return RedirectResponse
-   */
-  function generatePurchase(int $nid) : RedirectResponse {
-    $node = $this->entityTypeManager->getStorage('node')->load($nid);
-    $response = new RedirectResponse("/node/{$node->nid->value}");
-    if(!empty($node)){
-      $res = $this->createPurchaseService->createPurchase($node);
-      if($res){
-        $response = new RedirectResponse("/node/{$node->nid->value}");
-         $this->messenger->addMessage("Se ha creado las órdenes de compra de la cotización");
-      }
-    }
-    $this->messenger->addError('No se ha podido crear las órdenes de compra');
-    $response->send();
-    return $response;
-  }
 }

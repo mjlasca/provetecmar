@@ -20,4 +20,29 @@ core_provetecmar.get_parameters_for_quote:
     _controller: '\Drupal\core_provetecmar\Controller\QuoteController::getParametersQuote'
     _title: 'Get parameters for quote'
   requirements:
+    _permission: 'access content'
+
+core_provetecmar.quote_download_pdf:
+  path: '/quote/download/{nid}/{return}'
+  defaults:
+    _controller: '\Drupal\core_provetecmar\Controller\QuoteController::download'
+    _title: 'Download quote'
+  requirements:
+    _permission: 'access content'
+
+core_provetecmar.purchase_download_pdf:
+  path: '/purchase-order/download/{nid}/{return}'
+  defaults:
+    _controller: '\Drupal\core_provetecmar\Controller\PurchaseOrderController::download'
+    _title: 'Download purchase order'
+  requirements:
     _permission: 'access content'    
+
+core_provetecmar.quote_create_purchase:
+  path: '/quote/purchase-order/{nid}'
+  defaults:
+    _controller: '\Drupal\core_provetecmar\Controller\QuoteController::generatePurchase'
+    _title: 'Generate purchase order'
+  requirements:
+    _permission: 'access content'    
+    
