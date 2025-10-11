@@ -18,6 +18,9 @@ use Drupal\Core\File\FileSystemInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\core_provetecmar\Service\CreatePurchaseOrderService;
+use Drupal\core_provetecmar\Service\MailSendRequests;
+use Symfony\Component\HttpFoundation\Request;
+
 
 /**
  * Controller for feature quote's
@@ -57,9 +60,16 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
   /**
    * Service createPurchase
    *
-   * @var Drupal\core_provetecmar\Service\CreatePurchaseOrderService
+   * @var \Drupal\core_provetecmar\Service\CreatePurchaseOrderService
    */
   protected $createPurchaseService;  
+
+  /**
+   * Service send requests
+   * 
+   * @var \Drupal\core_provetecmar\Service\MailSendRequests;
+   */
+  protected $mailSendRequests;
 
 
   public function __construct(
@@ -69,14 +79,15 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     RendererInterface $renderer,
     FileSystemInterface $file_system,
     MessengerInterface $messenger,
-    CreatePurchaseOrderService $createPurchaseService
-
+    CreatePurchaseOrderService $createPurchaseService,
+    MailSendRequests $mailSendRequests,
     ) {
     $this->mailer = $mailer;
     $this->languageManager = $language_manager;
     $this->entityTypeManager = $entityTypeManager;
     $this->messenger = $messenger;
     $this->createPurchaseService = $createPurchaseService;
+    $this->mailSendRequests = $mailSendRequests;
   }
 
   public static function create(ContainerInterface $container) {
@@ -87,7 +98,8 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
       $container->get('renderer'),
       $container->get('file_system'),
       $container->get('messenger'),
-      $container->get('core_provetecmar.quote_create_purchase')
+      $container->get('core_provetecmar.quote_create_purchase'),
+      $container->get('core_provetecmar.mailsendrequest'),
     );
   }
 
@@ -256,5 +268,19 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     }
     $response->send();
     return $response;
+  }
+
+  /**
+   * Send requests
+   * @return Response
+   */
+  function sendRequests(Request $req) : JsonResponse {
+    $data = json_decode($req->getContent(), TRUE);
+    if(empty($data['providers']) || empty($data['products']) || empty($data['node']))
+      return new JsonResponse(['msg' => 'Algunos de los datos esenciales está vacío'], 400);
+    $res = $this->mailSendRequests->proccess($data);
+    if($res['success'])
+      return new JsonResponse(['success' => $res['success'], 'msg' => $res['msg']], 200);
+    return new JsonResponse(['msg' => $res['msg']], 500);
   }
 }

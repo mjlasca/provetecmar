@@ -2,7 +2,7 @@
  * Class for ui quote
  */
 export class QuoteUi {
-  constructor(settings) {
+  constructor(settings = null) {
     this.settings = settings.quote_settings ?? [];
     this.parameters = settings.parameters ?? [];
   }
@@ -70,6 +70,7 @@ export class QuoteUi {
 
   succesWarning(context) {
     Object.values(this.settings).forEach((el) => {
+      console.log(`.valid-${el.nid}`);
       if (context.querySelector(`.valid-${el.nid}`)) {
         context
           .querySelector(`.valid-${el.nid}`)

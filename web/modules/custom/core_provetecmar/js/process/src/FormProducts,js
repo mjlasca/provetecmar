@@ -1,0 +1,21 @@
+import { Calculate } from "./paragraphs/calculate";
+import { QuoteUi } from "./paragraphs/quote-ui";
+
+export class FormQuote{
+    paragraphs = [];
+    form = null;
+    ui = null;
+    constructor(form = null, settings = null){
+        this.form = form;
+        this.ui = new QuoteUi(settings);
+    }
+    
+    init(){
+        console.log(this.form);
+        if(this.form != null){
+            console.log("entra");
+            this.ui.succesWarning(this.form);
+        }
+            
+    }
+}

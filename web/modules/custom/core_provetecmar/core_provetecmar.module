@@ -13,8 +13,24 @@ use Drupal\Core\Render\Markup;
 function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
   if ($form_id === 'node_quote_edit_form' || $form_id === 'node_quote_form') {
     $form['field_products']['#prefix'] = '<div class="quote-parameters"></div><div class="quote-messages"></div>';
+    $form['field_products']['#suffix'] = '<div class="requests-send"><span class="button-primary">Enviar Solicitudes</span></div><div class="quote-modal quote-hide"><div class="loader-overlay" style="display:none;"><div class="spinner"></div></div>
+    <div class="quote-modal--body"><div class="quote-modal--head">
+    </div></div></div>';
     if (isset($form['field_products']['widget'])) {
       $settings = [];
+
+      $providerList = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties([
+        'type' => 'provider',
+        'status' => 1
+      ]);
+      foreach ($providerList as $key => $prov) {
+        $settings['providers_list'][] = [
+            'nid' => $prov->nid->value,
+            'title' => $prov->title->value,
+            'mail' => $prov->field_email->value
+        ];
+      }
+
       $taxs = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
         'vid' => 'trm_a_usd'
       ]);
@@ -95,7 +111,6 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
         }
       }
     }
-    $form['field_requests_send']['widget']['#prefix'] = '<div class="loader-overlay" style="display:none;"><div class="spinner"></div></div>';
     $form['actions']['submit']['#validate'][] = '_quote_validation_custom';
     $form['actions']['submit']['#submit'][] = '_quote_submit_custom';
     $form['#attached']['drupalSettings'] = $settings;

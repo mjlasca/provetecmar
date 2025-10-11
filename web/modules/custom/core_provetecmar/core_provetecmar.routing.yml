@@ -46,3 +46,11 @@ core_provetecmar.quote_create_purchase:
   requirements:
     _permission: 'access content'    
     
+core_provetecmar.quote_send_requests:
+  path: '/send-request'
+  defaults:
+    _controller: '\Drupal\core_provetecmar\Controller\QuoteController::sendRequests'
+    _title: 'Send requests'
+  requirements:
+    _permission: 'access content'
+  methods: [POST]

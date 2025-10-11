@@ -1,8 +1,10 @@
-import { Calculate } from "./calculate.js";
-import { Utilities } from "./utilities.js";
+import { FormQuote } from "./FormProducts,js";
+import { Calculate } from "./paragraphs/calculate.js";
+import { Utilities } from "./paragraphs/utilities.js";
+import { Requests } from "./requests/Requests.js";
 import "./style.css";
 
-(function ($, Drupal) {
+(function ($, Drupal, once) {
   Drupal.behaviors.Quote = {
     attach: function (context, settings) {
       const settCalc = {
@@ -12,11 +14,16 @@ import "./style.css";
         container_delivery: settings.container_delivery,
       };
       let Calc = new Calculate(null, null, settCalc);
-      if (settings.quote_settings)
-        Calc.ui.settings = settings.quote_settings;
-      settings.quote_settings = Calc.updateSettings(context);
+      const $form = $(context).find("#field-products-values");
+      let formQuote = new FormQuote(context, settCalc);
+      formQuote.init();
+
+      once('quote-behavior', '.quote-modal', context).forEach(function (element) {
+        const requests = new Requests(element, settings.providers_list, settings.path);
+      });
+
       const $productFields = $(context).find(
-        'input[name*="field_product"]:not(.processed-by-js)'
+          'input[name*="field_product"]:not(.processed-by-js)'
       );
       $productFields.each(function (e) {
         const $this = $(this);
@@ -36,50 +43,17 @@ import "./style.css";
           }
         });
       });
-      const $form = $(context).find("form");
-      if (context && $form) {
-        Calc.ui.succesWarning(context);
-        $form.on("click", (e) => {
-          if (e.target && e.target.classList.contains("show-product")) {
-            Calc = settings.calc;
-            if (Calc) {
-              Calc.containerRow = e.target.closest(".paragraphs-subform");
-              Calc.nid = e.target.getAttribute("data-nid") ?? null;
-              Calc.process();
-            }
-          }
+      
+      $form.on('change', '.paragraphs-subform input, .paragraphs-subform select', function (e) {
+        console.log('testtt-------------------');
+        console.log(Calc);
+
+      });
+      once('quote-window-focus', window).forEach(() => {
+        window.addEventListener("focus", () => {
+          if (Calc) Calc.process();
         });
-        $form.on("change", (e) => {
-          if (e.target && e.target.name.includes("field_shipping_method")) {
-            Calc.ui.showContainer(
-              e.target.closest(".paragraphs-subform"),
-              e.target.value == 120
-            );
-          }
-          if (
-            e.target &&
-            e.target.name.indexOf("[field_product]") < 1 &&
-            e.target.classList.contains("form-element")
-          ) {
-            const nodeProduct = e.target
-              .closest(".paragraphs-subform")
-              .querySelector(".show-product");
-            if (nodeProduct) {
-              Calc = settings.calc;
-              if (Calc) {
-                Calc.containerRow = e.target.closest(".paragraphs-subform");
-                Calc.nid = nodeProduct.getAttribute("data-nid") ?? null;
-                Calc.process();
-              }
-            }
-          }
-        });
-      }
-      window.addEventListener("focus", () => {
-        if (Calc) {
-          Calc.process();
-        }
       });
     },
   };
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);

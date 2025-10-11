@@ -53,90 +53,93 @@ class MailSendRequests {
    * Function for procces node and send requests quote to providers
    * @param Node
    *  Nodo quote white paragraphs line products
+   * @return Array
+   *  Success and message status
    */
-  public function proccess(Node $node) : bool {
-    $paragraphs =  $node->field_products->referencedEntities();
-    $lineProducts = [];
-    foreach ($paragraphs as $key => $paragraph) {
-      if($paragraph->field_check->value == 1){
-        if( !empty($paragraph->field_product->target_id) && !empty($paragraph->field_product->entity->field_provider->target_id) ) {
-          $lineProducts[$paragraph->field_product->entity->field_provider->target_id]['provider'] = $paragraph->field_product->entity->field_provider->entity;
-          $lineProducts[$paragraph->field_product->entity->field_provider->target_id]['items'][] = $paragraph;
+  public function proccess(array $productsProvider) : array {
+    try {
+      $lineProducts = [];
+      $node = Node::load($productsProvider['node']);
+      foreach ($productsProvider['products'] as $k => $product) {
+        $productNode = Node::load($product['nid']);
+        if(!empty($product)){
+          $lineProducts[] = [
+            'title' => $productNode->title->value,
+            'description' => $productNode->field_description->value,
+            'cant' => $product['cant']
+          ];
         }
       }
-    }
-    foreach ($lineProducts as $key => $prov) {
-      $to = $prov['provider']->field_email->value;
-      $data['provider'] = $prov['provider']->title->value;
-      $data['date'] = $prov['provider'];
-      $build = [
-        '#theme' => 'rfq_mail',
-        '#company_name' => 'Provetecmar S.A.',
-        '#rfq_number' => "RFQ-{$node->nid->value}",
-        '#data' => $data,
-        '#items' => $prov['items'],
-      ];
-      
-      $html = $this->renderer->renderPlain($build);
 
-      $build = [
-        '#theme' => 'rfq_pdf_mail',
-        '#company_name' => 'Provetecmar S.A.',
-        '#rfq_number' => "RFQ-{$node->nid->value}",
-        '#data' => $data,
-        '#items' => $prov['items'],
-      ];
+      $result = array_map(function($item) use ($lineProducts) {
+        $item['items'] = $lineProducts;
+        return $item;
+      }, $productsProvider['providers']);
 
-      $htmlPdf = $this->renderer->renderPlain($build);
+      foreach ($result as $key => $prov) {
+        $to = $prov['mail'];
+        $data['provider'] = $prov['title'];
+        $build = [
+          '#theme' => 'rfq_mail',
+          '#company_name' => 'Provetecmar S.A.',
+          '#rfq_number' => "RFQ-{$node->nid->value}",
+          '#data' => $data,
+          '#items' => $prov['items'],
+        ];
+        
+        $html = $this->renderer->renderPlain($build);
 
-      $options = new Options();
-      $options->set('isRemoteEnabled', TRUE);
-      $dompdf = new Dompdf($options);
-      $dompdf->loadHtml($htmlPdf);
-      $dompdf->setPaper('A4', 'portrait');
-      $dompdf->render();
-      $pdfContent = $dompdf->output();
+        $build = [
+          '#theme' => 'rfq_pdf_mail',
+          '#company_name' => 'Provetecmar S.A.',
+          '#rfq_number' => "RFQ-{$node->nid->value}",
+          '#data' => $data,
+          '#items' => $prov['items'],
+        ];
 
-      $pdfPath = 'public://rfq-' . $node->nid->value . '.pdf';
-      file_put_contents($this->fileSystem->realpath($pdfPath), $pdfContent);
-      $attach = [
-        'filepath' => $pdfPath,
-        'filename' => 'RFQ-' . $node->nid->value . '.pdf',
-        'filemime' => 'application/pdf',
-      ];
-      if($this->mailer->sendMail($to, "Solicitud de cotización RFQ-{$node->nid->value}", $html, $attach)){
-         $node = Node::create([
-            'type'        => 'requests',              // Machine name del tipo de contenido.
-            'title'       => 'Envío '.$node->nid->value.$node->created->value,
-            'uid'         => $this->currentUser->id(),                      // ID del autor (1 = admin).
-            'status'      => 1,                      // 1 = publicado, 0 = no publicado.
-            'field_html'        => [
-              'value' => $htmlPdf,
-              'format' => 'full_html',
-            ],
-            'field_provider' => [
-              'target_id' => $prov['provider']->id()
-            ]
+        $htmlPdf = $this->renderer->renderPlain($build);
 
-            
+        $options = new Options();
+        $options->set('isRemoteEnabled', TRUE);
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($htmlPdf);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $pdfContent = $dompdf->output();
+
+        $pdfPath = 'public://rfq-' . $node->nid->value . '.pdf';
+        file_put_contents($this->fileSystem->realpath($pdfPath), $pdfContent);
+        $attach = [
+          'filepath' => $pdfPath,
+          'filename' => 'RFQ-' . $node->nid->value . '.pdf',
+          'filemime' => 'application/pdf',
+        ];
+        if($this->mailer->sendMail($to, "Solicitud de cotización RFQ-{$node->nid->value}", $html, $attach)){
+          $nodeRequest = Node::create([
+              'type'        => 'requests',
+              'title'       => 'Envío '.$node->nid->value.$node->created->value,
+              'uid'         => $this->currentUser->id(),
+              'status'      => 1,
+              'field_html'        => [
+                'value' => $htmlPdf,
+                'format' => 'full_html',
+              ],
+              'field_provider' => [
+                'target_id' => $prov['nid']
+              ],
+              'field_quote' => [
+                'target_id' => $prov['node']
+              ]
           ]);
-
-          // Guardar el nodo.
-          $node->save();
-      /*  $mailLog = MailLog::create([
-                  'to' => $to,
-                  'subject' => "Solicitud de cotización RFQ-{$node->nid->value}",
-                  'body' => $html,
-                  'status' => 'sent',
-                  'rfq' => $node->id(),
-                  'provider' => $prov['provider']->id(),
-                  'uid' => $this->currentUser->id(),
-                ]);
-        $mailLog->save();*/
+          $nodeRequest->save();
+        }
       }
+      if(!empty($pdfPath))
+        unlink($pdfPath);
+      return ['success' => TRUE, 'msg' => 'Solicitudes enviadas con éxito'];
+    } catch (\Throwable $th) {
+      return ['success' => FALSE, 'msg' => "Hubo un error al enviar las solicitudes {$th->getMessage()}"];
     }
-    if(!empty($pdfPath))
-      unlink($pdfPath);
-    return true;
+    
   }
 }

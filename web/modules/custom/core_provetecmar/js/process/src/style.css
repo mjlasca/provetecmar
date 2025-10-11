@@ -12,6 +12,20 @@
   background-color: rgba(0, 0, 0, 0.199);
 }
 
+.quote-modal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background-color: #0003;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .product-success,
 .product-success:hover {
   background-color: rgba(31, 236, 31, 0.144) !important;
@@ -114,10 +128,139 @@
 }
 
 
+.quote-modal--body {
+  background-color: #fff;
+  width: 70%;
+  max-width: 450px;
+  max-height: 550px;
+  border-radius: 20px;
+  position: relative;
+  min-height: 400px;
+}
+
+.quote-modal--form{
+  padding: 20px;
+}
+
+.quote-modal--body .form{
+  display: flex;
+  justify-items: center;
+  flex-direction: column;
+  gap: 20px;
+  height: auto;
+}
+
+.quote-modal--body .form ul {
+    margin-inline: 0;
+}
+
+.quote-modal--body .form li {
+    list-style: none;
+    cursor: pointer;
+    margin: 0;
+    border-bottom: 1px #eee solid;
+    margin-bottom: 2px;
+}
+
+.quote-modal--body .form input {
+    border: 1px #eee solid;
+    border-radius: 5px;
+    height: 30px;
+    font-size: 16px;
+}
+    
+.quote-modal--body .form .selected-items {
+    display: flex;
+    flex-direction: column;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.quote-modal--body .form .selected-items .tag button{
+    background-color: #FFC700;
+    border: 0px;
+    cursor: pointer;
+    margin-bottom: 2px;
+}
+
+.quote-modal--body .form .selected-items .tag button:hover{
+    background-color: #eee;
+}
+
+.quote-modal--head{
+  display: flex;
+  justify-content: space-between;
+}
+
+.quote-modal--head strong{
+  font-size: 20px;
+  padding: 10px 20px;
+}
+
+.quote-modal--head .modal-head--close{
+  padding: 5px;
+  background-color: #FFC700;
+  cursor: pointer;
+  border-radius: 0 20px 0 0;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quote-modal--head svg{
+  width: 20px;
+}
+
+.quote-modal--button{
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  padding: 5px 0 15px 0;
+  width: 100%;
+}
+
+.modal-button {
+  background-color: #ffc700;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.modal-button:hover {
+  background-color: #e6b800; /* un poco más oscuro al pasar el mouse */
+  transform: translateY(-2px);
+}
+
+.button-primary {
+  background-color: #ffc700;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.button-primary:hover {
+  background-color: #e6b800; /* un poco más oscuro al pasar el mouse */
+  transform: translateY(-2px);
+}
+
 
 @media (max-width: 768px) {
   .quote-parameters {
     padding: 6px 10px;
     font-size: 14px;
+  }
+  .quote-modal--body{
+    width: 90%;
   }
 }
