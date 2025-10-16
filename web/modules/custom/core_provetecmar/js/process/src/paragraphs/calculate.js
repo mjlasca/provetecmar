@@ -1,5 +1,8 @@
+
+import { FormQuote } from "../FormProducts";
 import { QuoteUi } from "./quote-ui";
 import { Services } from "./services";
+
 
 /**
  * Clas for utilities quote
@@ -15,6 +18,7 @@ export class Calculate {
     this.init();
     this.shipping = settings.shipping;
     this.customs = settings.container_delivery;
+    this.formQuote = new FormQuote(containerRow, settings);
   }
 
   async init() {
@@ -82,8 +86,9 @@ export class Calculate {
     const fieldCant = this.containerRow.querySelector('[name*="field_cant"]');
     if (fieldCant && fieldCant.value != "") {
       const costTotal = this.containerRow.querySelector('[name*="field_total_cost"]');
-      if(trm){
-        costTotal.setAttribute('data-currency',trm.tid);
+      const costTotalTrm = this.containerRow.querySelector('[name*="field_total"]');
+      if(costTotalTrm){
+        costTotalTrm.previousElementSibling.textContent =  `Total (${trm.name})`;
       }
       costTotal.value =
         parseFloat(result * fieldCant.value).toFixed(2);
@@ -245,47 +250,18 @@ export class Calculate {
 
   async handleGetProduct() {
     this.dataProduct = await this.services.nodeProductService();
-    const lintProduct = this.containerRow.querySelector(".show-product");
-    if (lintProduct) lintProduct.href = `/node/${this.nid}/edit`;
+    const linkProduct = this.containerRow.querySelector(".show-product");
+    if (linkProduct){
+      linkProduct.href = `/node/${this.nid}/edit`;
+    } 
     else {
-      this.ui.linkProduct(this.nid, this.containerRow);
+      this.ui.linkProduct(this.nid, this.containerRow, this.dataProduct.currency);
     }
     this.validState();
     
   }
 
-  totalResults(){
-    const data = {
-      'totals': {
-        'cost': 0,
-        'total' : 0,
-        'weight' : 0
-      },
-      'terms' : []
-    };
-    const weights = document.querySelectorAll('[name*="field_weight_total"]');
-    const totalCost = document.querySelectorAll('[name*="field_total_cost"]');
-    const totalSale = document.querySelectorAll('[name*="field_total_sale"]');
-    data.totals.weight = this.getTotalField(weights).toFixed(2);
-    data.totals.cost = this.getTotalField(totalCost).toFixed(2);
-    data.totals.total = this.getTotalField(totalSale).toFixed(2);
-
-    return data;
-  }
-
-  getTotalField(container){
-    let rest = 0;
-    if(container.length > 0){
-      container.forEach(el => {
-        if(el.value && el.value > 0){
-          rest = rest + parseFloat(el.value);
-        }
-      });
-    }
-    
-    return rest;
-  }
-
+  
   updateSettings(context){
     const nids = context.querySelectorAll('[data-nid]');
     let arrNid = [];
@@ -296,7 +272,7 @@ export class Calculate {
     }
     const restUpd = this.ui.settings.filter(obj => arrNid.includes(obj.nid));
     this.ui.settings = restUpd;
-    this.ui.parametersMarkup(this.totalResults());
+    this.ui.parametersMarkup(this.formQuote.totalResults());
     return this.ui.settings;
   }
 
@@ -309,7 +285,7 @@ export class Calculate {
       this.vrCosttUsd();
       this.landedCostFactor();
       this.vrUnitUsd();
-      this.ui.parametersMarkup(this.totalResults());
+      this.ui.parametersMarkup(this.formQuote.totalResults());
     }
   }
 

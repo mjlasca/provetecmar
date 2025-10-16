@@ -153,6 +153,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     $node = $this->entityTypeManager->getStorage('node')->load($nid);
     $result = [];
     if(!empty($node)){
+      $result['nid'] = $node->nid->value ?? 0;
       $result['weight'] = $node->field_unit_weight->value ?? 0;
       $result['cost_unit'] = $node->field_unit_cost->value ?? 0;
       $result['provider'] = $node->field_provider->target_id ?? 0;
@@ -206,7 +207,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
         'base64Logo' => $base64Logo
       ],
     ];
-
+    dd($build);
     $htmlPdf = $this->renderer->renderPlain($build);
 
     $options = new Options();

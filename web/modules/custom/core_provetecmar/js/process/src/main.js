@@ -1,4 +1,4 @@
-import { FormQuote } from "./FormProducts,js";
+import { FormQuote } from "./FormProducts.js";
 import { Calculate } from "./paragraphs/calculate.js";
 import { Utilities } from "./paragraphs/utilities.js";
 import { Requests } from "./requests/Requests.js";
@@ -16,6 +16,7 @@ import "./style.css";
       let Calc = new Calculate(null, null, settCalc);
       const $form = $(context).find("#field-products-values");
       let formQuote = new FormQuote(context, settCalc);
+      formQuote.calc = Calc;
       formQuote.init();
 
       once('quote-behavior', '.quote-modal', context).forEach(function (element) {
@@ -32,28 +33,27 @@ import "./style.css";
           if (ui.item) {
             const entityId = ui.item.value;
             const nid = Utilities.getId(entityId);
-            Calc = new Calculate(
+            formQuote.calc = new Calculate(
               event.target.closest(".paragraphs-subform"),
               nid,
               settCalc
             );
-            Calc.process();
-            settings.calc = Calc;
-            settings.quote_settings = Calc.ui.settings;
+            formQuote.calc.process();
           }
         });
       });
       
       $form.on('change', '.paragraphs-subform input, .paragraphs-subform select', function (e) {
-        console.log('testtt-------------------');
-        console.log(Calc);
-
+        
       });
-      once('quote-window-focus', window).forEach(() => {
-        window.addEventListener("focus", () => {
-          if (Calc) Calc.process();
+      
+      window.addEventListener("focus", () => {
+          console.log("testestt");
+          if(formQuote){
+            formQuote.calc.process();
+          }
         });
-      });
+      
     },
   };
 })(jQuery, Drupal, once);

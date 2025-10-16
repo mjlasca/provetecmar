@@ -26,14 +26,20 @@ export class QuoteUi {
     }
   }
 
-  linkProduct(nid, container) {
+  linkProduct(nid, container, currency) {
     if (!container.querySelector(".show-product")) {
       const aElement = document.createElement("a");
       aElement.classList.add("show-product");
       aElement.setAttribute("target", "_blank");
       aElement.setAttribute("data-nid", nid);
       aElement.textContent = "+";
+      aElement.href = `/node/${nid}/edit`;
       const divProduct = container.querySelector(".field--name-field-product");
+      const paragraphsSubform = divProduct.closest('.paragraphs-subform');
+      if(paragraphsSubform){
+        paragraphsSubform.setAttribute('data-currency', currency);
+        paragraphsSubform.setAttribute('data-node', nid);
+      }
       divProduct.prepend(aElement);
     }
   }
@@ -70,7 +76,6 @@ export class QuoteUi {
 
   succesWarning(context) {
     Object.values(this.settings).forEach((el) => {
-      console.log(`.valid-${el.nid}`);
       if (context.querySelector(`.valid-${el.nid}`)) {
         context
           .querySelector(`.valid-${el.nid}`)
@@ -108,14 +113,39 @@ export class QuoteUi {
   parametersMarkup(data) {
     const params = document.querySelector(".quote-parameters");
     if(params){
-        
         let trms = "";
+        const currencys = document.querySelectorAll('[data-currency]');
+        const objCurrenc = [];
+        currencys.forEach(el => {
+          const input = el.querySelector('[name*="field_total"]');
+          objCurrenc.push({
+            'nid' : el.getAttribute('data-node'),
+            'currency' : el.getAttribute('data-currency'),
+            'costTotal' : input.value
+          });
+          const nameT = this.parameters.find(item => item.tid == el.getAttribute('data-currency') );
+          if(nameT)
+            input.previousElementSibling.textContent = `Total (${nameT.name})`;
+        });
+        this.settings = this.settings.map(obj => ({
+          ...obj,
+          currency: {
+            ...obj.currency,
+            cost: 0
+          }
+        }));
         Object.values(this.parameters).forEach((term) => {
             const resF = this.settings.find(item => item.currency.tid == term.tid);
             if(resF != undefined){
+              const totalTid = objCurrenc.reduce((total, val) => {
+                if(val.currency == term.tid){
+                  return total + parseFloat(val.costTotal);
+                }
+                return total;
+              }, 0);
               trms += `<p class="span-left"><small>(${term.factor})</small> <b>${term.name}</b></p>
                         <p class="span-${term.name}">
-                            ${resF.currency.cost}
+                            ${parseFloat(totalTid)}
                         </p>
                     `;
             }
@@ -138,10 +168,7 @@ export class QuoteUi {
                         </div>
                     </div>
                     `;
-
-       
     }
-    
   }
 
   collapseBar(bar) {
