@@ -14,7 +14,10 @@
         const vrTotal = context.querySelectorAll('[name*="field_total_sale"]');
         const factSale = context.querySelectorAll('[name*="field_sale_factor"]');
         const taxCo = context.querySelectorAll('[name*="field_tax"]');
+        const totalCostUsd = context.querySelectorAll('[name*="field_total_cost"]');
+        const containerDelivery = context.querySelectorAll('[name*="field_container_delivery"]');
 
+        setReadOnly(totalCostUsd);
         setReadOnly(totalInput);
         setReadOnly(weightInput);
         setReadOnly(factCost);
@@ -23,16 +26,31 @@
         setReadOnly(vrTotal);
         setReadOnly(factSale);
         setReadOnly(taxCo);
+        showContainer(containerDelivery);
 
         if(buttonSend){
             buttonSend.addEventListener('click', function(){
                 sendRequests.click();
             });
         }
+
         function setReadOnly(content) {
             if(content){
                 content.forEach(element => {
                     element.readOnly = true;        
+                });
+            }
+        }
+        function showContainer(content) {
+            if(content){
+                content.forEach(element => {
+                    if(element.value != '_none'){
+                        const hide = element.closest('.quote-hide');
+                        if(hide){
+                            hide.classList.remove('quote-hide');
+                            hide.classList.add('quote-container');
+                        }
+                    }
                 });
             }
         }

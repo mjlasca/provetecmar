@@ -2,7 +2,6 @@ admin-theme-style:
   css:
     theme:
       css/admin-theme-style.css: {}
-
 quote:
   js:
     js/quoteRequests.js:

@@ -85,6 +85,8 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     $this->mailer = $mailer;
     $this->languageManager = $language_manager;
     $this->entityTypeManager = $entityTypeManager;
+    $this->renderer = $renderer;
+    $this->fileSystem = $file_system;
     $this->messenger = $messenger;
     $this->createPurchaseService = $createPurchaseService;
     $this->mailSendRequests = $mailSendRequests;
@@ -207,7 +209,6 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
         'base64Logo' => $base64Logo
       ],
     ];
-    dd($build);
     $htmlPdf = $this->renderer->renderPlain($build);
 
     $options = new Options();

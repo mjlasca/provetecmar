@@ -98,7 +98,7 @@
   transition: transform 0.3s ease;
 }
 
-.paragraph-type--items:hover .quote-sale{
+.paragraph-complete .quote-sale{
   display: grid;
 }
 

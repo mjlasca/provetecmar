@@ -12,12 +12,28 @@ use Drupal\Core\Render\Markup;
  */
 function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
   if ($form_id === 'node_quote_edit_form' || $form_id === 'node_quote_form') {
-    $form['field_products']['#prefix'] = '<div class="quote-parameters"></div><div class="quote-messages"></div>';
-    $form['field_products']['#suffix'] = '<div class="requests-send"><span class="button-primary">Enviar Solicitudes</span></div><div class="quote-modal quote-hide"><div class="loader-overlay" style="display:none;"><div class="spinner"></div></div>
-    <div class="quote-modal--body"><div class="quote-modal--head">
-    </div></div></div>';
+    //$form['field_products']['#access'] = FALSE;
+    $form['field_requests_send']['#prefix'] = '<div class="quote-app"></div><div class="quote-parameters"></div><div class="quote-messages"></div>';
+    $nodeQuote = $form_state->getFormObject()->getEntity();
+    $arrState = ['assignment','price_change'];
+    if(!empty($nodeQuote->get('moderation_state')->value) && in_array($nodeQuote->get('moderation_state')->value, $arrState) ){
+      $form['field_products']['#suffix'] = '<div class="requests-send"><span class="button-primary">Enviar Solicitudes</span></div><div class="quote-modal quote-hide"><div class="loader-overlay" style="display:none;"><div class="spinner"></div></div><div class="quote-modal--body"><div class="quote-modal--head"></div></div></div>';
+    }
     if (isset($form['field_products']['widget'])) {
       $settings = [];
+
+      $taxes = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
+        'vid' => 'taxes'
+      ]);
+      if(!empty($taxes)){
+        foreach ($taxes as $k => $tax) {
+          $settings['taxes'][] = [
+            'rfq' => $tax->field_rfq->target_id,
+            'region' => $tax->field_origin->target_id,
+            'tax' => $tax->field_tax->value,
+          ];
+        }
+      }
 
       $providerList = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties([
         'type' => 'provider',
@@ -82,8 +98,7 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
             $nid = $node->id();
             if(
               $node->field_unit_weight->value != 0 &&
-              $node->field_unit_cost->value != 0 &&
-              $node->field_provider->target_id != ''
+              $node->field_unit_cost->value != 0
             ){
               $settings['quote_settings'][] = [
                 'nid' => $nid,
@@ -113,7 +128,16 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
     }
     $form['actions']['submit']['#validate'][] = '_quote_validation_custom';
     $form['actions']['submit']['#submit'][] = '_quote_submit_custom';
+    $arrState = ['assignment','price_change'];
+    $settings['process'] = TRUE;
+    $arrState = ['published','offer_ready'];
+    if(!empty($nodeQuote->get('moderation_state')->value) && in_array($nodeQuote->get('moderation_state')->value, $arrState) ){
+      $settings['process'] = FALSE;
+    }
     $form['#attached']['drupalSettings'] = $settings;
+    $form['#attached']['library'][] = 'core_provetecmar/quote';
+  }
+  if ($form_id === 'node_purchase_order_edit_form' || $form_id === 'node_purchase_order_form') {
     $form['#attached']['library'][] = 'core_provetecmar/quote';
   }
 }
@@ -125,7 +149,7 @@ function _quote_validation_custom($form, \Drupal\Core\Form\FormStateInterface $f
   $form_state->setTemporaryValue('entity_validated', TRUE);
   $node = $form_state->getFormObject()->getEntity();
   $service = \Drupal::service('core_provetecmar.importxlsx_validation');
-  $resultImport = $service->importXlsxValidation($node, 'field_items_import');
+  $resultImport = $service->importXlsxValidation($form, $form_state);
   if(!$resultImport['success'])
   {
     $form_state->setErrorByName(
@@ -156,7 +180,7 @@ function _quote_submit_custom($form, \Drupal\Core\Form\FormStateInterface $form_
   // Ejemplo: obtener el nodo.
   $node = $form_state->getFormObject()->getEntity();
   $service = \Drupal::service('core_provetecmar.importxlsx');
-  $resultImport = $service->importXlsx($node, 'field_items_import');
+  $resultImport = $service->importXlsx($form, $form_state);
   if(isset($resultImport['success'])){
     if($resultImport['success'])
       \Drupal::messenger()->addStatus($resultImport['message']);
@@ -263,4 +287,14 @@ function core_provetecmar_node_access(\Drupal\node\NodeInterface $node, $op, \Dr
   }
 
   return \Drupal\Core\Access\AccessResult::neutral();
+}
+
+/**
+ * Implements hook_node_access().
+ */
+function core_provetecmar_preprocess_node(array &$variables) {
+  $node = $variables['node'];
+  $account = \Drupal::currentUser();
+  $can_edit = $node->access('update', $account);
+  $variables['can_edit'] = $can_edit;
 }

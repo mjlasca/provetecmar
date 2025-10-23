@@ -11,10 +11,12 @@ export class Calculate {
   constructor(containerRow, nid, settings) {
     this.containerRow = containerRow;
     this.dataProduct = null;
-    this.parametersQuote = null;
+    this.parametersQuote = settings.taxes;
     this.nid = nid;
     this.ui = new QuoteUi(settings);
-    this.services = new Services(nid);
+    console.log("A--------");
+    console.log(this.nid);
+    this.services = new Services(this.nid);
     this.init();
     this.shipping = settings.shipping;
     this.customs = settings.container_delivery;
@@ -23,7 +25,9 @@ export class Calculate {
 
   async init() {
     this.dataProduct = await this.services.nodeProductService();
-    this.parametersQuote = await this.services.parametersService();
+    if(this.containerRow){
+      this.containerRow.closest('.paragraph-type--items').classList.add('paragraph-complete');
+    }
   }
 
   weightTotal() {
@@ -50,7 +54,6 @@ export class Calculate {
       }
     }
     else fieldTotal.value = 0;
-    
   }
 
   taxCalculate() {
@@ -60,8 +63,8 @@ export class Calculate {
     );
     this.containerRow.querySelector('[name*="field_tax"]').value = 0;
     if (rfq && region && rfq.value > 0 && region.value > 0) {
-      if ( this.parametersQuote.hasOwnProperty('taxes') && this.parametersQuote.taxes) {
-        const tax = this.parametersQuote.taxes.find(
+      if (this.parametersQuote) {
+        const tax = this.parametersQuote.find(
           (item) => item.rfq === rfq.value && item.region === region.value
         );
         if (tax) {
@@ -258,7 +261,6 @@ export class Calculate {
       this.ui.linkProduct(this.nid, this.containerRow, this.dataProduct.currency);
     }
     this.validState();
-    
   }
 
   
@@ -279,6 +281,7 @@ export class Calculate {
   async process() {
     if (this.containerRow && this.nid) {
       await this.handleGetProduct();
+      console.log(this.dataProduct);
       this.costTotal();
       this.weightTotal();
       this.taxCalculate();
@@ -293,8 +296,7 @@ export class Calculate {
     const dragCont = this.containerRow.closest(".paragraph-type--items");
     if (
       this.dataProduct.weight > 0 &&
-      this.dataProduct.cost_unit > 0 &&
-      this.dataProduct.provider != ""
+      this.dataProduct.cost_unit > 0
     ) {
       this.ui.validateProduct(dragCont, true, this.dataProduct);
     } else {

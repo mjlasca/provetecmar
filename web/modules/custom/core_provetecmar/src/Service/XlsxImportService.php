@@ -9,6 +9,7 @@ use Drupal\file\FileRepositoryInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\file\Entity\File;
 use Drupal\paragraphs\Entity\Paragraph;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -92,20 +93,15 @@ class XlsxImportService {
    * @return bool
    *  Succes or not create products and paragraphs add
    */
-  public function importXlsx(Node $node, $field_name): array {
+  public function importXlsx($form, $form_state): array {
     try 
     {
-      
-      if (!$node->hasField($field_name) || $node->get($field_name)->isEmpty()) 
-        return ['success' => TRUE, 'message' => ''];
-      if(count($node->get('field_products')->getValue()) > 1)
-        return [];
-
-      $file = $node->get($field_name)->entity;
-      if (!$file) {
-        return ['success' => TRUE, 'message' => ''];
+      $nodeQuote = $form_state->getFormObject()->getEntity();
+      $file_input = $form_state->getValue(['field_items_import', 0]);
+      if (!empty($file_input['fids'][0])) {
+        $fid = $file_input['fids'][0];
+        $file = File::load($fid);
       }
-      
 
       $file_path = $this->fileSystem->realpath($file->getFileUri());
       $extension = strtolower(pathinfo($file_path, PATHINFO_EXTENSION));
@@ -120,16 +116,16 @@ class XlsxImportService {
 
       foreach ($rows as $key => $row) {
         
-        if($key > 5 && !empty($row[2]) && !empty($row[3]) && !empty($row[4]) ){
+        if($key > 1 && !empty($row[1]) && !empty($row[2]) && !empty($row[3]) ){
           
           $nids = $this->entityTypeManager
             ->getStorage('node')
             ->getQuery()
             ->condition('type', 'product')
-            ->condition('field_id_unique', $row[2] ?? '')
+            ->condition('field_part', $row[6] ?? '')
             ->accessCheck(FALSE)
             ->execute();
-
+          
           if (!empty($nids)) {
             $nid = reset($nids);
             $product = $this->entityTypeManager
@@ -140,46 +136,45 @@ class XlsxImportService {
               ->getStorage('node')
               ->create([
                 'type' => 'product',
-                'field_id_unique' => $row[2] ?? '',
+                'field_part' => $row[6] ?? '',
               ]);
           }
+          if($product){
+            $unit = $this->validateTaxonomy('unit_of_measurement',$row[8]);
+            if($unit != FALSE)
+              $product->set('field_unit',$unit);
+            if(!empty($row[4])){
+              $manufacturer = $this->validateTaxonomy('manufacturer',$row[4]);
+              if($manufacturer != FALSE)
+                $product->set('field_manufacturer',$manufacturer);
+            }  
+            $product->set('title', str_replace('"','', $row[2] ) ?? '');
+            $product->set('field_description', $row[3] ?? '');
 
-          $unit = $this->validateTaxonomy('unit_of_measurement',$row[8]);
-          if($unit != FALSE)
-            $product->set('field_unit',$unit);
-          if(!empty($row[5])){
-            $manufacturer = $this->validateTaxonomy('manufacturer',$row[5]);
-            if($manufacturer != FALSE)
-              $product->set('field_manufacturer',$manufacturer);
-          }  
-          $product->set('title', str_replace('"','', $row[3] ) ?? '');
-          $product->set('field_description', $row[4] ?? '');
-
-          
-          if($product->save()){
-            $paragraphProd = [
-              'type' => 'items', 
-              'field_product' => [
-                'target_id' => $product->id(),
-              ]
-            ];
-            if(!empty($row[7]) && $row[7])
-              $paragraphProd['field_cant'] = trim($row[7]);
-            if(!empty($row[9]) && $row[9])
-              $paragraphProd['field_comments'] = trim($row[9]);
-
-            $paragraph = Paragraph::create($paragraphProd);
-            if($paragraph->save()){
-              $arrayParagraph = $node->get('field_products')->getValue() ?? [];
-              $arrayParagraph[] = [
-                'target_id' => $paragraph->id(),
-                'target_revision_id' => $paragraph->getRevisionId(),
-              ];
-              $node->set('field_products', $arrayParagraph);
-              $node->save();
+            if($product->save()){
+              $paragraphProd = [
+                'type' => 'items', 
+                'field_product' => [
+                  'target_id' => $product->id(),
+                  ]
+                ];
+                if(!empty($row[7]) && $row[7])
+                  $paragraphProd['field_cant'] = trim($row[7]);
+                if(!empty($row[9]) && $row[9])
+                  $paragraphProd['field_comments'] = trim($row[9]);
+                
+                $paragraph = Paragraph::create($paragraphProd);
+                if($paragraph->save()){
+                  $arrayParagraph = $nodeQuote->get('field_products')->getValue() ?? [];
+                $arrayParagraph[] = [
+                  'target_id' => $paragraph->id(),
+                  'target_revision_id' => $paragraph->getRevisionId(),
+                ];
+                $nodeQuote->set('field_products', $arrayParagraph);
+                $nodeQuote->save();
+              }
             }
           }
-          
         }
       }
       return ['success' => TRUE, 'message' => 'Se generó correctamente la importación'];

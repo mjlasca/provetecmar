@@ -1,6 +1,6 @@
 (function ($, Drupal) {
   Drupal.behaviors.Quote = {
-    attach: function (context) {
+    attach: function (context, settings) {
         
     },
   };

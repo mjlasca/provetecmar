@@ -11,6 +11,7 @@ use Drupal\node\Entity\Node;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Drupal\file\Entity\File;
 
 
 
@@ -92,21 +93,23 @@ class XlsxImportServiceValidation {
    * @return bool
    *  Succes or not create products and paragraphs add
    */
-  public function importXlsxValidation(Node $node, $field_name): array {
+  public function importXlsxValidation($form, $form_state): array {
     try 
     {
+      $field_name = '';
+      if(is_array($form_state->getValue('field_products')) && count($form_state->getValue('field_products')) > 2)
+        return ['success' => TRUE];
+      $file_input = $form_state->getValue(['field_items_import', 0]);
+      if (!empty($file_input['fids'][0])) {
+        $fid = $file_input['fids'][0];
+        $file = File::load($fid);
+      }
       
-      if (!$node->hasField($field_name) || $node->get($field_name)->isEmpty()) 
-        return ['success' => TRUE, 'message' => ''];
-      if(count($node->get('field_products')->getValue()) > 1)
-        return ['success' => TRUE, 'message' => ''];
-
-      $file = $node->get($field_name)->entity;
+      
       if (!$file) {
         return ['success' => TRUE, 'message' => ''];
       }
-      
-
+        
       $file_path = $this->fileSystem->realpath($file->getFileUri());
       $extension = strtolower(pathinfo($file_path, PATHINFO_EXTENSION));
       
@@ -117,37 +120,34 @@ class XlsxImportServiceValidation {
       }else{
         return ['success' => FALSE, 'message' => 'El archivo debe ser xlsx o xls'];
       }
-
+      
       $message = '';
       foreach ($rows as $key => $row) {
-
-        if($key > 5 && !empty($row[2]) && !empty($row[3]) && !empty($row[4]) ){
+        if($key > 1 && !empty($row[1]) && !empty($row[2]) && !empty($row[3]) ){
+          if(empty($row[0]))
+              $message .= "<li>El código es obligatorio. Item #$row[0]</li>";
           if(empty($row[2]))
-              $message .= "<li>El código es obligatorio. Item #$row[1]</li>";
+              $message .= "<li>El nombre es obligatorio. Item #$row[0]</li>";
           if(empty($row[3]))
-              $message .= "<li>El nombre es obligatorio. Item #$row[1]</li>";
-          if(empty($row[4]))
-              $message .= "<li>La descripción es obligatoria. Item #$row[1]</li>";
+              $message .= "<li>La descripción es obligatoria. Item #$row[0]</li>";
           if(empty($row[6]))
-              $message .= "<li>El parte es obligatorio. Item #$row[1]</li>";
+              $message .= "<li>El Parte No. es obligatorio. Item #$row[0]</li>";
           if(empty($row[7]))
-              $message .= "<li>La cantidad es obligatoria. Item #$row[1]</li>";
+              $message .= "<li>La cantidad es obligatoria. Item #$row[0]</li>";
           if(empty($row[8]))
-              $message .= "<li>La unidad de medida es obligatoria. Item #$row[1]</li>";
+              $message .= "<li>La unidad de medida es obligatoria. Item #$row[0]</li>";
           if(!empty($row[7]) && !is_numeric(trim($row[7])))
-            $message .= "<li>La cantidad no es un número. Item #$row[1]</li>";
-          
+            $message .= "<li>La cantidad no es un número. Item #$row[0]</li>";
           $unit = $this->validateTaxonomy('unit_of_measurement',$row[8]);
           if($unit == FALSE)
-            $message .= "<li>La unidad de medida $row[8] no es correcta. Item #$row[1]</li>";
-          if(!empty($row[5])){
-            $manufacturer = $this->validateTaxonomy('manufacturer',$row[5]);
+            $message .= "<li>La unidad de medida $row[8] no es correcta. Item #$row[0]</li>";
+          if(!empty($row[4])){
+            $manufacturer = $this->validateTaxonomy('manufacturer',$row[4]);
             if($manufacturer == FALSE)
-              $message .= "<li>El fabricante $row[5] no es correcto. Item #$row[1]</li>";
+              $message .= "<li>El fabricante $row[4] no es correcto. Item #$row[0]</li>";
           }  
         }
       }
-
       if(!empty($message)){
         return ['success' => FALSE, 'message' => $message];
       }else{
