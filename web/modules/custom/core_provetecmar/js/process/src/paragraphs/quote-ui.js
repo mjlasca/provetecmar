@@ -5,6 +5,7 @@ import { Services } from "./services";
  */
 export class QuoteUi {
   lines = null;
+  itemsProducts = [];
   constructor(settings = null, products) {
     this.settings = settings ?? [];
     this.parameters = settings.parameters ?? [];
@@ -23,6 +24,10 @@ export class QuoteUi {
     this.rfqs = this.settings.group_companies;
     this.deliveries = this.settings.deliveries;
     this.quote_settings = this.settings.quote_settings;
+    this.assessment = this.settings.assessment;
+    this.shipping_method = this.settings.shipping_method;
+    this.container_type = this.settings.container_type;
+    this.container_delivery = this.settings.container_delivery;
     
   }
 
@@ -43,8 +48,32 @@ export class QuoteUi {
     return td;
   }
 
+  tooltipInit(element, msg) {
+    const tooltip = document.createElement('div');
+    tooltip.className = 'custom-tooltip';
+    tooltip.textContent = msg;
+    tooltip.style.display = 'none'; 
+    document.body.appendChild(tooltip);
+    element.addEventListener('mouseenter', (e) => {
+        tooltip.style.left = e.pageX + 10 + 'px';
+        tooltip.style.top = e.pageY + 10 + 'px';
+        tooltip.style.display = 'block';
+    });
+    element.addEventListener('mouseleave', () => {
+        tooltip.style.display = 'none';
+    });
+    element.addEventListener('mousemove', (e) => {
+        tooltip.style.left = e.pageX + 10 + 'px';
+        tooltip.style.top = e.pageY + 10 + 'px';
+    });
+  }
+
   line(data){
     const tr = document.createElement('tr');
+    tr.classList = ['line-product']
+    const fieldCheck = this.fieldInput({'name':'field_check[]', 'type': 'checkbox'});
+    fieldCheck.classList = ['td-check'];
+    tr.append(fieldCheck);
     const fieldProduct = this.fieldInput({'name':'field_product[]', 'type': 'text'});
     tr.append(fieldProduct);
     const fieldCant = this.fieldInput({'name':'field_cant[]', 'type': 'number'});
@@ -57,6 +86,22 @@ export class QuoteUi {
     tr.append(fieldCompany);
     const fieldDelivery = this.fieldSelect({'name': 'field_delivery_region[]'}, this.deliveries)
     tr.append(fieldDelivery);
+    const fieldTax = this.fieldInput({'name' : 'field_tax[]', 'type' : 'number', 'readOnly': true});
+    tr.append(fieldTax);
+    const fieldCost = this.fieldInput({'name' : 'field_cost[]', 'type' : 'number', 'readOnly': true});
+    tr.append(fieldCost);
+    const fieldTotalCost = this.fieldInput({'name' : 'field_total_cost[]', 'type' : 'number', 'readOnly': true});
+    tr.append(fieldTotalCost);
+    const fieldAssessment = this.fieldSelect({'name' : 'field_assessment[]'}, this.assessment);
+    tr.append(fieldAssessment);
+    const fieldLandedCost = this.fieldInput({'name' : 'field_landed_cost[]', 'type' : 'number'});
+    tr.append(fieldLandedCost);
+    const fieldShippingMethod = this.fieldSelect({'name' : 'field_shipping_method[]'}, this.shipping_method);
+    tr.append(fieldShippingMethod);
+    const fieldContainerType = this.fieldSelect({'name' : 'field_container_type[]'}, this.container_type);
+    tr.append(fieldContainerType);
+    const fieldContainerDelivery = this.fieldSelect({'name' : 'field_container_delivery[]'}, this.container_delivery);
+    tr.append(fieldContainerDelivery);
     const btnRemove = document.createElement('button');
     btnRemove.classList = ['btn btn-remove']
     btnRemove.type = 'button';
@@ -69,21 +114,20 @@ export class QuoteUi {
         <td><input type="number" name="field_cant[]" class="form-input" step="0.01" /></td>
         <td><input type="number" name="field_weight_total[]" class="form-input" step="0.01" /></td>
         <td><input type="number" name="field_total[]" class="form-input" readonly /></td>
-        <td><input type="number" name="field_qty[]" class="form-input" /></td>
-        <td><input type="number" name="field_cost[]" class="form-input" step="0.01" /></td>
-        <td><input type="number" name="field_total_cost[]" class="form-input" step="0.01" readonly /></td>
+        
+        
+        
         <td><input type="number" name="field_unit_sale[]" class="form-input" step="0.01" /></td>
         <td><input type="number" name="field_total_sale[]" class="form-input" step="0.01" readonly /></td>
         <td><input type="number" name="field_sale_factor[]" class="form-input" step="0.01" /></td>
-        <td><input type="number" name="field_landed_cost[]" class="form-input" step="0.01" /></td>
+        
         <td><select name="field_margin[]" class="form-select"></select></td>
-        <td><input type="number" name="field_tax[]" class="form-input" step="0.01" /></td>
-        <td><select name="field_assessment[]" class="form-select"></select></td>
+        
+        
         <td><select name="field_company[]" class="form-select"></select></td>
-        <td><select name="field_delivery_region[]" class="form-select"></select></td>
-        <td><select name="field_container_type[]" class="form-select"></select></td>
-        <td><select name="field_container_delivery[]" class="form-select"></select></td>
-        <td><select name="field_shipping_method[]" class="form-select"></select></td>
+        
+        
+        
         <td><select name="field_incoterm[]" class="form-select"></select></td>
         <td><input type="text" name="field_delivery_time[]" class="form-input" /></td>
         <td class="center"><input type="checkbox" name="field_check[]" /></td>
@@ -104,8 +148,10 @@ export class QuoteUi {
       sugges.classList = ['product-suggestion'];
       const ul = document.createElement('ul');
       sugges.appendChild(ul);
+      td.classList = ['td-product'];
       td.appendChild(sugges);
       inp.addEventListener('input', (e) =>  this.autoComplete(e,ul));
+      inp.addEventListener('keydown', (e) => this.handleKeyboardNavigation(e, ul, this.itemsProducts));
     }
     inp.addEventListener('change', (e) =>  this.products.calculate(e));
     return td;
@@ -138,14 +184,20 @@ export class QuoteUi {
     
   }
 
-  handleKeyboardNavigation(e, container, data) {
+  handleKeyboardNavigation(e, container) {
+    
     const input = e.target;
     let currentIndex = -1;
     const items = container.querySelectorAll('li');
+    if (e.repeat) {
+        return; 
+    }
     if (items.length === 0) return;
+    container.closest('.product-suggestion').style.display = 'block';
     items.forEach((ele,k) => {
-      if(ele.classList.contains('active'))
+      if(ele.classList.contains('active')){
         currentIndex = k;
+      }
     });
     switch (e.key) {
       case 'ArrowDown':
@@ -162,13 +214,14 @@ export class QuoteUi {
         e.preventDefault();
         if (currentIndex >= 0 && currentIndex < items.length) {
           input.value = items[currentIndex].textContent;
-          input.dataset.nid = data[currentIndex].nid;
-          input.closest('tr').dataset.id = data[currentIndex].nid;
-          const resul = this.products.setLine(data[currentIndex]);
+          input.dataset.nid = this.itemsProducts[currentIndex].nid;
+          input.closest('tr').dataset.id = this.itemsProducts[currentIndex].nid;
+          const resul = this.products.setLine(this.itemsProducts[currentIndex]);
           if(!resul.success){
             input.value = '';
             input.dataset.nid = '';
           }
+          container.closest('.product-suggestion').style.display = 'none';
           container.innerHTML = '';
         }
         return;
@@ -182,8 +235,9 @@ export class QuoteUi {
 
 
   renderSuggestions(container, items, input) {
-    input.addEventListener('keydown', (e) => this.handleKeyboardNavigation(e, container, items));
+    this.itemsProducts = items;
     if (!items || items.length === 0) return;
+    container.closest('.product-suggestion').style.display = 'block';
     items.forEach(item => {
       const li = document.createElement('li');
       li.textContent = item.name; 
@@ -198,6 +252,7 @@ export class QuoteUi {
           input.dataset.nid = '';
         }
         container.innerHTML = '';
+        container.closest('.product-suggestion').style.display = 'none';
       });
       container.appendChild(li);
     });
@@ -384,12 +439,10 @@ export class QuoteUi {
   }
 
   showError(container, msg) {
-    const divErr = container.querySelector(".form-type--checkbox");
-    if (!divErr.querySelector(".error-quote--content")) {
-      const dElement = document.createElement("div");
-      dElement.classList.add("error-quote--content");
-      dElement.innerHTML = `<p>${msg}</p>`;
-      divErr.appendChild(dElement);
+    if(!container.classList.contains("error-quote--content")){
+      container.classList.add("error-quote--content");
+      const td = container.querySelector('.td-check');
+      this.tooltipInit(container, msg);
     }
   }
 }

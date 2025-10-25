@@ -17,25 +17,26 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
   <table class="quote-table">
     <thead>
       <tr>
+        <th class="td-check">No.</th>
         <th>Producto</th>
         <th>Cantidad</th>
         <th>Peso total</th>
         <th>Total</th>
-        <th>Qty</th>
+        <th>Empresa</th>
+        <th>Región entrega</th>
+        <th>Impuesto (%)</th>
         <th>Costo Unitario USD</th>
         <th>Costo total (USD)</th>
+        <th>Gravamen (%)</th>
+        <th>Factor cost</th>
+        <th>Tipo envío</th>
+        <th>Tipo contenedor</th>
+        <th>Entrega contenedor</th>
+        <th>Qty</th>
         <th>Vr Unitario</th>
         <th>Vr Total</th>
         <th>Factor</th>
-        <th>Factor cost</th>
         <th>Margen (%)</th>
-        <th>Impuesto (%)</th>
-        <th>Gravamen (%)</th>
-        <th>Empresa</th>
-        <th>Región entrega</th>
-        <th>Tipo contenedor</th>
-        <th>Entrega contenedor</th>
-        <th>Tipo envío</th>
         <th>Incoterm</th>
         <th>Tiempo entrega</th>
         <th>Solicitud</th>
@@ -73,6 +74,55 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
           ];
         }
       }
+
+      $assessment = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
+        'vid' => 'assessment'
+      ]);
+      if(!empty($assessment)){
+        foreach ($assessment as $k => $val) {
+          $settings['assessment'][] = [
+            'tid' => $val->tid->value,
+            'name' => $val->name->value,
+          ];
+        }
+      }
+
+      $shipping_method = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
+        'vid' => 'shipping_method'
+      ]);
+      if(!empty($shipping_method)){
+        foreach ($shipping_method as $k => $val) {
+          $settings['shipping_method'][] = [
+            'tid' => $val->tid->value,
+            'name' => $val->name->value,
+          ];
+        }
+      }
+
+      $container_type = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
+        'vid' => 'container_type'
+      ]);
+      if(!empty($container_type)){
+        foreach ($container_type as $k => $val) {
+          $settings['container_type'][] = [
+            'tid' => $val->tid->value,
+            'name' => $val->name->value,
+          ];
+        }
+      }
+      
+      $container_delivery = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
+        'vid' => 'container_delivery'
+      ]);
+      if(!empty($container_delivery)){
+        foreach ($container_delivery as $k => $val) {
+          $settings['container_delivery'][] = [
+            'tid' => $val->tid->value,
+            'name' => $val->name->value,
+          ];
+        }
+      }
+      
 
       $deliveries = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
         'vid' => 'delivery_region'

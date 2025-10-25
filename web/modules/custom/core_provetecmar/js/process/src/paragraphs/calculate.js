@@ -80,7 +80,11 @@ export class Calculate {
       const costTotal = this.containerRow.querySelector('[name*="field_total_cost"]');
       const costTotalTrm = this.containerRow.querySelector('[name*="field_total"]');
       if(costTotalTrm){
-        costTotalTrm.previousElementSibling.textContent =  `Total (${trm.name})`;
+        if(costTotalTrm.nextElementSibling == null){
+          const desc = document.createElement('label');
+          desc.textContent = `(${trm.name})`;
+          costTotalTrm.insertAdjacentElement('afterend', desc);
+        }
       }
       costTotal.value =
         parseFloat(result * fieldCant.value).toFixed(2);
@@ -271,10 +275,10 @@ export class Calculate {
     if (this.containerRow && this.nid) {
       this.costTotal();
       this.weightTotal();
-      /*this.taxCalculate();
+      this.taxCalculate();
       this.vrCosttUsd();
       this.landedCostFactor();
-      this.vrUnitUsd();
+      /*this.vrUnitUsd();
       this.ui.parametersMarkup(this.formQuote.totalResults());*/
     }
   }
