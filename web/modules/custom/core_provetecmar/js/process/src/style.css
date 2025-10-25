@@ -264,3 +264,105 @@
     width: 90%;
   }
 }
+
+.quote-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.quote-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 1400px; /* Permite scroll horizontal */
+}
+
+.quote-table th,
+.quote-table td {
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.quote-table thead {
+  background: #f1f1f1;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.quote-table input,
+.quote-table select {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.center {
+  text-align: center;
+}
+
+.btn {
+  border: none;
+  border-radius: 6px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.btn-remove {
+  background: #ff6666;
+  color: white;
+}
+
+.btn-remove:hover {
+  background: #e05555;
+}
+
+.btn-add {
+  background: #ffc700;
+  color: #000;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.table-actions {
+  text-align: right;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .quote-table-wrapper {
+    overflow-x: scroll;
+  }
+}
+
+
+.product-suggestion {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  position: absolute;
+  background: #fff;
+  width: 100%;
+  z-index: 1000;
+}
+
+.suggestion-item {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+
+.product-suggestion li.active {
+  background-color: #007BFF;
+  color: white;
+}

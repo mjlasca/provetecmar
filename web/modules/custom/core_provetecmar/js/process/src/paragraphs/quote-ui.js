@@ -1,10 +1,214 @@
+import { Services } from "./services";
+
 /**
  * Class for ui quote
  */
 export class QuoteUi {
-  constructor(settings = null) {
-    this.settings = settings.quote_settings ?? [];
+  lines = null;
+  constructor(settings = null, products) {
+    this.settings = settings ?? [];
     this.parameters = settings.parameters ?? [];
+    this.app = document.querySelector('#quote-lines');
+    this.addLine = document.querySelector('.table-actions');
+    this.service = new Services();
+    this.products = products;
+    this.init();
+  }
+
+  init(){
+    this.addLine.addEventListener('click', () => {
+      this.app.appendChild(this.line(''));
+    });
+    console.log(this.settings);
+    this.rfqs = this.settings.group_companies;
+    this.deliveries = this.settings.deliveries;
+    this.quote_settings = this.settings.quote_settings;
+    
+  }
+
+  fieldSelect(props, options){
+    const td = document.createElement('td');
+    const sele = document.createElement('select');
+    if (props) {
+        Object.assign(sele, props);
+    }
+    Object.values(options).forEach((val) => {
+      const option = document.createElement('option');
+      option.value = val.tid;
+      option.textContent  = val.name;
+      sele.appendChild(option);
+    });
+    sele.addEventListener('change', (e) =>  this.products.calculate(e));
+    td.appendChild(sele);
+    return td;
+  }
+
+  line(data){
+    const tr = document.createElement('tr');
+    const fieldProduct = this.fieldInput({'name':'field_product[]', 'type': 'text'});
+    tr.append(fieldProduct);
+    const fieldCant = this.fieldInput({'name':'field_cant[]', 'type': 'number'});
+    tr.append(fieldCant);
+    const fieldWeight = this.fieldInput({ 'name': 'field_weight_total[]', 'type': 'number', 'readOnly':true});
+    tr.append(fieldWeight);
+    const fieldTotal = this.fieldInput({ 'name': 'field_total[]', 'type': 'number', 'readOnly':true});
+    tr.append(fieldTotal);
+    const fieldCompany = this.fieldSelect({'name' : 'field_company[]'}, this.rfqs);
+    tr.append(fieldCompany);
+    const fieldDelivery = this.fieldSelect({'name': 'field_delivery_region[]'}, this.deliveries)
+    tr.append(fieldDelivery);
+    const btnRemove = document.createElement('button');
+    btnRemove.classList = ['btn btn-remove']
+    btnRemove.type = 'button';
+    btnRemove.textContent = "🗑️";
+    btnRemove.addEventListener('click', (e) => this.removeLine(e));
+    tr.appendChild(btnRemove);
+    return tr;
+    /*return `<tr class="quote-line">
+        <td><input type="text" name="field_product[]" class="form-input" /></td>
+        <td><input type="number" name="field_cant[]" class="form-input" step="0.01" /></td>
+        <td><input type="number" name="field_weight_total[]" class="form-input" step="0.01" /></td>
+        <td><input type="number" name="field_total[]" class="form-input" readonly /></td>
+        <td><input type="number" name="field_qty[]" class="form-input" /></td>
+        <td><input type="number" name="field_cost[]" class="form-input" step="0.01" /></td>
+        <td><input type="number" name="field_total_cost[]" class="form-input" step="0.01" readonly /></td>
+        <td><input type="number" name="field_unit_sale[]" class="form-input" step="0.01" /></td>
+        <td><input type="number" name="field_total_sale[]" class="form-input" step="0.01" readonly /></td>
+        <td><input type="number" name="field_sale_factor[]" class="form-input" step="0.01" /></td>
+        <td><input type="number" name="field_landed_cost[]" class="form-input" step="0.01" /></td>
+        <td><select name="field_margin[]" class="form-select"></select></td>
+        <td><input type="number" name="field_tax[]" class="form-input" step="0.01" /></td>
+        <td><select name="field_assessment[]" class="form-select"></select></td>
+        <td><select name="field_company[]" class="form-select"></select></td>
+        <td><select name="field_delivery_region[]" class="form-select"></select></td>
+        <td><select name="field_container_type[]" class="form-select"></select></td>
+        <td><select name="field_container_delivery[]" class="form-select"></select></td>
+        <td><select name="field_shipping_method[]" class="form-select"></select></td>
+        <td><select name="field_incoterm[]" class="form-select"></select></td>
+        <td><input type="text" name="field_delivery_time[]" class="form-input" /></td>
+        <td class="center"><input type="checkbox" name="field_check[]" /></td>
+        <td><input type="text" name="field_comments[]" class="form-input" /></td>
+        <td class="center"><button type="button" class="btn btn-remove">🗑️</button></td>
+      </tr>`;*/
+  }
+
+  fieldInput(props = null){
+    const td = document.createElement('td');
+    const inp = document.createElement('input');
+    if (props) {
+        Object.assign(inp, props);
+    }
+    td.appendChild(inp);
+    if(props.name == 'field_product[]'){
+      const sugges = document.createElement('div');
+      sugges.classList = ['product-suggestion'];
+      const ul = document.createElement('ul');
+      sugges.appendChild(ul);
+      td.appendChild(sugges);
+      inp.addEventListener('input', (e) =>  this.autoComplete(e,ul));
+    }
+    inp.addEventListener('change', (e) =>  this.products.calculate(e));
+    return td;
+  }
+
+  async autoComplete(e, contain){
+    contain.innerHTML = '';
+    const keyword = e.target.value;
+    if(keyword.length < 3)
+      return;
+    try {
+      const response = await fetch(
+        `${this.service.urlBase}/get-product-quote/${keyword}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
+      }
+      const data = await response.json();
+      this.renderSuggestions(contain, data.products, e.target)
+    } catch (error) {
+      console.error("Error en fetchData:", error);
+    }
+    
+  }
+
+  handleKeyboardNavigation(e, container, data) {
+    const input = e.target;
+    let currentIndex = -1;
+    const items = container.querySelectorAll('li');
+    if (items.length === 0) return;
+    items.forEach((ele,k) => {
+      if(ele.classList.contains('active'))
+        currentIndex = k;
+    });
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        currentIndex = (currentIndex + 1) % items.length;
+        break;
+
+      case 'ArrowUp':
+        e.preventDefault();
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        break;
+
+      case 'Enter':
+        e.preventDefault();
+        if (currentIndex >= 0 && currentIndex < items.length) {
+          input.value = items[currentIndex].textContent;
+          input.dataset.nid = data[currentIndex].nid;
+          input.closest('tr').dataset.id = data[currentIndex].nid;
+          const resul = this.products.setLine(data[currentIndex]);
+          if(!resul.success){
+            input.value = '';
+            input.dataset.nid = '';
+          }
+          container.innerHTML = '';
+        }
+        return;
+
+      default:
+        return;
+    }
+    items.forEach(li => li.classList.remove('active'));
+    items[currentIndex].classList.add('active');
+  }
+
+
+  renderSuggestions(container, items, input) {
+    input.addEventListener('keydown', (e) => this.handleKeyboardNavigation(e, container, items));
+    if (!items || items.length === 0) return;
+    items.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item.name; 
+      li.classList.add('suggestion-item');
+      li.addEventListener('click', () => {
+        input.value = item.name;
+        input.dataset.nid = item.nid;
+        input.closest('tr').dataset.id = item.nid;
+        const resul = this.products.setLine(item);
+        if(!resul.success){
+          input.value = '';
+          input.dataset.nid = '';
+        }
+        container.innerHTML = '';
+      });
+      container.appendChild(li);
+    });
+  }
+
+  removeLine(e){
+    if( !confirm('¿Está segur@ de eliminar esta líena?') )
+      return;
+    const tr = e.target.closest('tr');
+    this.products.lines = this.products.lines.filter(item => item.nid == tr.dataset.id);
+    tr.remove();
   }
 
   modalMarkup(src) {

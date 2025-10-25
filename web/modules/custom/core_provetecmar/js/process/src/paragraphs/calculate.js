@@ -8,26 +8,15 @@ import { Services } from "./services";
  * Clas for utilities quote
  */
 export class Calculate {
-  constructor(containerRow, nid, settings) {
+  constructor(containerRow, nid, settings, products) {
     this.containerRow = containerRow;
     this.dataProduct = null;
     this.parametersQuote = settings.taxes;
     this.nid = nid;
-    this.ui = new QuoteUi(settings);
-    console.log("A--------");
-    console.log(this.nid);
-    this.services = new Services(this.nid);
-    this.init();
     this.shipping = settings.shipping;
     this.customs = settings.container_delivery;
-    this.formQuote = new FormQuote(containerRow, settings);
-  }
-
-  async init() {
-    this.dataProduct = await this.services.nodeProductService();
-    if(this.containerRow){
-      this.containerRow.closest('.paragraph-type--items').classList.add('paragraph-complete');
-    }
+    this.formQuote = products;
+    this.ui = this.formQuote.ui;
   }
 
   weightTotal() {
@@ -47,7 +36,7 @@ export class Calculate {
     if (fieldCant && this.dataProduct.cost_unit){
       fieldTotal.value =
         parseFloat(this.dataProduct.cost_unit) * parseFloat(fieldCant.value);
-      const upd = this.ui.settings.find(item => item.nid == this.nid);
+      const upd = this.ui.quote_settings.find(item => item.nid == this.nid);
       if(upd){
         upd.currency.cost = fieldTotal.value;
         upd.currency.tid = this.dataProduct.currency;
@@ -272,23 +261,21 @@ export class Calculate {
         arrNid.push(el.getAttribute('data-nid'));
       });
     }
-    const restUpd = this.ui.settings.filter(obj => arrNid.includes(obj.nid));
-    this.ui.settings = restUpd;
+    const restUpd = this.ui.quote_settings.filter(obj => arrNid.includes(obj.nid));
+    this.ui.quote_settings = restUpd;
     this.ui.parametersMarkup(this.formQuote.totalResults());
-    return this.ui.settings;
+    return this.ui.quote_settings;
   }
 
-  async process() {
+  process() {
     if (this.containerRow && this.nid) {
-      await this.handleGetProduct();
-      console.log(this.dataProduct);
       this.costTotal();
       this.weightTotal();
-      this.taxCalculate();
+      /*this.taxCalculate();
       this.vrCosttUsd();
       this.landedCostFactor();
       this.vrUnitUsd();
-      this.ui.parametersMarkup(this.formQuote.totalResults());
+      this.ui.parametersMarkup(this.formQuote.totalResults());*/
     }
   }
 

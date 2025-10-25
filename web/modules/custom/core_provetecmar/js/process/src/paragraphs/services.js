@@ -2,9 +2,34 @@
  * Clas for get services
  */
 export class Services {
-  constructor(nid) {
+  constructor() {
     this.urlBase = `${window.location.origin}`;
-    this.nid = nid;
+  }
+
+  async nodeProductService(keyword) {
+    if (keyword) {
+      try {
+        console.log("testtt");
+        const response = await fetch(
+          `${this.urlBase}/get-product-quote/${keyword}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error(`Error HTTP: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log(data);
+        return data.product;
+      } catch (error) {
+        console.error("Error en fetchData:", error);
+      }
+    }
   }
 
   async nodeProductService() {

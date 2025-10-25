@@ -12,8 +12,48 @@ use Drupal\Core\Render\Markup;
  */
 function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
   if ($form_id === 'node_quote_edit_form' || $form_id === 'node_quote_form') {
-    //$form['field_products']['#access'] = FALSE;
-    $form['field_requests_send']['#prefix'] = '<div class="quote-app"></div><div class="quote-parameters"></div><div class="quote-messages"></div>';
+    $form['field_products']['#access'] = FALSE;
+    $form['field_requests_send']['#prefix'] = '<div class="quote-app"><div class="quote-table-wrapper">
+  <table class="quote-table">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Peso total</th>
+        <th>Total</th>
+        <th>Qty</th>
+        <th>Costo Unitario USD</th>
+        <th>Costo total (USD)</th>
+        <th>Vr Unitario</th>
+        <th>Vr Total</th>
+        <th>Factor</th>
+        <th>Factor cost</th>
+        <th>Margen (%)</th>
+        <th>Impuesto (%)</th>
+        <th>Gravamen (%)</th>
+        <th>Empresa</th>
+        <th>Región entrega</th>
+        <th>Tipo contenedor</th>
+        <th>Entrega contenedor</th>
+        <th>Tipo envío</th>
+        <th>Incoterm</th>
+        <th>Tiempo entrega</th>
+        <th>Solicitud</th>
+        <th>Comentarios</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="quote-lines">
+      
+    </tbody>
+  </table>
+
+  
+</div>
+<div class="table-actions">
+    <button id="add-line" type="button" class="btn btn-add">➕ Agregar línea</button>
+  </div>
+</div><div class="quote-parameters"></div><div class="quote-messages"></div>';
     $nodeQuote = $form_state->getFormObject()->getEntity();
     $arrState = ['assignment','price_change'];
     if(!empty($nodeQuote->get('moderation_state')->value) && in_array($nodeQuote->get('moderation_state')->value, $arrState) ){
@@ -21,6 +61,30 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
     }
     if (isset($form['field_products']['widget'])) {
       $settings = [];
+
+      $rfqs = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
+        'vid' => 'group_companies'
+      ]);
+      if(!empty($rfqs)){
+        foreach ($rfqs as $k => $rfq) {
+          $settings['group_companies'][] = [
+            'tid' => $rfq->tid->value,
+            'name' => $rfq->name->value,
+          ];
+        }
+      }
+
+      $deliveries = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
+        'vid' => 'delivery_region'
+      ]);
+      if(!empty($deliveries)){
+        foreach ($deliveries as $k => $val) {
+          $settings['deliveries'][] = [
+            'tid' => $val->tid->value,
+            'name' => $val->name->value,
+          ];
+        }
+      }
 
       $taxes = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
         'vid' => 'taxes'

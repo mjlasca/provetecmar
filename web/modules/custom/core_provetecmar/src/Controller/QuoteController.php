@@ -151,18 +151,33 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
    *  Id node
    * @return JsonResponse / RedirectResponse;
    */
-  public function getProduct($nid) : mixed {
-    $node = $this->entityTypeManager->getStorage('node')->load($nid);
+  public function getProduct($keyword) : mixed {
+    $query = $this->entityTypeManager
+      ->getStorage('node')
+      ->getQuery()
+      ->condition('title', '%' . $keyword . '%', 'LIKE')
+      ->accessCheck(TRUE);
+
+    $nids = $query->execute();
+
+    $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($nids);
+    if(empty($nodes))
+      return new JsonResponse(['success' => TRUE, 'products' => []], 200);
     $result = [];
-    if(!empty($node)){
-      $result['nid'] = $node->nid->value ?? 0;
-      $result['weight'] = $node->field_unit_weight->value ?? 0;
-      $result['cost_unit'] = $node->field_unit_cost->value ?? 0;
-      $result['provider'] = $node->field_provider->target_id ?? 0;
-      $result['currency'] = $node->field_purchase_currency->target_id ?? 0;
+    foreach ($nodes as $key => $node) {
+      if(!empty($node)){
+        $result[] = [
+          'nid' => $node->nid->value ?? 0,
+          'name' => $node->title->value ?? 0,
+          'weight' => $node->field_unit_weight->value ?? 0,
+          'cost_unit' => $node->field_unit_cost->value ?? 0,
+          'provider' => $node->field_provider->target_id ?? 0,
+          'currency' => $node->field_purchase_currency->target_id ?? 0,
+        ];
+      }
     }
     if(!empty($result))
-      return new JsonResponse(['success' => TRUE, 'product' => $result], 200);
+      return new JsonResponse(['success' => TRUE, 'products' => $result], 200);
     return new JsonResponse(['success' => 'invalid request method'], 400);
   }
 

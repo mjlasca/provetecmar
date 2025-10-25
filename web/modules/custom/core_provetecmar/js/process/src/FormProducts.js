@@ -1,7 +1,8 @@
+import { Calculate } from "./paragraphs/calculate";
 import { QuoteUi } from "./paragraphs/quote-ui";
 
 export class FormQuote{
-    paragraphs = [];
+    lines = [];
     form = null;
     ui = null;
     settings = [];
@@ -9,7 +10,8 @@ export class FormQuote{
     constructor(form = null, settings = null){
         this.form = form;
         this.settings = settings;
-        this.ui = new QuoteUi(settings);
+        this.ui = new QuoteUi(settings, this);
+        this.calc = new Calculate(null, null, settings, this);
     }
     
     init(){
@@ -46,8 +48,36 @@ export class FormQuote{
             }
         });
         }
-        
         return rest;
+    }
+
+    getObjLine(nid){
+        return this.lines.find(item => item.nid == nid);
+    }
+
+    calculate(e){
+        const obj = {};
+        const prop = e.target.name.replace('[]','');
+        obj[prop] = e.target.value;
+        obj['nid'] = e.target.closest('tr').dataset.id;
+        this.setLine(obj);
+        this.calc.containerRow = e.target.closest('tr');
+        this.calc.nid = e.target.closest('tr').dataset.id;
+        this.calc.dataProduct = this.getObjLine(this.calc.nid);
+        this.calc.process();
+    }
+
+    setLine(data) {
+        console.log(this.lines.length);
+        if (this.lines.length > 0) {
+            const search = this.lines.find(line => line.nid === data.nid);
+            if (search) {
+                Object.assign(search, data); 
+                return { 'msg': 'Línea de producto actualizada', 'success': true };
+            }
+        }
+        this.lines.push(data);
+        return { 'msg': 'Nueva línea de producto agregada', 'success': true };
     }
 
 }

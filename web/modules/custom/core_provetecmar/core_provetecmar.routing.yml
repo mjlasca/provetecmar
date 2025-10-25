@@ -7,7 +7,7 @@ core_provetecmar.send_mail_requests:
     _permission: 'access content'
 
 core_provetecmar.get_product_for_quote:
-  path: '/get-product-quote/{nid}'
+  path: '/get-product-quote/{keyword}'
   defaults:
     _controller: '\Drupal\core_provetecmar\Controller\QuoteController::getProduct'
     _title: 'Get product'
