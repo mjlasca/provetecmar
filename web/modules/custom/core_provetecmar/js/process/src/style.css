@@ -172,7 +172,7 @@
     height: 30px;
     font-size: 16px;
 }
-    
+
 .quote-modal--body .form .selected-items {
     display: flex;
     flex-direction: column;
@@ -300,6 +300,27 @@
 .quote-table .td-check {
   min-width: 60px;
   max-width: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  justify-content: center;
+  align-items: center;
+}
+
+.quote-table .td-check input[type="checkbox"]{
+  width: 12px;
+  height: 12px;
+  transform: scale(1.5);
+}
+
+
+.quote-table .td-small {
+  min-width: 60px;
+  max-width: 60px;
+}
+
+.quote-table .td-medium {
+  min-width: 250px;
 }
 
 .quote-table thead {
@@ -346,8 +367,9 @@
 }
 
 .table-actions {
-  text-align: right;
   margin-top: 0.5rem;
+  max-width: 200px;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -388,7 +410,7 @@
 
 .custom-tooltip {
     position: absolute;
-    background-color: #333;
+    background-color: #e05555;
     color: white;
     padding: 5px 10px;
     border-radius: 4px;

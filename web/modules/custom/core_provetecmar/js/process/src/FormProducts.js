@@ -12,8 +12,9 @@ export class FormQuote{
         this.settings = settings;
         this.ui = new QuoteUi(settings, this);
         this.calc = new Calculate(null, null, settings, this);
+        this.initLines();
     }
-    
+
     init(){
         if(this.form != null){
             this.ui.succesWarning(this.form);
@@ -67,12 +68,20 @@ export class FormQuote{
         this.calc.process();
     }
 
+    initLines(){
+        if(this.settings.items.length > 0){
+            this.lines = this.settings.items;
+            Object.values(this.lines).forEach(item => {
+                this.ui.setLine(item);
+            });
+        }
+    }
+
     setLine(data) {
-        console.log(this.lines.length);
         if (this.lines.length > 0) {
             const search = this.lines.find(line => line.nid === data.nid);
             if (search) {
-                Object.assign(search, data); 
+                Object.assign(search, data);
                 return { 'msg': 'Línea de producto actualizada', 'success': true };
             }
         }

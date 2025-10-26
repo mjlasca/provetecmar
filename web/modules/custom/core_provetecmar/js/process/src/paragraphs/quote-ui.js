@@ -6,6 +6,8 @@ import { Services } from "./services";
 export class QuoteUi {
   lines = null;
   itemsProducts = [];
+  succ = null;
+  fals = null;
   constructor(settings = null, products) {
     this.settings = settings ?? [];
     this.parameters = settings.parameters ?? [];
@@ -18,9 +20,8 @@ export class QuoteUi {
 
   init(){
     this.addLine.addEventListener('click', () => {
-      this.app.appendChild(this.line(''));
+      this.setLine({});
     });
-    console.log(this.settings);
     this.rfqs = this.settings.group_companies;
     this.deliveries = this.settings.deliveries;
     this.quote_settings = this.settings.quote_settings;
@@ -28,7 +29,13 @@ export class QuoteUi {
     this.shipping_method = this.settings.shipping_method;
     this.container_type = this.settings.container_type;
     this.container_delivery = this.settings.container_delivery;
-    
+    this.incoterms = this.settings.incoterms;
+    this.margin = this.settings.margin;
+    //span check th prmary
+    this.succ = document.querySelector('.check-succ');
+    this.succ.innerHTML = '<input type="checkbox" >';
+    this.succ.addEventListener('change', (e) => this.manageCheck(e));
+
   }
 
   fieldSelect(props, options){
@@ -52,8 +59,8 @@ export class QuoteUi {
     const tooltip = document.createElement('div');
     tooltip.className = 'custom-tooltip';
     tooltip.textContent = msg;
-    tooltip.style.display = 'none'; 
-    document.body.appendChild(tooltip);
+    tooltip.style.display = 'none';
+    element.appendChild(tooltip);
     element.addEventListener('mouseenter', (e) => {
         tooltip.style.left = e.pageX + 10 + 'px';
         tooltip.style.top = e.pageY + 10 + 'px';
@@ -68,72 +75,80 @@ export class QuoteUi {
     });
   }
 
+  tooltipRemove(container){
+    container.querySelector('.custom-tooltip').remove();
+  }
+
+  setLine(data){
+    this.app.appendChild(this.line(data));
+    this.counter();
+  }
+
   line(data){
     const tr = document.createElement('tr');
     tr.classList = ['line-product']
+
     const fieldCheck = this.fieldInput({'name':'field_check[]', 'type': 'checkbox'});
     fieldCheck.classList = ['td-check'];
     tr.append(fieldCheck);
-    const fieldProduct = this.fieldInput({'name':'field_product[]', 'type': 'text'});
+    const fieldProduct = this.fieldInput({'name':'field_product[]', 'type': 'text', 'value':  data.field_product ?? '' });
+    if(data.nid){
+      tr.dataset.id = data.nid;
+      fieldProduct.dataset.nid = data.nid;
+    }
     tr.append(fieldProduct);
-    const fieldCant = this.fieldInput({'name':'field_cant[]', 'type': 'number'});
+    const fieldCant = this.fieldInput({'name':'field_cant[]', 'type': 'number', 'value':  data.field_cant ?? '' });
     tr.append(fieldCant);
-    const fieldWeight = this.fieldInput({ 'name': 'field_weight_total[]', 'type': 'number', 'readOnly':true});
+    const fieldWeight = this.fieldInput({ 'name': 'field_weight_total[]', 'type': 'number', 'readOnly':true, 'value':  data.field_weight_total ?? '' });
     tr.append(fieldWeight);
-    const fieldTotal = this.fieldInput({ 'name': 'field_total[]', 'type': 'number', 'readOnly':true});
+    const fieldTotal = this.fieldInput({ 'name': 'field_total[]', 'type': 'number', 'readOnly':true, 'value':  data.field_total ?? '' });
     tr.append(fieldTotal);
-    const fieldCompany = this.fieldSelect({'name' : 'field_company[]'}, this.rfqs);
+    const fieldCompany = this.fieldSelect({'name' : 'field_company[]', 'value':  data.field_company ?? ''}, this.rfqs);
     tr.append(fieldCompany);
-    const fieldDelivery = this.fieldSelect({'name': 'field_delivery_region[]'}, this.deliveries)
+    const fieldDelivery = this.fieldSelect({'name': 'field_delivery_region[]', 'value':  data.field_delivery_region ?? ''}, this.deliveries)
     tr.append(fieldDelivery);
-    const fieldTax = this.fieldInput({'name' : 'field_tax[]', 'type' : 'number', 'readOnly': true});
+    const fieldTax = this.fieldInput({'name' : 'field_tax[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_taxs ?? ''});
     tr.append(fieldTax);
-    const fieldCost = this.fieldInput({'name' : 'field_cost[]', 'type' : 'number', 'readOnly': true});
+    const fieldCost = this.fieldInput({'name' : 'field_cost[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_cost ?? ''});
     tr.append(fieldCost);
-    const fieldTotalCost = this.fieldInput({'name' : 'field_total_cost[]', 'type' : 'number', 'readOnly': true});
+    const fieldTotalCost = this.fieldInput({'name' : 'field_total_cost[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_total_cost ?? ''});
     tr.append(fieldTotalCost);
-    const fieldAssessment = this.fieldSelect({'name' : 'field_assessment[]'}, this.assessment);
+    const fieldAssessment = this.fieldSelect({'name' : 'field_assessment[]', 'value':  data.field_assessment ?? ''}, this.assessment);
     tr.append(fieldAssessment);
-    const fieldLandedCost = this.fieldInput({'name' : 'field_landed_cost[]', 'type' : 'number'});
+    const fieldMargin = this.fieldSelect({'name' : 'field_margin[]', 'value':  data.field_margin ?? ''}, this.margin);
+    tr.append(fieldMargin);
+    const fieldIncoterm = this.fieldSelect({'name' : 'field_incoterm[]', 'value':  data.field_incoterm ?? ''}, this.incoterms);
+    tr.append(fieldIncoterm);
+    const fieldLandedCost = this.fieldInput({'name' : 'field_landed_cost[]', 'type' : 'number', 'value':  data.field_landed_cost ?? ''});
     tr.append(fieldLandedCost);
-    const fieldShippingMethod = this.fieldSelect({'name' : 'field_shipping_method[]'}, this.shipping_method);
+    const fieldShippingMethod = this.fieldSelect({'name' : 'field_shipping_method[]', 'value':  data.field_shipping_method ?? ''}, this.shipping_method);
     tr.append(fieldShippingMethod);
-    const fieldContainerType = this.fieldSelect({'name' : 'field_container_type[]'}, this.container_type);
+    const fieldContainerType = this.fieldSelect({'name' : 'field_container_type[]', 'value':  data.field_container_type ?? ''}, this.container_type);
     tr.append(fieldContainerType);
-    const fieldContainerDelivery = this.fieldSelect({'name' : 'field_container_delivery[]'}, this.container_delivery);
+    const fieldQty = this.fieldInput({'name' : 'field_qty[]', 'type' : 'number', 'value':  data.field_qty ?? ''});
+    tr.append(fieldQty);
+    const fieldContainerDelivery = this.fieldSelect({'name' : 'field_container_delivery[]', 'value':  data.field_container_delivery ?? ''}, this.container_delivery);
     tr.append(fieldContainerDelivery);
+    const fieldUnitSale = this.fieldInput({'name' : 'field_unit_sale[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_unit_sale ?? ''});
+    tr.append(fieldUnitSale);
+    const fieldTotalSale = this.fieldInput({'name' : 'field_total_sale[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_total_sale ?? ''});
+    tr.append(fieldTotalSale);
+    const fieldSaleFactor = this.fieldInput({'name' : 'field_sale_factor[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_sale_factor ?? ''});
+    tr.append(fieldSaleFactor);
+    const fieldDeliveryTime = this.fieldInput({'name' : 'field_delivery_time[]', 'type' : 'text', 'value':  data.field_delivery_time ?? ''});
+    tr.append(fieldDeliveryTime);
+    const fieldComments = this.fieldInput({'name' : 'field_comments[]', 'type' : 'text', 'value':  data.field_comments ?? ''});
+    tr.append(fieldComments);
+    const tdBtn = document.createElement('td');
+    tdBtn.classList = ['td-small'];
     const btnRemove = document.createElement('button');
+    tdBtn.appendChild(btnRemove);
     btnRemove.classList = ['btn btn-remove']
     btnRemove.type = 'button';
     btnRemove.textContent = "🗑️";
     btnRemove.addEventListener('click', (e) => this.removeLine(e));
-    tr.appendChild(btnRemove);
+    tr.appendChild(tdBtn);
     return tr;
-    /*return `<tr class="quote-line">
-        <td><input type="text" name="field_product[]" class="form-input" /></td>
-        <td><input type="number" name="field_cant[]" class="form-input" step="0.01" /></td>
-        <td><input type="number" name="field_weight_total[]" class="form-input" step="0.01" /></td>
-        <td><input type="number" name="field_total[]" class="form-input" readonly /></td>
-        
-        
-        
-        <td><input type="number" name="field_unit_sale[]" class="form-input" step="0.01" /></td>
-        <td><input type="number" name="field_total_sale[]" class="form-input" step="0.01" readonly /></td>
-        <td><input type="number" name="field_sale_factor[]" class="form-input" step="0.01" /></td>
-        
-        <td><select name="field_margin[]" class="form-select"></select></td>
-        
-        
-        <td><select name="field_company[]" class="form-select"></select></td>
-        
-        
-        
-        <td><select name="field_incoterm[]" class="form-select"></select></td>
-        <td><input type="text" name="field_delivery_time[]" class="form-input" /></td>
-        <td class="center"><input type="checkbox" name="field_check[]" /></td>
-        <td><input type="text" name="field_comments[]" class="form-input" /></td>
-        <td class="center"><button type="button" class="btn btn-remove">🗑️</button></td>
-      </tr>`;*/
   }
 
   fieldInput(props = null){
@@ -181,16 +196,16 @@ export class QuoteUi {
     } catch (error) {
       console.error("Error en fetchData:", error);
     }
-    
+
   }
 
   handleKeyboardNavigation(e, container) {
-    
+
     const input = e.target;
     let currentIndex = -1;
     const items = container.querySelectorAll('li');
     if (e.repeat) {
-        return; 
+        return;
     }
     if (items.length === 0) return;
     container.closest('.product-suggestion').style.display = 'block';
@@ -240,7 +255,7 @@ export class QuoteUi {
     container.closest('.product-suggestion').style.display = 'block';
     items.forEach(item => {
       const li = document.createElement('li');
-      li.textContent = item.name; 
+      li.textContent = item.name;
       li.classList.add('suggestion-item');
       li.addEventListener('click', () => {
         input.value = item.name;
@@ -264,6 +279,7 @@ export class QuoteUi {
     const tr = e.target.closest('tr');
     this.products.lines = this.products.lines.filter(item => item.nid == tr.dataset.id);
     tr.remove();
+    this.counter();
   }
 
   modalMarkup(src) {
@@ -272,7 +288,7 @@ export class QuoteUi {
       divModal.classList.add("overlay-modal");
       divModal.id = "modal-quote";
       divModal.innerHTML = `
-            <div class="content-modal"> 
+            <div class="content-modal">
             <iframe
                 class="modal-iframe"
                 src="${src}"
@@ -410,7 +426,7 @@ export class QuoteUi {
             }
         });
         params.innerHTML = `<div class="parameters-body">
-                        
+
                         <div class="bar-left">
                             <div class="total-trm">${trms}</div>
                             <div class="quote-parameters--totals">
@@ -441,8 +457,31 @@ export class QuoteUi {
   showError(container, msg) {
     if(!container.classList.contains("error-quote--content")){
       container.classList.add("error-quote--content");
-      const td = container.querySelector('.td-check');
       this.tooltipInit(container, msg);
     }
+  }
+
+  counter(){
+    const count = this.app.querySelectorAll('.td-check .count-line');
+    count.forEach(element => {
+      element.remove();
+    });
+    const lines = this.app.querySelectorAll('.td-check');
+    lines.forEach((element, x) => {
+      const span = document.createElement('span');
+      span.classList = ['count-line'];
+      span.textContent = (x + 1);
+      element.prepend(span);
+    });
+  }
+
+  manageCheck(e){
+    const status = e.target.checked;
+    const checks = this.app.querySelectorAll('input[type="checkbox"]');
+    if(checks.length < 1)
+      return;
+    checks.forEach(element => {
+      element.checked = status;
+    });
   }
 }

@@ -24,7 +24,7 @@ export class Calculate {
     const fieldWeight = this.containerRow.querySelector(
       '[name*="field_weight_total"]'
     );
-    if (fieldCant && this.dataProduct.weight)
+    if (fieldCant && fieldCant.value != '' && this.dataProduct.weight)
       fieldWeight.value =
         parseFloat(this.dataProduct.weight) * parseFloat(fieldCant.value);
     else fieldWeight.value = 0;
@@ -74,7 +74,7 @@ export class Calculate {
     }
     this.containerRow.querySelector('[name*="field_cost"]').value =
       result.toFixed(2);
-    
+
     const fieldCant = this.containerRow.querySelector('[name*="field_cant"]');
     if (fieldCant && fieldCant.value != "") {
       const costTotal = this.containerRow.querySelector('[name*="field_total_cost"]');
@@ -127,7 +127,7 @@ export class Calculate {
         if(shipp.type_delivery == 'defa')
             landed.value = 0;
       }
-      
+
     }
   }
 
@@ -138,8 +138,10 @@ export class Calculate {
   }
 
   getShipping() {
-    if (this.containerRow.querySelector(".error-quote--content"))
-          this.containerRow.querySelector(".error-quote--content").remove();
+    if(this.containerRow.classList.contains('error-quote--content')){
+      this.containerRow.classList.remove('error-quote--content');
+      this.ui.tooltipRemove(this.containerRow);
+    }
     let res = {'type_delivery':'defa'};
     const delivery = this.containerRow.querySelector(
       '[name*="field_delivery_region"]'
@@ -161,13 +163,13 @@ export class Calculate {
     }
     if(res == undefined)
         res = {'type_delivery':'defa', 'cost':0};
-    
+
     if (
       delivery &&
       shippingMethod &&
       delivery.value > 0 &&
       res != undefined &&
-      res.hasOwnProperty('type_delivery') && 
+      res.hasOwnProperty('type_delivery') &&
       res.type_delivery == 'mar'
     ) {
       const containerType = this.containerRow.querySelector(
@@ -201,15 +203,19 @@ export class Calculate {
           const shipping = objRes.cost * qty.value;
           const shipExw = parseFloat(totalUsd.value) + parseFloat(shipping);
           const asse = shipExw * (parseFloat(optionSelect.textContent) / 100);
+          console.log(this.customs);
+
           const customsGet = this.customs.find(
             (item) => item.tid == parseInt(containerDelivery.value)
           );
+          console.log(customsGet);
           if (customsGet) {
             const customs = shipExw * (objRes.customs / 100);
             const localDelivery =
               shipping * (parseFloat(customsGet.shipping_method) / 100);
             const landedCost = localDelivery + customs + asse + shipExw;
             res = {'cost' : landedCost / parseFloat(totalUsd.value), 'type_delivery' : 'mar'};
+            console.log(res);
           }
         }else{
             this.ui.showError(
@@ -249,14 +255,14 @@ export class Calculate {
     const linkProduct = this.containerRow.querySelector(".show-product");
     if (linkProduct){
       linkProduct.href = `/node/${this.nid}/edit`;
-    } 
+    }
     else {
       this.ui.linkProduct(this.nid, this.containerRow, this.dataProduct.currency);
     }
     this.validState();
   }
 
-  
+
   updateSettings(context){
     const nids = context.querySelectorAll('[data-nid]');
     let arrNid = [];
@@ -278,7 +284,8 @@ export class Calculate {
       this.taxCalculate();
       this.vrCosttUsd();
       this.landedCostFactor();
-      /*this.vrUnitUsd();
+      this.vrUnitUsd();
+      /*
       this.ui.parametersMarkup(this.formQuote.totalResults());*/
     }
   }
