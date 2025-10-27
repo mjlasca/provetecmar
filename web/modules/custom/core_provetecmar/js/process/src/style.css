@@ -333,8 +333,8 @@
 .quote-table input,
 .quote-table select {
   width: 100%;
-  padding: 5px 0px;
-  font-size: 0.9rem;
+  padding: 5px;
+  font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -417,4 +417,9 @@
     font-size: 14px;
     z-index: 1000;
     pointer-events: none;
+}
+
+.msg-draft{
+  text-align: center;
+  background-color: #f1ffa4;
 }

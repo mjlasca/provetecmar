@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\core_provetecmar\Service\CreatePurchaseOrderService;
 use Drupal\core_provetecmar\Service\MailSendRequests;
+use Drupal\core_provetecmar\Service\SetLinesQuoteService;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -55,21 +56,27 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
    *
    * @var \Drupal\Core\Messenger\MessengerInterface
    */
-  protected $messenger;  
+  protected $messenger;
 
   /**
    * Service createPurchase
    *
    * @var \Drupal\core_provetecmar\Service\CreatePurchaseOrderService
    */
-  protected $createPurchaseService;  
+  protected $createPurchaseService;
 
   /**
    * Service send requests
-   * 
+   *
    * @var \Drupal\core_provetecmar\Service\MailSendRequests;
    */
   protected $mailSendRequests;
+
+  /**
+   * Set lines for save paragraph
+   * @var \Drupal\core_provetecmar\Service\SetLinesQuoteService
+   */
+  protected $setLine;
 
 
   public function __construct(
@@ -81,6 +88,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     MessengerInterface $messenger,
     CreatePurchaseOrderService $createPurchaseService,
     MailSendRequests $mailSendRequests,
+    SetLinesQuoteService $setLinesQuote
     ) {
     $this->mailer = $mailer;
     $this->languageManager = $language_manager;
@@ -90,6 +98,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     $this->messenger = $messenger;
     $this->createPurchaseService = $createPurchaseService;
     $this->mailSendRequests = $mailSendRequests;
+    $this->setLine = $setLinesQuote;
   }
 
   public static function create(ContainerInterface $container) {
@@ -102,6 +111,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
       $container->get('messenger'),
       $container->get('core_provetecmar.quote_create_purchase'),
       $container->get('core_provetecmar.mailsendrequest'),
+      $container->get('core_provetecmar.save_lines_quote'),
     );
   }
 
@@ -113,7 +123,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
   public function sendMailRequests($items) : array {
     $result = ['success' => false];
     foreach ($items as $key => $item) {
-      
+
     }
     if($this->mailer->sendMail(
       'mjlasca@gmail.com',
@@ -189,12 +199,12 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
    */
   public function download($nid, $return = 'pdf') : Response {
     $node = $this->entityTypeManager->getStorage('node')->load($nid);
-    
+
     if(!empty($node->created->value)){
       $dt = new DrupalDateTime("@".$node->created->value);
       $date = $dt->format("d \\d\\e F \\d\\e\\l Y");
     }
-    
+
     $paragraphs =  $node->field_products->referencedEntities();
     $items = [];
     $total = 0;
@@ -236,7 +246,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
 
     $pdfContent = $dompdf->output();
 
-    
+
     if($return == 'mail'){
       $pdfPath = 'public://cotización-' . $node->nid->value . '.pdf';
       file_put_contents($this->fileSystem->realpath($pdfPath), $pdfContent);
@@ -252,7 +262,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
          $this->messenger->addMessage("Se ha enviado PDF de cotización correctamente a {$to}");
         $response->send();
       }
-        
+
     }else{
       $response = new Response($pdfContent);
       $response->headers->set('Content-Type', 'application/pdf');
@@ -299,5 +309,19 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     if($res['success'])
       return new JsonResponse(['success' => $res['success'], 'msg' => $res['msg']], 200);
     return new JsonResponse(['msg' => $res['msg']], 500);
+  }
+
+  /**
+   * Send requests
+   * @return Response
+   */
+  function saveLinesQuote($nid, Request $req) : JsonResponse {
+    if(empty($nid))
+      return new JsonResponse(['success' => FALSE], 400);
+    $data['lines'] = json_decode($req->getContent(), TRUE);
+    $data['node'] = $this->entityTypeManager->getStorage('node')->load($nid);
+    $result = $this->setLine->saveLines($data);
+    return new JsonResponse($result, 200);
+
   }
 }

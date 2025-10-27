@@ -13,13 +13,13 @@ export class FormQuote{
         this.ui = new QuoteUi(settings, this);
         this.calc = new Calculate(null, null, settings, this);
         this.initLines();
+        this.init();
+        console.log(this.settings);
     }
 
     init(){
-        if(this.form != null){
-            this.ui.succesWarning(this.form);
-            this.ui.parametersMarkup(this.totalResults());
-        }
+        this.form = document.querySelector('form');
+        this.form.addEventListener('submit', (e) => this.formSubmit(e));
     }
 
     totalResults(){
@@ -88,5 +88,39 @@ export class FormQuote{
         this.lines.push(data);
         return { 'msg': 'Nueva línea de producto agregada', 'success': true };
     }
+
+    formSubmit(e){
+        e.preventDefault();
+        this.sendLines();
+    }
+
+    async sendLines(){
+        try {
+            const response = await fetch(
+                `/save-lines/${this.settings.nid}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(this.lines),
+                }
+            );
+            if (!response.ok) {
+                const errorBody = await response.json().catch(() => ({ message: 'Error desconocido del servidor.' }));
+                throw new Error(
+                    `Error HTTP ${response.status}: ${errorBody.message || 'Fallo al guardar las líneas.'}`
+                );
+            }
+            const data = await response.json();
+            console.log("Líneas guardadas exitosamente. IDs recibidos:", data.paragraph_ids);
+            return data;
+
+        } catch (error) {
+            console.error("Error al guardar las líneas de cotización:", error);
+            throw error;
+        }
+    }
+
 
 }

@@ -33,14 +33,10 @@ export class Calculate {
   costTotal() {
     const fieldCant = this.containerRow.querySelector('[name*="field_cant"]');
     const fieldTotal = this.containerRow.querySelector('[name*="field_total"]');
-    if (fieldCant && this.dataProduct.cost_unit){
+    if (fieldCant.value != '' && this.dataProduct.cost_unit != ''){
       fieldTotal.value =
         parseFloat(this.dataProduct.cost_unit) * parseFloat(fieldCant.value);
-      const upd = this.ui.quote_settings.find(item => item.nid == this.nid);
-      if(upd){
-        upd.currency.cost = fieldTotal.value;
-        upd.currency.tid = this.dataProduct.currency;
-      }
+      const upd = this.formQuote.lines.find(item => item.nid == this.nid);
     }
     else fieldTotal.value = 0;
   }

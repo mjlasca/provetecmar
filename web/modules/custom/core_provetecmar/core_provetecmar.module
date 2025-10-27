@@ -67,40 +67,7 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
       $serviceParam = \Drupal::service('core_provetecmar.parameters_quote');
       $settings = $serviceParam->getParameters();
       $settings['items'] = $serviceParam->getData($nodeQuote);
-      foreach ($form['field_products']['widget'] as $delta => &$paragraph_item) {
-        if (is_numeric($delta) && isset($paragraph_item['subform']['field_product'])) {
-          if (!empty($paragraph_item['subform']['field_product']['widget'][0]['target_id']['#default_value'])) {
-            $node = $paragraph_item['subform']['field_product']['widget'][0]['target_id']['#default_value'];
-            $nid = $node->id();
-            if(
-              $node->field_unit_weight->value != 0 &&
-              $node->field_unit_cost->value != 0
-            ){
-              $settings['quote_settings'][] = [
-                'nid' => $nid,
-                'class' => 'product-success',
-                'currency' => [
-                    'tid' => $node->field_purchase_currency->target_id ?? 0,
-                    'cost' => $paragraph_item['subform']['field_total']['widget'][0]['target_id']['#default_value'] ?? 0
-                  ]
-              ];
-            }else{
-              $settings['quote_settings'][] = [
-                'nid' => $nid,
-                'class' => 'product-warning',
-                'currency' => [
-                    'tid' => $node->field_purchase_currency->target_id ?? 0,
-                    'cost' => $paragraph_item['subform']['field_total']['widget'][0]['target_id']['#default_value'] ?? 0
-                  ]
-              ];
-            }
-            $paragraph_item['#attributes']['class'][] = 'valid-'.$nid;
-            $paragraph_item['#attributes']['data-node'] = $nid;
-            $paragraph_item['#attributes']['data-currency'] = $node->field_purchase_currency->target_id ?? 0;
-            $paragraph_item['subform']['field_product']['#prefix'] = '<a data-nid="'.$nid.'" href="/node/' . $nid . '/edit" class="show-product" target="_blank">+</a>';
-          }
-        }
-      }
+      $settings['nid'] = $nodeQuote->nid->value;
     }
     $form['actions']['submit']['#validate'][] = '_quote_validation_custom';
     $form['actions']['submit']['#submit'][] = '_quote_submit_custom';
@@ -109,6 +76,9 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
     $arrState = ['published','offer_ready'];
     if(!empty($nodeQuote->get('moderation_state')->value) && in_array($nodeQuote->get('moderation_state')->value, $arrState) ){
       $settings['process'] = FALSE;
+    }
+    if($form_id === 'node_quote_form'){
+      $settings['process'] = -1;
     }
     $form['#attached']['drupalSettings'] = $settings;
     $form['#attached']['library'][] = 'core_provetecmar/quote';
@@ -153,11 +123,10 @@ function _quote_validation_custom($form, \Drupal\Core\Form\FormStateInterface $f
  * Submit custom quote
  */
 function _quote_submit_custom($form, \Drupal\Core\Form\FormStateInterface $form_state) {
-  // Ejemplo: obtener el nodo.
   $node = $form_state->getFormObject()->getEntity();
   $service = \Drupal::service('core_provetecmar.importxlsx');
   $resultImport = $service->importXlsx($form, $form_state);
-  if(isset($resultImport['success'])){
+  /*if(isset($resultImport['success'])){
     if($resultImport['success'])
       \Drupal::messenger()->addStatus($resultImport['message']);
     else{
@@ -166,7 +135,7 @@ function _quote_submit_custom($form, \Drupal\Core\Form\FormStateInterface $form_
         Markup::create($resultImport['message'])
       );
     }
-  }
+  }*/
 
   $values = $form_state->getValues();
   if (isset($values['field_requests_send']) && $node->field_requests_send->value == 1){

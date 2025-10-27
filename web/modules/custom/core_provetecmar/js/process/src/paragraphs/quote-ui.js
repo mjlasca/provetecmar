@@ -48,6 +48,8 @@ export class QuoteUi {
       const option = document.createElement('option');
       option.value = val.tid;
       option.textContent  = val.name;
+      if(props.value && val.tid == props.value)
+        option.selected = true;
       sele.appendChild(option);
     });
     sele.addEventListener('change', (e) =>  this.products.calculate(e));
@@ -85,13 +87,14 @@ export class QuoteUi {
   }
 
   line(data){
+    console.log(data);
     const tr = document.createElement('tr');
     tr.classList = ['line-product']
 
     const fieldCheck = this.fieldInput({'name':'field_check[]', 'type': 'checkbox'});
     fieldCheck.classList = ['td-check'];
     tr.append(fieldCheck);
-    const fieldProduct = this.fieldInput({'name':'field_product[]', 'type': 'text', 'value':  data.field_product ?? '' });
+    const fieldProduct = this.fieldInput({'name':'field_product[]', 'type': 'text', 'autocomplete': 'off', 'value':  data.field_product ?? '' });
     if(data.nid){
       tr.dataset.id = data.nid;
       fieldProduct.dataset.nid = data.nid;
@@ -142,7 +145,8 @@ export class QuoteUi {
     const tdBtn = document.createElement('td');
     tdBtn.classList = ['td-small'];
     const btnRemove = document.createElement('button');
-    tdBtn.appendChild(btnRemove);
+    if(this.settings.process)
+      tdBtn.appendChild(btnRemove);
     btnRemove.classList = ['btn btn-remove']
     btnRemove.type = 'button';
     btnRemove.textContent = "🗑️";
@@ -200,7 +204,6 @@ export class QuoteUi {
   }
 
   handleKeyboardNavigation(e, container) {
-
     const input = e.target;
     let currentIndex = -1;
     const items = container.querySelectorAll('li');
