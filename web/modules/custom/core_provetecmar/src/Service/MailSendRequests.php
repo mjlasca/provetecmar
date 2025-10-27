@@ -9,6 +9,7 @@ use Drupal\core_provetecmar\Entity\MailLog;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\File\FileSystemInterface;
+use Psy\Readline\Hoa\Console;
 
 class MailSendRequests {
 
@@ -86,7 +87,7 @@ class MailSendRequests {
           '#data' => $data,
           '#items' => $prov['items'],
         ];
-        
+
         $html = $this->renderer->renderPlain($build);
 
         $build = [
@@ -128,7 +129,7 @@ class MailSendRequests {
                 'target_id' => $prov['nid']
               ],
               'field_quote' => [
-                'target_id' => $prov['node']
+                'target_id' => $node->nid->value
               ]
           ]);
           $nodeRequest->save();
@@ -140,6 +141,6 @@ class MailSendRequests {
     } catch (\Throwable $th) {
       return ['success' => FALSE, 'msg' => "Hubo un error al enviar las solicitudes {$th->getMessage()}"];
     }
-    
+
   }
 }

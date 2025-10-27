@@ -11,8 +11,14 @@ use Drupal\Core\Render\Markup;
  * Implementa hook_form_alter().
  */
 function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  if ($form_id === 'node_quote_edit_form' || $form_id === 'node_quote_form') {
+  if ($form_id === 'node_quote_edit_form' || $form_id === 'node_quote_form' || $form_id === 'node_purchase_order_edit_form' || $form_id === 'node_purchase_order_form') {
     $form['field_products']['#access'] = FALSE;
+    $nodeQuote = $form_state->getFormObject()->getEntity();
+    $arrState = ['assignment','price_change'];
+    $modal = '';
+    if(!empty($nodeQuote->get('moderation_state')->value) && in_array($nodeQuote->get('moderation_state')->value, $arrState) ){
+      $modal = '<div class="requests-send"><span class="button-primary">Enviar Solicitudes</span></div><div class="quote-modal quote-hide"><div class="loader-overlay" style="display:none;"><div class="spinner"></div></div><div class="quote-modal--body"><div class="quote-modal--head"></div></div></div>';
+    }
     $form['field_requests_send']['#prefix'] = '<div class="quote-app"><div class="quote-table-wrapper">
   <table class="quote-table">
     <thead>
@@ -54,14 +60,11 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
 
 </div>
 <div class="table-actions">
-    <button id="add-line" type="button" class="btn btn-add">➕ Agregar línea</button>
-  </div>
+    <span class="btn add-line">➕ Agregar línea</span>
+    '.$modal.'
+</div>
 </div><div class="quote-parameters"></div><div class="quote-messages"></div>';
-    $nodeQuote = $form_state->getFormObject()->getEntity();
-    $arrState = ['assignment','price_change'];
-    if(!empty($nodeQuote->get('moderation_state')->value) && in_array($nodeQuote->get('moderation_state')->value, $arrState) ){
-      $form['field_products']['#suffix'] = '<div class="requests-send"><span class="button-primary">Enviar Solicitudes</span></div><div class="quote-modal quote-hide"><div class="loader-overlay" style="display:none;"><div class="spinner"></div></div><div class="quote-modal--body"><div class="quote-modal--head"></div></div></div>';
-    }
+
     if (isset($form['field_products']['widget'])) {
       $settings = [];
       $serviceParam = \Drupal::service('core_provetecmar.parameters_quote');
@@ -81,9 +84,6 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
       $settings['process'] = -1;
     }
     $form['#attached']['drupalSettings'] = $settings;
-    $form['#attached']['library'][] = 'core_provetecmar/quote';
-  }
-  if ($form_id === 'node_purchase_order_edit_form' || $form_id === 'node_purchase_order_form') {
     $form['#attached']['library'][] = 'core_provetecmar/quote';
   }
 }

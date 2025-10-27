@@ -1,4 +1,5 @@
 import { FormQuote } from "./FormProducts.js";
+import { Requests } from "./requests/Requests.js";
 import "./style.css";
 
 (function ($, Drupal, once) {
@@ -15,6 +16,9 @@ import "./style.css";
       }
       once("quote-form", ".quote-app", context).forEach((e) => {
         formObj = new FormQuote(e, settings);
+      });
+      once('quote-behavior', '.quote-modal', context).forEach(function (element) {
+        const requests = new Requests(element, settings.providers_list, settings.path);
       });
     },
   };

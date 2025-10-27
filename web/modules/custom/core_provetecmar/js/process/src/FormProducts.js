@@ -57,15 +57,30 @@ export class FormQuote{
     }
 
     calculate(e){
-        const obj = {};
+        let obj = {};
+        const tr = e.target.closest('tr');
         const prop = e.target.name.replace('[]','');
         obj[prop] = e.target.value;
-        obj['nid'] = e.target.closest('tr').dataset.id;
+        obj['nid'] = tr.dataset.id;
         this.setLine(obj);
-        this.calc.containerRow = e.target.closest('tr');
-        this.calc.nid = e.target.closest('tr').dataset.id;
+        this.calc.containerRow = tr;
+        this.calc.nid = tr.dataset.id;
         this.calc.dataProduct = this.getObjLine(this.calc.nid);
         this.calc.process();
+        obj = this.instanceField(tr);
+        obj['nid'] = tr.dataset.id;
+        this.setLine(obj);
+        console.log(this.lines);
+    }
+
+    instanceField(tr){
+        const fields = tr.querySelectorAll('input[name*="field_"] , select[name*="field_"]');
+        let props = {};
+        fields.forEach(el => {
+            props[el.name.replace('[]','')] = el.value;
+        });
+
+        return props;
     }
 
     initLines(){
@@ -77,8 +92,10 @@ export class FormQuote{
         }
     }
 
-    setLine(data) {
+    setLine(data, oldnid = null) {
         if (this.lines.length > 0) {
+            if( oldnid != null && data.nid != oldnid )
+                this.lines = this.lines.filter(line => line.nid !== oldnid);
             const search = this.lines.find(line => line.nid === data.nid);
             if (search) {
                 Object.assign(search, data);
@@ -89,9 +106,29 @@ export class FormQuote{
         return { 'msg': 'Nueva línea de producto agregada', 'success': true };
     }
 
-    formSubmit(e){
+    async formSubmit(e) {
         e.preventDefault();
-        this.sendLines();
+        const clickedButton = e.submitter;
+        const form = e.target;
+
+        if (!clickedButton) {
+            console.error('No se detectó el botón de acción. Fallo al intentar guardar.');
+            return;
+        }
+        try {
+            await this.sendLines();
+            const tempInput = document.createElement('input');
+            tempInput.type = 'hidden';
+            tempInput.name = clickedButton.name;
+            tempInput.value = clickedButton.value;
+            if (clickedButton.id) {
+                tempInput.id = clickedButton.id;
+            }
+            form.appendChild(tempInput);
+            form.submit();
+        } catch (error) {
+            console.error("Fallo al guardar las líneas con Fetch. El guardado del nodo ha sido cancelado.", error);
+        }
     }
 
     async sendLines(){
@@ -113,7 +150,7 @@ export class FormQuote{
                 );
             }
             const data = await response.json();
-            console.log("Líneas guardadas exitosamente. IDs recibidos:", data.paragraph_ids);
+            console.log("Líneas guardadas exitosamente. IDs recibidos:", data);
             return data;
 
         } catch (error) {

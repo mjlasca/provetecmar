@@ -46,11 +46,11 @@ export class Requests{
                         'products' : this.products,
                     };
                     const rest = await this.service.send(dataSend);
-                    
+
                     if(this.msg){
                         this.msg.innerHTML =`<p>${rest.msg}</p>`;
                         setTimeout(() => {
-                            this.ui.reset();
+                            this.clearChecks();
                             this.modal.hideModal();
                             this.msg.innerHTML =``;
                         }, 2000);
@@ -73,18 +73,25 @@ export class Requests{
 
     getProducts(){
         this.products = [];
-        const productsElement = document.querySelectorAll('[data-nid]');
-        productsElement.forEach(product => {
-            const paragraph = product.closest('.paragraphs-subform');
-            const check = paragraph.querySelector('.form-type--checkbox input');
-            if(check.checked && paragraph.querySelector('.field--name-field-cant input').value != ''){
+        const productsElement = document.querySelectorAll('#quote-lines input[type="checkbox"]');
+        productsElement.forEach(check => {
+            const paragraph = check.closest('tr');
+            if(check.checked && paragraph.querySelector('input[name*="field_product"]').value != '' && paragraph.dataset.id != ''){
                 this.products.push({
-                    'nid': product.getAttribute('data-nid'),
-                    'cant': paragraph.querySelector('.field--name-field-cant input').value
+                    'nid': paragraph.dataset.id,
+                    'cant': paragraph.querySelector('input[name*="field_cant"]').value
                 });
             }
         });
         return this.products;
+    }
+
+    clearChecks(){
+        const productsElement = document.querySelectorAll('#quote-lines input[type="checkbox"]');
+        productsElement.forEach(check => {
+            if(check.checked)
+                check.checked = false;
+        });
     }
 
     extractNumberFromPath() {

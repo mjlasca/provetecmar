@@ -12,7 +12,7 @@ export class QuoteUi {
     this.settings = settings ?? [];
     this.parameters = settings.parameters ?? [];
     this.app = document.querySelector('#quote-lines');
-    this.addLine = document.querySelector('.table-actions');
+    this.addLine = document.querySelector('.add-line');
     this.service = new Services();
     this.products = products;
     this.init();
@@ -87,7 +87,6 @@ export class QuoteUi {
   }
 
   line(data){
-    console.log(data);
     const tr = document.createElement('tr');
     tr.classList = ['line-product']
 
@@ -97,7 +96,7 @@ export class QuoteUi {
     const fieldProduct = this.fieldInput({'name':'field_product[]', 'type': 'text', 'autocomplete': 'off', 'value':  data.field_product ?? '' });
     if(data.nid){
       tr.dataset.id = data.nid;
-      fieldProduct.dataset.nid = data.nid;
+      fieldProduct.querySelector('input').dataset.nid = data.nid;
     }
     tr.append(fieldProduct);
     const fieldCant = this.fieldInput({'name':'field_cant[]', 'type': 'number', 'value':  data.field_cant ?? '' });
@@ -171,6 +170,10 @@ export class QuoteUi {
       td.appendChild(sugges);
       inp.addEventListener('input', (e) =>  this.autoComplete(e,ul));
       inp.addEventListener('keydown', (e) => this.handleKeyboardNavigation(e, ul, this.itemsProducts));
+      inp.addEventListener('dblclick', (e) => window.open(`/node/${e.target.dataset.nid}/edit`, '_blank'))
+    }
+    if(props.type == 'number'){
+      inp.step = 0.01;
     }
     inp.addEventListener('change', (e) =>  this.products.calculate(e));
     return td;
@@ -233,8 +236,8 @@ export class QuoteUi {
         if (currentIndex >= 0 && currentIndex < items.length) {
           input.value = items[currentIndex].textContent;
           input.dataset.nid = this.itemsProducts[currentIndex].nid;
+          const resul = this.products.setLine(this.itemsProducts[currentIndex], input.closest('tr').dataset.id);
           input.closest('tr').dataset.id = this.itemsProducts[currentIndex].nid;
-          const resul = this.products.setLine(this.itemsProducts[currentIndex]);
           if(!resul.success){
             input.value = '';
             input.dataset.nid = '';
@@ -263,8 +266,8 @@ export class QuoteUi {
       li.addEventListener('click', () => {
         input.value = item.name;
         input.dataset.nid = item.nid;
+        const resul = this.products.setLine(item, input.closest('tr').dataset.id);
         input.closest('tr').dataset.id = item.nid;
-        const resul = this.products.setLine(item);
         if(!resul.success){
           input.value = '';
           input.dataset.nid = '';
@@ -473,6 +476,7 @@ export class QuoteUi {
     lines.forEach((element, x) => {
       const span = document.createElement('span');
       span.classList = ['count-line'];
+      element.closest('tr').dataset.num = (x + 1);
       span.textContent = (x + 1);
       element.prepend(span);
     });

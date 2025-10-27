@@ -368,8 +368,8 @@
 
 .table-actions {
   margin-top: 0.5rem;
-  max-width: 200px;
-  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
 }
 
 @media (max-width: 768px) {
@@ -394,13 +394,20 @@
   display: none;
 }
 
+.product-suggestion ul{
+  list-style-type: none !important;
+  margin-left: 0 !important;
+}
+
 .suggestion-item {
   padding: 5px 10px;
   cursor: pointer;
+  text-align: left;
+  text-decoration: none;
 }
 
 .suggestion-item:hover {
-  background-color: #f0f0f0;
+  background-color: #007BFF;
 }
 
 .product-suggestion li.active {
@@ -423,3 +430,4 @@
   text-align: center;
   background-color: #f1ffa4;
 }
+

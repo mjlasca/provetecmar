@@ -51,19 +51,19 @@ class ValidateQuoteService {
      *
      * @param \GuzzleHttp\ClientInterface $http_client
      *   The HTTP client service used to make external API requests.
-     * 
+     *
      * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
      *   The logger factory service used to get a logger channel for this module.
-     * 
+     *
      * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
      *   Manage storage entity
-     * 
+     *
      * @param \Drupal\file\FileRepositoryInterface $fileRepository
      *   Manage files
-     * 
+     *
      * @param \Drupal\Core\File\FileUrlGeneratorInterface $fileUrlGenerator
      *   Generate url's
-     * 
+     *
      * @param \Drupal\Core\File\FileSystemInterface $fileSystem
      *   Manage files
      */
@@ -108,7 +108,7 @@ class ValidateQuoteService {
       }
 
       return ['success' => TRUE];
-      
+
     }
 
     /**
