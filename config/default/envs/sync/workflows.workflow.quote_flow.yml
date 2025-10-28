@@ -61,6 +61,12 @@ type_settings:
         - draft
       to: assignment
       weight: 2
+    list_offer_to_list_offer:
+      label: 'list offer to list offer'
+      from:
+        - offer_ready
+      to: offer_ready
+      weight: 13
     offer_published:
       label: 'Pasar a orden de compra'
       from:

@@ -9,9 +9,14 @@ dependencies:
     - field.field.node.quote.field_detail_quote
     - field.field.node.quote.field_incoterms
     - field.field.node.quote.field_items_import
+    - field.field.node.quote.field_observaciones
     - field.field.node.quote.field_products
+    - field.field.node.quote.field_quote_tax
     - field.field.node.quote.field_quoter
     - field.field.node.quote.field_requests_send
+    - field.field.node.quote.field_rfq
+    - field.field.node.quote.field_trm
+    - field.field.node.quote.field_valid
     - node.type.quote
     - workflows.workflow.quote_flow
   module:
@@ -46,8 +51,10 @@ third_party_settings:
         - field_customer
         - field_quoter
         - field_description
-        - field_incoterms
         - field_items_import
+        - group_fields
+        - field_valid
+        - field_observaciones
       label: 'Datos Generales'
       region: content
       parent_name: group_cotizacion
@@ -94,6 +101,24 @@ third_party_settings:
         formatter: closed
         description: ''
         required_fields: true
+    group_fields:
+      children:
+        - field_rfq
+        - field_incoterms
+        - field_trm
+        - field_quote_tax
+      label: Configuración
+      region: content
+      parent_name: group_datos_generales
+      weight: 6
+      format_type: fieldset
+      format_settings:
+        classes: quote-flex
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
+        required_fields: true
 id: node.quote.default
 targetEntityType: node
 bundle: quote
@@ -101,7 +126,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 3
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -133,20 +158,28 @@ content:
     third_party_settings: {  }
   field_incoterms:
     type: options_select
-    weight: 5
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
   field_items_import:
     type: file_generic
-    weight: 6
+    weight: 5
     region: content
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
+  field_observaciones:
+    type: string_textarea
+    weight: 8
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
   field_products:
     type: paragraphs
-    weight: 4
+    weight: 10
     region: content
     settings:
       title: Párrafo
@@ -162,6 +195,13 @@ content:
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings: {  }
+  field_quote_tax:
+    type: number
+    weight: 12
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   field_quoter:
     type: entity_reference_autocomplete
     weight: 3
@@ -174,10 +214,31 @@ content:
     third_party_settings: {  }
   field_requests_send:
     type: boolean_checkbox
-    weight: 6
+    weight: 11
     region: content
     settings:
       display_label: true
+    third_party_settings: {  }
+  field_rfq:
+    type: options_select
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_trm:
+    type: number
+    weight: 11
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_valid:
+    type: string_textfield
+    weight: 7
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   langcode:
     type: language_select

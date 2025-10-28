@@ -3,8 +3,10 @@ langcode: es
 status: true
 dependencies:
   config:
+    - field.field.taxonomy_term.group_companies.field_image
     - taxonomy.vocabulary.group_companies
   module:
+    - image
     - text
 id: taxonomy_term.group_companies.default
 targetEntityType: taxonomy_term
@@ -17,6 +19,17 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 0
+    region: content
+  field_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 1
     region: content
 hidden:
   langcode: true

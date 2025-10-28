@@ -1,0 +1,25 @@
+uuid: 81684760-c9d9-45f9-a8f1-6050c7e3900a
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_quote_tax
+    - node.type.quote
+id: node.quote.field_quote_tax
+field_name: field_quote_tax
+entity_type: node
+bundle: quote
+label: Impuestos(%)
+description: 'Porcentaje del subtotal'
+required: true
+translatable: false
+default_value:
+  -
+    value: 0.0
+default_value_callback: ''
+settings:
+  min: 0.0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

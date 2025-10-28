@@ -1,16 +1,16 @@
-uuid: e079eb3f-6cda-4c1c-a267-98c3b3f873cd
+uuid: 35e9be90-f48b-43ea-a313-bc4442f53440
 langcode: es
 status: true
 dependencies:
   config:
-    - field.storage.node.field_incoterms
+    - field.storage.node.field_rfq
     - node.type.quote
-    - taxonomy.vocabulary.incoterms
-id: node.quote.field_incoterms
-field_name: field_incoterms
+    - taxonomy.vocabulary.group_companies
+id: node.quote.field_rfq
+field_name: field_rfq
 entity_type: node
 bundle: quote
-label: Incoterm
+label: 'RFQ (Cliente)'
 description: ''
 required: true
 translatable: false
@@ -20,7 +20,7 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      incoterms: incoterms
+      group_companies: group_companies
     sort:
       field: name
       direction: asc
