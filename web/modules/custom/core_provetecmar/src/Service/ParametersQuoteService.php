@@ -142,7 +142,7 @@ class ParametersQuoteService {
         'vid' => 'group_companies'
       ]);
       if(!empty($rfqs)){
-        $settings['group_companies'] = [''];
+        $settings['group_companies'] = ['--Seleccionar--'];
         foreach ($rfqs as $k => $rfq) {
           $settings['group_companies'][] = [
             'tid' => $rfq->tid->value,
@@ -155,6 +155,7 @@ class ParametersQuoteService {
         'vid' => 'assessment'
       ]);
       if(!empty($assessment)){
+        $settings['assessment'] = ['--Seleccionar--'];
         foreach ($assessment as $k => $val) {
           $settings['assessment'][] = [
             'tid' => $val->tid->value,
@@ -167,6 +168,7 @@ class ParametersQuoteService {
         'vid' => 'shipping_method'
       ]);
       if(!empty($shipping_method)){
+        $settings['shipping_method'] = ['--Seleccionar--'];
         foreach ($shipping_method as $k => $val) {
           $settings['shipping_method'][] = [
             'tid' => $val->tid->value,
@@ -179,6 +181,7 @@ class ParametersQuoteService {
         'vid' => 'container_type'
       ]);
       if(!empty($container_type)){
+        $settings['container_type'] = ['--Seleccionar--'];
         foreach ($container_type as $k => $val) {
           $settings['container_type'][] = [
             'tid' => $val->tid->value,
@@ -191,6 +194,7 @@ class ParametersQuoteService {
         'vid' => 'incoterms'
       ]);
       if(!empty($incoterms)){
+        $settings['incoterms'] = ['--Seleccionar--'];
         foreach ($incoterms as $k => $val) {
           $settings['incoterms'][] = [
             'tid' => $val->tid->value,
@@ -203,6 +207,7 @@ class ParametersQuoteService {
         'vid' => 'delivery_region'
       ]);
       if(!empty($deliveries)){
+        $settings['deliveries'] = ['--Seleccionar--'];
         foreach ($deliveries as $k => $val) {
           $settings['deliveries'][] = [
             'tid' => $val->tid->value,
@@ -215,6 +220,7 @@ class ParametersQuoteService {
         'vid' => 'margin'
       ]);
       if(!empty($margin)){
+        $settings['margin'] = ['--Seleccionar--'];
         foreach ($margin as $k => $val) {
           $settings['margin'][] = [
             'tid' => $val->tid->value,
@@ -283,6 +289,7 @@ class ParametersQuoteService {
         'vid' => 'container_delivery'
       ]);
       if(!empty($container_delivery)){
+        $settings['container_delivery'] = ['--Seleccionar--'];
         foreach ($container_delivery as $k => $term) {
           $settings['container_delivery'][] = [
             'name' => $term->name->value,

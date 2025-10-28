@@ -41,9 +41,9 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
         <th>Incoterm</th>
         <th>Factor cost</th>
         <th class="td-medium">Tipo envío</th>
-        <th>Tipo contenedor</th>
-        <th>Qty</th>
-        <th>Entrega contenedor</th>
+        <th class="td-mar">Tipo contenedor</th>
+        <th class="td-mar">Qty</th>
+        <th class="td-mar">Entrega contenedor</th>
         <th>Vr Unitario (USD)</th>
         <th>Vr Total (USD)</th>
         <th>Factor</th>

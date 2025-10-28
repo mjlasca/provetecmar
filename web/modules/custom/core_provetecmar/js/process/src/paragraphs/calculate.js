@@ -226,7 +226,7 @@ export class Calculate {
     const vrTotal = this.containerRow.querySelector('[name*="field_total_sale"]');
     const factSale = this.containerRow.querySelector('[name*="field_sale_factor"]');
     const margin = this.containerRow.querySelector('[name*="field_margin"]');
-    if(factCost.value != '' && costUnit.value != '' && cant.value != '' && margin.value != '' && vrUnit.value != '' && vrTotal.value != '' && factSale.value != ''){
+    if(factCost && costUnit && cant && margin && vrUnit && vrTotal && factSale){
         const optionMargin = margin.options[margin.selectedIndex];
         const vrUnitRes = (parseFloat(factCost.value) * parseFloat(costUnit.value)) / (1 - (parseFloat(optionMargin.textContent) / 100) );
         vrUnit.value = vrUnitRes.toFixed(2);

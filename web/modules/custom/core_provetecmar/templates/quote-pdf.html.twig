@@ -16,10 +16,14 @@
 
     header {
       position: fixed;
-      top: -60px;  /* distancia desde el borde del papel */
+      top: 0px;
       left: 0;
       right: 0;
       text-align: center;
+    }
+
+    table td{
+      padding: 0px 5px;
     }
 
     .logo img {
@@ -43,7 +47,7 @@
     }
 
     .title-section h1 {
-      font-size: 34px;
+      font-size: 28px;
       font-weight: bold;
       margin: 0;
     }
@@ -51,7 +55,6 @@
     .title-section .number {
       font-size: 14px;
       font-weight: bold;
-      text-align: right;
     }
 
     .meta {
@@ -74,7 +77,7 @@
       background: #f3f3f3;
       text-align: center;
       font-weight: bold;
-      font-size: 20px;
+      font-size: 15px;
     }
 
     .item-title {
@@ -99,6 +102,10 @@
       font-size: 11px;
       display: flex;
       gap: 10px;
+    }
+
+    .total-row tr{
+      padding: 0 10px;
     }
 
     .total-row td {
@@ -132,37 +139,77 @@
 
         <!-- Datos cliente -->
         <div class="meta">
-          <div>Fecha: {{ data.date }}</div>
-          <div>Cliente: <strong>{{ data.client }}</strong></div>
+
+        <table style="border:0;">
+          <tr>
+            <td>Fecha: <br>{{ data.date }}</td>
+            <td>Cliente: <br><strong>{{ data.client.name }}</strong></td>
+            <td>Teléfono: <br><strong>{{ data.client.phone }}</strong></td>
+            <td>Email: <br><strong>{{ data.client.email }}</strong></td>
+            <td>Moneda: <br><strong>{{ data.client.currency }}</strong></td>
+          </tr>
+          </table>
         </div>
 
         <!-- Tabla de productos -->
         <table class="table" style="border:0px;">
           <thead>
             <tr>
-              <th style="width:60%;text-align:left">Detalle</th>
-              <th style="width:20%">Cant./Unidad</th>
-              <th style="width:20%">Precio</th>
+              <th style="width:5%;text-align:center">Item</th>
+              <th style="width:10%;text-align:left">Parte No.</th>
+              <th style="width:45%;text-align:left">Detalle</th>
+              <th style="width:8%">Cant. Unidad</th>
+              <th style="width:12%">Vr Unit.</th>
+              <th style="width:20%">Vr Total</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody style="border-bottom: 2px solid #000;margin-bottom:10px;">
             {% for item in data.items %}
               <tr style="border-top:solid 1px #ddd;">
+                <td style="border-right:solid 1px #ddd;text-aling:center;">
+                  {{ loop.index }}
+                </td>
+                <td style="border-right:solid 1px #ddd;">
+                  {{ item.part }}
+                </td>
                 <td style="border-right:solid 1px #ddd;">
                   <div class="item-title">{{ item.title }}</div>
                   <div>{{ item.description }}</div>
                 </td>
                 <td style="text-align:center; border-right:solid 1px #ddd;">{{ item.cant }} / {{ item.unit }}</td>
-                <td style="text-align:right;">{{ item.price }}</td>
+                <td style="text-align:right; border-right:solid 1px #ddd;">{{ item.price|number_format(2, ',', '.') }}</td>
+                <td style="text-align:right;">{{ item.price_total|number_format(2, ',', '.') }}</td>
               </tr>
             {% endfor %}
-            <tr class="total-row" style="font-size:16px;">
-              <td colspan="2" >TOTAL</td>
-              <td style="text-align:right;">{{ data.total }}</td>
-            </tr>
           </tbody>
+          <tfoot style="font-size:12px;">
+            
+            <tr class="total-row" >
+              <td>Validez: <br>{{ data.node.valid }}</td>
+              <td>Incoterm: <br><strong>{{ data.node.incoterm }}</strong></td>
+              <td>TRM: <br><strong>{{ data.node.trm }}</strong></td>
+              <td colspan="2" >SUBTOTAL</td>
+              <td style="text-align:right;">{{data.subtotal|number_format(2, ',', '.') }}</td>
+            </tr>
+            <tr class="total-row">
+              <td colspan="3" ></td>
+              <td  colspan="2">IMPUESTOS ({{ data.node.tax|number_format(0) }}%)</td>
+              <td style="text-align:right;">{{ data.tax_total|number_format(2, ',', '.') }}</td>
+            </tr>
+            <tr class="total-row">
+              <td colspan="3" ></td>
+              <td colspan="2" >TOTAL</td>
+              <td style="text-align:right;">{{data.total|number_format(2, ',', '.') }}</td>
+            </tr>
+            {% if data.node.observation %}
+              <tr>
+                <td colspan="4">Observaciones: <br>{{ data.node.observation }}</td>
+              </tr>
+            {% endif %}
+          </tfoot>
         </table>
     </div>
+
   </content>
   
 

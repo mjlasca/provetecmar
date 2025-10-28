@@ -166,6 +166,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
       ->getStorage('node')
       ->getQuery()
       ->condition('title', '%' . $keyword . '%', 'LIKE')
+      ->condition('type', 'product')
       ->accessCheck(TRUE);
 
     $nids = $query->execute();
@@ -211,10 +212,12 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     foreach ($paragraphs as $k => $paragraph) {
       $items[] = [
         'title' => $paragraph->field_product->entity->title->value,
+        'part' => $paragraph->field_product->entity->field_part->value,
         'description' => $paragraph->field_product->entity->field_description->value,
         'cant' => $paragraph->field_cant->value,
         'unit' => $paragraph->field_product->entity->field_unit->entity->name->value,
-        'price' => $paragraph->field_total_sale->value
+        'price' => $paragraph->field_unit_sale->value,
+        'price_total' => $paragraph->field_total_sale->value
       ];
       if(!empty( $paragraph->field_total_sale->value )){
         $total +=  $paragraph->field_total_sale->value;
@@ -222,16 +225,36 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     }
     $base_path = \Drupal::service('extension.list.module')->getPath('core_provetecmar');
     $base64Logo = 'data:image/jpeg;base64,' . base64_encode(file_get_contents("$base_path/assets/banner-provetecmar.jpg"));
+    if(!empty($node->field_rfq->target_id)){
+      $urlImageSecond = $node->field_rfq->entity->field_image->entity->getFileUri();
+      $base64Logo =  'data:image/jpeg;base64,' . base64_encode(file_get_contents($urlImageSecond));
+    }
 
+    $tax = $total * ( $node->field_quote_tax->value/100) ;
+    $total_fu = $total + $tax;
     $build = [
       '#theme' => 'quote_pdf',
       '#data' => [
         'nid' => $node->nid->value,
         'date' => $date,
-        'client' => $node->field_customer->entity->title->value,
+        'client' => [
+          'name' => $node->field_customer->entity->title->value,
+          'phone' => $node->field_customer->entity->field_phone->value,
+          'email' => $node->field_customer->entity->field_email->value,
+          'currency' => $node->field_customer->entity->field_purchase_currency->entity->name->value
+        ],
+        'node' => [
+          'valid' => $node->field_valid->value,
+          'observation' => $node->field_observaciones->value,
+          'tax' => $node->field_quote_tax->value,
+          'trm' => $node->field_trm->value,
+          'incoterm' => $node->field_incoterms->entity->name->value
+        ],
         'items' => $items,
-        'total' => $total,
-        'base64Logo' => $base64Logo
+        'subtotal' => $total,
+        'tax_total' => $tax,
+        'total' => $total_fu,
+        'base64Logo' => $base64Logo,
       ],
     ];
     $htmlPdf = $this->renderer->renderPlain($build);

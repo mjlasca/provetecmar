@@ -8,6 +8,7 @@ export class QuoteUi {
   itemsProducts = [];
   succ = null;
   fals = null;
+  btnRequests = null;
   constructor(settings = null, products) {
     this.settings = settings ?? [];
     this.parameters = settings.parameters ?? [];
@@ -35,7 +36,9 @@ export class QuoteUi {
     this.succ = document.querySelector('.check-succ');
     this.succ.innerHTML = '<input type="checkbox" >';
     this.succ.addEventListener('change', (e) => this.manageCheck(e));
-
+    this.btnRequests = document.querySelector('.requests-send');
+    if(this.btnRequests)
+      this.btnRequests.style.display = 'none';
   }
 
   fieldSelect(props, options){
@@ -52,6 +55,9 @@ export class QuoteUi {
         option.selected = true;
       sele.appendChild(option);
     });
+    if(props.name == 'field_shipping_method[]'){
+      sele.addEventListener('change',(e) => this.showContainer(sele.closest('tr'), e.target.value));
+    }
     sele.addEventListener('change', (e) =>  this.products.calculate(e.target));
     td.appendChild(sele);
     return td;
@@ -89,12 +95,10 @@ export class QuoteUi {
   line(data){
     const tr = document.createElement('tr');
     tr.classList = ['line-product']
-
     const fieldCheck = this.fieldInput({'name':'field_check[]', 'type': 'checkbox'});
     fieldCheck.classList = ['td-check'];
     tr.append(fieldCheck);
     const fieldProduct = this.fieldInput({'name':'field_product[]', 'type': 'text', 'autocomplete': 'off', 'value':  data.field_product ?? '' });
-
     tr.append(fieldProduct);
     const fieldCant = this.fieldInput({'name':'field_cant[]', 'type': 'number', 'value':  data.field_cant ?? '' });
     tr.append(fieldCant);
@@ -122,11 +126,14 @@ export class QuoteUi {
     tr.append(fieldLandedCost);
     const fieldShippingMethod = this.fieldSelect({'name' : 'field_shipping_method[]', 'value':  data.field_shipping_method ?? ''}, this.shipping_method);
     tr.append(fieldShippingMethod);
-    const fieldContainerType = this.fieldSelect({'name' : 'field_container_type[]', 'value':  data.field_container_type ?? ''}, this.container_type);
+    const fieldContainerType = this.fieldSelect({'name' : 'field_container_type[]', 'value':  data.field_container_type ?? '', 'disabled':true}, this.container_type);
+    fieldContainerType.classList.add('td-mar');
     tr.append(fieldContainerType);
-    const fieldQty = this.fieldInput({'name' : 'field_qty[]', 'type' : 'number', 'value':  data.field_qty ?? ''});
+    const fieldQty = this.fieldInput({'name' : 'field_qty[]', 'type' : 'number', 'value':  data.field_qty ?? '', 'disabled':true});
+    fieldQty.classList.add('td-mar');
     tr.append(fieldQty);
-    const fieldContainerDelivery = this.fieldSelect({'name' : 'field_container_delivery[]', 'value':  data.field_container_delivery ?? ''}, this.container_delivery);
+    const fieldContainerDelivery = this.fieldSelect({'name' : 'field_container_delivery[]', 'value':  data.field_container_delivery ?? '', 'disabled':true}, this.container_delivery);
+    fieldContainerDelivery.classList.add('td-mar');
     tr.append(fieldContainerDelivery);
     const fieldUnitSale = this.fieldInput({'name' : 'field_unit_sale[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_unit_sale ?? ''});
     tr.append(fieldUnitSale);
@@ -177,8 +184,19 @@ export class QuoteUi {
     if(props.type == 'number'){
       inp.step = 0.01;
     }
+    if(props.type == 'checkbox'){
+      inp.addEventListener('change', (e) => this.requestsShow(e.target));
+    }
+    
     inp.addEventListener('change', (e) =>  this.products.calculate(e.target));
     return td;
+  }
+
+  requestsShow(check){
+    if(check.checked)
+      this.btnRequests.style.display = 'block';
+    else
+      this.btnRequests.style.display = 'none';
   }
 
   async autoComplete(e, contain){
@@ -336,26 +354,24 @@ export class QuoteUi {
     }
   }
 
-  showContainer(container, show) {
-    const conta = container.querySelector(".quote-container");
+  showContainer(container, val) {
+   
     const containerType = container.querySelector(
       '[name*="field_container_type"]'
     );
     const containerDelivery = container.querySelector(
       '[name*="field_container_delivery"]'
     );
-    const qty = conta.querySelector('[name*="field_qty"]');
-    if (!conta.classList.contains("quote-hide") && !show) {
-      conta.classList.add("quote-hide");
-      qty.removeAttribute("required");
-    } else if (show) {
-      if (container.querySelector(".error-quote--content"))
-        container.querySelector(".error-quote--content").remove();
-      conta.classList.remove("quote-hide");
-      qty.setAttribute("required", true);
-      qty.value = "";
-      containerDelivery.value = "_none";
-      containerType.value = "_none";
+    const qty = container.querySelector('[name*="field_qty"]');
+     console.log(val);
+    containerType.disabled = true;
+    containerDelivery.disabled = true;
+    qty.disabled = true;
+    if(val == 120)
+    {
+      containerType.disabled = false;
+      containerDelivery.disabled = false;
+      qty.disabled = false;
     }
   }
 
@@ -488,6 +504,7 @@ export class QuoteUi {
 
   manageCheck(e){
     const status = e.target.checked;
+    this.requestsShow(e.target);
     const checks = this.app.querySelectorAll('input[type="checkbox"]');
     if(checks.length < 1)
       return;
@@ -495,4 +512,5 @@ export class QuoteUi {
       element.checked = status;
     });
   }
+
 }
