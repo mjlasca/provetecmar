@@ -134,7 +134,7 @@ class SetLinesQuoteService {
             $node->set('field_products', $arrayParagraph);
             $node->save();
           }
-          return ['success' => TRUE];
+          return ['success' => TRUE, 'paragraphs' => $node->get('field_products')->referencedEntities()];
       } catch (\Throwable $th) {
         return ['success' => FALSE];
       }

@@ -24,7 +24,6 @@ export class Calculate {
     const fieldWeight = this.containerRow.querySelector(
       '[name*="field_weight_total"]'
     );
-    console.log(this.dataProduct);
     if (fieldCant && fieldCant.value != '' && this.dataProduct.weight)
       fieldWeight.value =
         parseFloat(this.dataProduct.weight) * parseFloat(fieldCant.value);
@@ -34,7 +33,7 @@ export class Calculate {
   costTotal() {
     const fieldCant = this.containerRow.querySelector('[name*="field_cant"]');
     const fieldTotal = this.containerRow.querySelector('[name*="field_total"]');
-    if (fieldCant.value != '' && this.dataProduct.cost_unit != ''){
+    if (fieldCant.value != '' && this.dataProduct.cost_unit != null){
       fieldTotal.value =
         parseFloat(this.dataProduct.cost_unit) * parseFloat(fieldCant.value);
       const upd = this.formQuote.lines.find(item => item.nid == this.nid);
@@ -227,7 +226,7 @@ export class Calculate {
     const vrTotal = this.containerRow.querySelector('[name*="field_total_sale"]');
     const factSale = this.containerRow.querySelector('[name*="field_sale_factor"]');
     const margin = this.containerRow.querySelector('[name*="field_margin"]');
-    if(factCost && costUnit && cant && margin && vrUnit && vrTotal && factSale){
+    if(factCost.value != '' && costUnit.value != '' && cant.value != '' && margin.value != '' && vrUnit.value != '' && vrTotal.value != '' && factSale.value != ''){
         const optionMargin = margin.options[margin.selectedIndex];
         const vrUnitRes = (parseFloat(factCost.value) * parseFloat(costUnit.value)) / (1 - (parseFloat(optionMargin.textContent) / 100) );
         vrUnit.value = vrUnitRes.toFixed(2);

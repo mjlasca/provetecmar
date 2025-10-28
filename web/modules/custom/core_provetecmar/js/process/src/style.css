@@ -271,7 +271,6 @@
 
 .quote-table-wrapper {
   width: 100%;
-  overflow-x: auto;
 }
 
 .quote-table {
@@ -279,6 +278,11 @@
   border-collapse: collapse;
   font-size: 0.9rem;
   min-width: 1400px; /* Permite scroll horizontal */
+}
+
+.quote-table tr:focus-within {
+    background-color: #f0f8ff;
+    border: 1px solid #007bff;
 }
 
 .quote-table td {
@@ -348,6 +352,12 @@
   border-radius: 6px;
   padding: 5px 10px;
   cursor: pointer;
+}
+
+.td-delete{
+  position: sticky;
+  right: 0;
+  background-color: white;
 }
 
 .btn-remove {
@@ -431,3 +441,6 @@
   background-color: #f1ffa4;
 }
 
+#block-gin-content{
+  max-width: none !important;
+}

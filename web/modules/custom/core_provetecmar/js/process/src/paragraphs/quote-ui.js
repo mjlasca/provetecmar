@@ -52,7 +52,7 @@ export class QuoteUi {
         option.selected = true;
       sele.appendChild(option);
     });
-    sele.addEventListener('change', (e) =>  this.products.calculate(e));
+    sele.addEventListener('change', (e) =>  this.products.calculate(e.target));
     td.appendChild(sele);
     return td;
   }
@@ -94,10 +94,7 @@ export class QuoteUi {
     fieldCheck.classList = ['td-check'];
     tr.append(fieldCheck);
     const fieldProduct = this.fieldInput({'name':'field_product[]', 'type': 'text', 'autocomplete': 'off', 'value':  data.field_product ?? '' });
-    if(data.nid){
-      tr.dataset.id = data.nid;
-      fieldProduct.querySelector('input').dataset.nid = data.nid;
-    }
+
     tr.append(fieldProduct);
     const fieldCant = this.fieldInput({'name':'field_cant[]', 'type': 'number', 'value':  data.field_cant ?? '' });
     tr.append(fieldCant);
@@ -142,7 +139,7 @@ export class QuoteUi {
     const fieldComments = this.fieldInput({'name' : 'field_comments[]', 'type' : 'text', 'value':  data.field_comments ?? ''});
     tr.append(fieldComments);
     const tdBtn = document.createElement('td');
-    tdBtn.classList = ['td-small'];
+    tdBtn.classList = ['td-small td-delete'];
     const btnRemove = document.createElement('button');
     if(this.settings.process)
       tdBtn.appendChild(btnRemove);
@@ -151,6 +148,11 @@ export class QuoteUi {
     btnRemove.textContent = "🗑️";
     btnRemove.addEventListener('click', (e) => this.removeLine(e));
     tr.appendChild(tdBtn);
+    if(data.nid){
+      tr.dataset.id = data.nid;
+      fieldProduct.querySelector('input').dataset.nid = data.nid;
+      this.products.calculate(fieldProduct.querySelector('input'));
+    }
     return tr;
   }
 
@@ -175,7 +177,7 @@ export class QuoteUi {
     if(props.type == 'number'){
       inp.step = 0.01;
     }
-    inp.addEventListener('change', (e) =>  this.products.calculate(e));
+    inp.addEventListener('change', (e) =>  this.products.calculate(e.target));
     return td;
   }
 
@@ -283,7 +285,9 @@ export class QuoteUi {
     if( !confirm('¿Está segur@ de eliminar esta líena?') )
       return;
     const tr = e.target.closest('tr');
-    this.products.lines = this.products.lines.filter(item => item.nid == tr.dataset.id);
+    console.log("prim",this.products.lines);
+    this.products.lines = this.products.lines.filter(item => item.nid != tr.dataset.id);
+    console.log("seg",this.products.lines);
     tr.remove();
     this.counter();
   }

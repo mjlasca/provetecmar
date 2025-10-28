@@ -14,7 +14,6 @@ export class FormQuote{
         this.calc = new Calculate(null, null, settings, this);
         this.initLines();
         this.init();
-        console.log(this.settings);
     }
 
     init(){
@@ -56,11 +55,11 @@ export class FormQuote{
         return this.lines.find(item => item.nid == nid);
     }
 
-    calculate(e){
+    calculate(input){
         let obj = {};
-        const tr = e.target.closest('tr');
-        const prop = e.target.name.replace('[]','');
-        obj[prop] = e.target.value;
+        const tr = input.closest('tr');
+        const prop = input.name.replace('[]','');
+        obj[prop] = input.value;
         obj['nid'] = tr.dataset.id;
         this.setLine(obj);
         this.calc.containerRow = tr;
@@ -70,7 +69,6 @@ export class FormQuote{
         obj = this.instanceField(tr);
         obj['nid'] = tr.dataset.id;
         this.setLine(obj);
-        console.log(this.lines);
     }
 
     instanceField(tr){

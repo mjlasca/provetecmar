@@ -27,7 +27,7 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
           <span>No.</span>
           <div class="check-succ"></div>
         </th>
-        <th>Producto</th>
+        <th class="td-product">Producto</th>
         <th class="td-small">Cantidad</th>
         <th>Peso total</th>
         <th>Total</th>
@@ -49,7 +49,7 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
         <th>Factor</th>
         <th>Tiempo entrega</th>
         <th>Comentarios</th>
-        <th class="td-small">🗑️</th>
+        <th class="td-small td-delete">🗑️</th>
       </tr>
     </thead>
     <tbody id="quote-lines">

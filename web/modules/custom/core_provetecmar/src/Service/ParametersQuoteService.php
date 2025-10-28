@@ -130,6 +130,7 @@ class ParametersQuoteService {
       return $result;
     }
 
+
     /**
      * Function for get parameters
      * @return
@@ -141,6 +142,7 @@ class ParametersQuoteService {
         'vid' => 'group_companies'
       ]);
       if(!empty($rfqs)){
+        $settings['group_companies'] = [''];
         foreach ($rfqs as $k => $rfq) {
           $settings['group_companies'][] = [
             'tid' => $rfq->tid->value,
