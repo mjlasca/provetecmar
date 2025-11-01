@@ -58,22 +58,21 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
   </table>
 
 
-</div>
-<div class="table-actions">
-    <span class="btn add-line">➕ Agregar línea</span>
-    '.$modal.'
-</div>
-</div><div class="quote-parameters"></div><div class="quote-messages"></div>';
+  </div>
+  <div class="table-actions">
+      <span class="btn add-line">➕ Agregar línea</span>
+      '.$modal.'
+  </div>
+  </div><div class="quote-parameters"></div><div class="quote-messages"></div>';
 
-    if (isset($form['field_products']['widget'])) {
-      $settings = [];
-      $serviceParam = \Drupal::service('core_provetecmar.parameters_quote');
-      $settings = $serviceParam->getParameters();
-      $settings['items'] = $serviceParam->getData($nodeQuote);
-      $settings['nid'] = $nodeQuote->nid->value;
-    }
+    
+    $settings = [];
+    $serviceParam = \Drupal::service('core_provetecmar.parameters_quote');
+    $settings = $serviceParam->getParameters();
+    $settings['items'] = $serviceParam->getData($nodeQuote);
+    $settings['nid'] = $nodeQuote->nid->value;
     $form['actions']['submit']['#validate'][] = '_quote_validation_custom';
-    $form['actions']['submit']['#submit'][] = '_quote_submit_custom';
+    array_unshift($form['actions']['submit']['#submit'], '_quote_submit_custom');
     $arrState = ['assignment','price_change'];
     $settings['process'] = TRUE;
     $arrState = ['published','offer_ready'];
@@ -103,7 +102,6 @@ function _quote_validation_custom($form, \Drupal\Core\Form\FormStateInterface $f
       Markup::create('<ul>' . $resultImport['message'] . '</ul>')
     );
   }
-
   $valQuote = \Drupal::service('core_provetecmar.validate_quote');
   $resultVal = $valQuote->validateQuote($node, $form, $form_state);
   if(!$resultVal['success'])
@@ -119,10 +117,40 @@ function _quote_validation_custom($form, \Drupal\Core\Form\FormStateInterface $f
 
 }
 
+function core_fogafin_entity_presave(\Drupal\Core\Entity\EntityInterface $entity) : void {
+  dd($entity);
+  if ($entity instanceof ContentEntityInterface && $entity->isTranslatable()) {
+    $route_match = \Drupal::routeMatch();
+    \Drupal::service('content_translation.synchronizer')->synchronizeFields($entity, $entity->language()
+      ->getId(), $route_match->getParameter('source_langcode'));
+  }
+}
+function core_fogafin_node_presave(\Drupal\Core\Entity\EntityInterface $entity) {
+  dd($entity->bundle());
+  if ($entity->bundle() === 'mi_tipo_con_paragraphs') {
+    if ($entity->hasField('field_mis_paragraphs')) {
+      // Eliminar TODOS los párrafos del valor a guardar
+      $entity->set('field_mis_paragraphs', []);
+    }
+  }
+}
+
 /**
  * Submit custom quote
  */
 function _quote_submit_custom($form, \Drupal\Core\Form\FormStateInterface $form_state) {
+
+    $input = $form_state->getUserInput();
+  if (isset($input['field_products'])) {
+    dd($input['field_products']);
+    $input['field_products'] = []; // ✅ Aquí puedes asignar array vacío
+    // O eliminar completamente:
+    // unset($input['field_paragraphs']);
+
+    $form_state->setUserInput($input);
+  }
+
+
   $node = $form_state->getFormObject()->getEntity();
   $service = \Drupal::service('core_provetecmar.importxlsx');
   $resultImport = $service->importXlsx($form, $form_state);

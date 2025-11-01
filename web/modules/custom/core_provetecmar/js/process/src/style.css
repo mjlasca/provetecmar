@@ -2,6 +2,10 @@
   max-width: 100% !important;
 }
 
+#gin-sticky-edit-preview{
+  display: none;
+}
+
 .quote-flex .fieldset__wrapper{
   display: flex;
   gap: 6px;
@@ -314,6 +318,9 @@
   gap: 3px;
   justify-content: center;
   align-items: center;
+  position: sticky;
+  left: 0;
+  background-color: #fff;
 }
 
 .quote-table .td-check input[type="checkbox"]{
@@ -448,4 +455,9 @@
 
 #block-gin-content{
   max-width: none !important;
+}
+
+#field-trm-s-values tbody{
+  display: flex !important;
+  flex-wrap: wrap !important;
 }

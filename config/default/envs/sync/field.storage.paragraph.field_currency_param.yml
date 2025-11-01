@@ -1,16 +1,16 @@
-uuid: 4c6ed6e5-8b9e-4cdd-b50f-c36ec79e0329
+uuid: 7e27637c-444b-47e1-b256-5c760a7ea74b
 langcode: es
 status: true
 dependencies:
   module:
     - paragraphs
-id: paragraph.field_delivery_time
-field_name: field_delivery_time
+    - taxonomy
+id: paragraph.field_currency_param
+field_name: field_currency_param
 entity_type: paragraph
-type: integer
+type: entity_reference
 settings:
-  unsigned: false
-  size: normal
+  target_type: taxonomy_term
 module: core
 locked: false
 cardinality: 1

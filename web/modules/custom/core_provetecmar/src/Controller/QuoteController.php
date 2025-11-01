@@ -241,7 +241,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
           'name' => $node->field_customer->entity->title->value,
           'phone' => $node->field_customer->entity->field_phone->value,
           'email' => $node->field_customer->entity->field_email->value,
-          'currency' => $node->field_customer->entity->field_purchase_currency->entity->name->value
+          'currency' => $node->field_currency->entity->name->value
         ],
         'node' => [
           'valid' => $node->field_valid->value,

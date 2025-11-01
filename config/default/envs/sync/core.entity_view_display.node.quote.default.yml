@@ -3,6 +3,7 @@ langcode: es
 status: true
 dependencies:
   config:
+    - field.field.node.quote.field_currency
     - field.field.node.quote.field_current_state
     - field.field.node.quote.field_customer
     - field.field.node.quote.field_description
@@ -16,6 +17,7 @@ dependencies:
     - field.field.node.quote.field_requests_send
     - field.field.node.quote.field_rfq
     - field.field.node.quote.field_trm
+    - field.field.node.quote.field_trm_s
     - field.field.node.quote.field_valid
     - node.type.quote
   module:
@@ -32,6 +34,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: -20
+    region: content
+  field_currency:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 120
     region: content
   field_current_state:
     type: string
@@ -142,6 +152,15 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     weight: 118
+    region: content
+  field_trm_s:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 121
     region: content
   field_valid:
     type: string

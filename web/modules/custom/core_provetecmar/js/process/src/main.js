@@ -10,7 +10,7 @@ import "./style.css";
       {
         const tabLines = document.querySelector('.quote-app');
         if(tabLines){
-          tabLines.innerHTML = '<div class="msg-draft"><h3>La cotización debe ser creada...</h3></div>';
+          tabLines.innerHTML = '<div class="msg-draft"><h3>La cotización debe ser creada para crear o editar líneas...</h3></div>';
         }
         return;
       }

@@ -9,7 +9,7 @@ id: node.quote.field_quote_tax
 field_name: field_quote_tax
 entity_type: node
 bundle: quote
-label: Impuestos(%)
+label: 'Impuesto de venta(%)'
 description: 'Porcentaje del subtotal'
 required: true
 translatable: false

@@ -1,15 +1,15 @@
-uuid: 6d4d8d90-e9a9-4440-8ff4-cf64e4c523b7
+uuid: e6d7684e-c588-4aa8-981e-5ce8095a388e
 langcode: es
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_delivery_time
+    - field.storage.paragraph.field_delivery_time_client
     - paragraphs.paragraphs_type.items
-id: paragraph.items.field_delivery_time
-field_name: field_delivery_time
+id: paragraph.items.field_delivery_time_client
+field_name: field_delivery_time_client
 entity_type: paragraph
 bundle: items
-label: 'Tiempo de entrega'
+label: 'Tiempo entrega cliente'
 description: ''
 required: false
 translatable: false
