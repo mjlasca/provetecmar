@@ -5,12 +5,10 @@
 # @see https://www.drupal.org/project/drupal/issues/3257119
 /web/core
 /vendor/
-/web/sites/*/settings.*.php
 /web/sites/*/services*.yml
 /web/sites/*/files
 /web/sites/*/private
 /web/sites/simpletest
-/web/sites/default/settings.php
 
 # Directories specific to this template
 /web/libraries
