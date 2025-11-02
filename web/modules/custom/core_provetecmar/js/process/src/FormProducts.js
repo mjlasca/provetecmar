@@ -68,6 +68,8 @@ export class FormQuote{
     }
 
     calculate(input){
+        if(this.settings.process)
+            return;
         let obj = {};
         const tr = input.closest('tr');
         this.incoterms(tr);
@@ -146,6 +148,8 @@ export class FormQuote{
     }
 
     async sendLines(){
+        if(this.settings.process)
+            return;
         try {
             const response = await fetch(
                 `/save-lines/${this.settings.nid}`,

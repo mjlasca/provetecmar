@@ -159,7 +159,7 @@ export class QuoteUi {
     const tdBtn = document.createElement('td');
     tdBtn.classList = ['td-small td-delete'];
     const btnRemove = document.createElement('button');
-    if(this.settings.process)
+    if(!this.settings.process)
       tdBtn.appendChild(btnRemove);
     btnRemove.classList = ['btn btn-remove']
     btnRemove.type = 'button';
@@ -169,6 +169,8 @@ export class QuoteUi {
     if(data.nid){
       tr.dataset.id = data.nid;
       fieldProduct.querySelector('input').dataset.nid = data.nid;
+    }
+    if(data.nid && !this.settings.process){
       this.products.calculate(fieldProduct.querySelector('input'));
     }
     return tr;
