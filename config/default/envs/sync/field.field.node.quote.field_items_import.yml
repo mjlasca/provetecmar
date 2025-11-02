@@ -12,7 +12,7 @@ field_name: field_items_import
 entity_type: node
 bundle: quote
 label: 'Importar productos'
-description: 'Al cargar el archivo se actualizarán o crearán los productos que estén registrados allí'
+description: "Cargue el archivo antes de agregar cualquier línea, si tiene alguna línea, no se cargarán los productos del archivo.\r\nEn cuyo caso, deberá borrar todas las líneas para que tome las del archivo."
 required: false
 translatable: false
 default_value: {  }

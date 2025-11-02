@@ -1,0 +1,23 @@
+uuid: 69c94be9-b64f-4a6b-b8b1-5ece5cf69dd8
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_representation
+    - taxonomy.vocabulary.brand_line
+  module:
+    - options
+id: taxonomy_term.brand_line.field_representation
+field_name: field_representation
+entity_type: taxonomy_term
+bundle: brand_line
+label: Representación
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: no_representada
+default_value_callback: ''
+settings: {  }
+field_type: list_string

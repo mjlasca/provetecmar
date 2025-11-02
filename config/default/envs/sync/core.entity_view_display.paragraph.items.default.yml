@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.items.field_assessment
+    - field.field.paragraph.items.field_brand
     - field.field.paragraph.items.field_cant
     - field.field.paragraph.items.field_check
     - field.field.paragraph.items.field_comments
@@ -41,6 +42,14 @@ content:
       link: true
     third_party_settings: {  }
     weight: 11
+    region: content
+  field_brand:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 26
     region: content
   field_cant:
     type: number_decimal

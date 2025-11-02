@@ -1,0 +1,23 @@
+Mejoras de UI/UX
+[ ] Extender el frame de fondo en la vista de líneas de cotización para que no se vea como "desbordado"
+
+Gestión de Monedas y TRM
+[ ] Mantener la moneda original del proveedor para la posterior emisión de órdenes de compra // ESTO aplica si se le asigna una moneda al proveedor
+[ ] Enviar solicitudes a proveedores en la moneda que ellos cotizan, no en dólares // Las órdenes no se envían con costos, sólo cantidades NO APLICA
+
+Proceso de Órdenes de Compra
+[ ] Implementar selección de ítems específicos para órdenes de compra cuando el cliente no apruebe todos los productos
+[ ] Crear ventana intermedia al cambiar estado a "orden de compra" donde se pueda seleccionar qué ítems pasan a la orden // No una ventana, será simplemente selección, se guarda luego al enviar la orden sólo se enviará los items seleccionados
+
+[ ] Generar órdenes de compra en la moneda original del proveedor, no en dólares // la orden se generará con la selección de moneda en la orden de compra
+[ ] Permitir modificación de TRM en las órdenes de compra si es necesario 
+Validaciones y Reglas de Negocio
+
+[ ] Delimitar el alcance del dashboard enfocándose únicamente en métricas del proceso de cotización
+[ ] Implementar análisis por marcas a nivel de línea de cotización
+[ ] No expandir funcionalidades analíticas más allá del proceso básico de cotización (reservar para fases posteriores)
+Entorno de Pruebas
+[ ] Completar las actualizaciones en el entorno de pruebas
+[ ] Liberar el ambiente de pruebas esta semana o inicios de la próxima
+[ ] Coordinar capacitación para explicar ingreso y navegación en el sistema
+Nota importante: Este checklist refleja los puntos específicos mencionados durante ambas reuniones del 28/10/2025 que requieren atención para completar y mejorar la solución del cotizador.

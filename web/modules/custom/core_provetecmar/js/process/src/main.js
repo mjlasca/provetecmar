@@ -6,6 +6,11 @@ import "./style.css";
   Drupal.behaviors.Quote = {
     attach: function (context, settings) {
       let formObj = null;
+      if(context){
+        const tableParam = document.querySelector('#field-trm-s-values tbody');
+        if(tableParam)
+          tableParam.classList.add('tbody-flex');
+      }
       if(settings.process == -1)
       {
         const tabLines = document.querySelector('.quote-app');

@@ -9,6 +9,7 @@ use Drupal\file\FileRepositoryInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\paragraphs\Entity\Paragraph;
 
 /**
  * Sete parameters quote
@@ -104,6 +105,7 @@ class ParametersQuoteService {
             'provider'                => $paragraph->get('field_product')->entity->field_provider->target_id ?? NULL,
             'weight'                  => $paragraph->get('field_product')->entity->field_unit_weight->value ?? NULL,
             'field_cant'              => $paragraph->get('field_cant')->value ?? NULL,
+            'field_currency_line'     => $paragraph->get('field_currency_line')->target_id ?? NULL,
             'field_weight_total'      => $paragraph->get('field_weight_total')->value ?? NULL,
             'field_total'             => $paragraph->get('field_total')->value ?? NULL,
             'field_company'           => $paragraph->get('field_company')->target_id ?? NULL,
@@ -114,6 +116,7 @@ class ParametersQuoteService {
             'field_assessment'        => $paragraph->get('field_assessment')->target_id ?? NULL,
             'field_margin'            => $paragraph->get('field_margin')->target_id ?? NULL,
             'field_incoterm'          => $paragraph->get('field_incoterm')->target_id ?? NULL,
+            'field_brand'        => $paragraph->get('field_brand')->target_id ?? NULL,
             'field_landed_cost'       => $paragraph->get('field_landed_cost')->value ?? NULL,
             'field_shipping_method'   => $paragraph->get('field_shipping_method')->target_id ?? NULL,
             'field_container_type'    => $paragraph->get('field_container_type')->target_id ?? NULL,
@@ -123,6 +126,7 @@ class ParametersQuoteService {
             'field_total_sale'        => $paragraph->get('field_total_sale')->value ?? NULL,
             'field_sale_factor'       => $paragraph->get('field_sale_factor')->value ?? NULL,
             'field_delivery_time'     => $paragraph->get('field_delivery_time')->value ?? NULL,
+            'field_delivery_time_client'     => $paragraph->get('field_delivery_time_client')->value ?? NULL,
             'field_comments'          => $paragraph->get('field_comments')->value ?? NULL,
           ];
         }
@@ -133,16 +137,18 @@ class ParametersQuoteService {
 
     /**
      * Function for get parameters
+     * @param Node $node
+     *  Node entity
      * @return
      *  array
      */
-    function getParameters() : array {
+    function getParameters(Node $node) : array {
       $settings = [];
       $rfqs = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
         'vid' => 'group_companies'
       ]);
       if(!empty($rfqs)){
-        $settings['group_companies'] = ['--Seleccionar--'];
+        $settings['group_companies'][] = ['name' => '--Seleccionar--', 'tid' => ''];
         foreach ($rfqs as $k => $rfq) {
           $settings['group_companies'][] = [
             'tid' => $rfq->tid->value,
@@ -155,22 +161,35 @@ class ParametersQuoteService {
         'vid' => 'assessment'
       ]);
       if(!empty($assessment)){
-        $settings['assessment'] = ['--Seleccionar--'];
         foreach ($assessment as $k => $val) {
           $settings['assessment'][] = [
             'tid' => $val->tid->value,
             'name' => $val->name->value,
           ];
         }
+        sort($settings['assessment']);
       }
 
       $shipping_method = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
         'vid' => 'shipping_method'
       ]);
       if(!empty($shipping_method)){
-        $settings['shipping_method'] = ['--Seleccionar--'];
+        $settings['shipping_method'][] = ['name' => '--Seleccionar--', 'tid' => ''];
         foreach ($shipping_method as $k => $val) {
           $settings['shipping_method'][] = [
+            'tid' => $val->tid->value,
+            'name' => $val->name->value,
+          ];
+        }
+      }
+
+      $brand_line = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([  
+        'vid' => 'brand_line'
+      ]);
+      if(!empty($brand_line)){
+        $settings['brand_line'][] = ['name' => '--Seleccionar--', 'tid' => ''];
+        foreach ($brand_line as $k => $val) {
+          $settings['brand_line'][] = [
             'tid' => $val->tid->value,
             'name' => $val->name->value,
           ];
@@ -181,7 +200,7 @@ class ParametersQuoteService {
         'vid' => 'container_type'
       ]);
       if(!empty($container_type)){
-        $settings['container_type'] = ['--Seleccionar--'];
+        $settings['container_type'][] = ['name' => '--Seleccionar--', 'tid' => ''];
         foreach ($container_type as $k => $val) {
           $settings['container_type'][] = [
             'tid' => $val->tid->value,
@@ -194,7 +213,7 @@ class ParametersQuoteService {
         'vid' => 'incoterms'
       ]);
       if(!empty($incoterms)){
-        $settings['incoterms'] = ['--Seleccionar--'];
+        $settings['incoterms'][] = ['name' => '--Seleccionar--', 'tid' => ''];
         foreach ($incoterms as $k => $val) {
           $settings['incoterms'][] = [
             'tid' => $val->tid->value,
@@ -207,7 +226,7 @@ class ParametersQuoteService {
         'vid' => 'delivery_region'
       ]);
       if(!empty($deliveries)){
-        $settings['deliveries'] = ['--Seleccionar--'];
+        $settings['deliveries'][] = ['name' => '--Seleccionar--', 'tid' => ''];
         foreach ($deliveries as $k => $val) {
           $settings['deliveries'][] = [
             'tid' => $val->tid->value,
@@ -220,7 +239,7 @@ class ParametersQuoteService {
         'vid' => 'margin'
       ]);
       if(!empty($margin)){
-        $settings['margin'] = ['--Seleccionar--'];
+        $settings['margin'][] = ['name' => '--Seleccionar--', 'tid' => ''];
         foreach ($margin as $k => $val) {
           $settings['margin'][] = [
             'tid' => $val->tid->value,
@@ -233,7 +252,6 @@ class ParametersQuoteService {
         'vid' => 'taxes'
       ]);
       if(!empty($taxes)){
-
         foreach ($taxes as $k => $tax) {
           $settings['taxes'][] = [
             'rfq' => $tax->field_rfq->target_id,
@@ -259,13 +277,41 @@ class ParametersQuoteService {
         'vid' => 'trm_a_usd'
       ]);
       if(!empty($taxs)){
+        $settings['currencies'][] = ['name' => 'Seleccionar', 'tid' => ''];
         foreach ($taxs as $key => $tax) {
-          $settings['parameters'][] = [
+          $settings['currencies'][] = [
             'name' => $tax->name->value,
             'tid' => $tax->tid->value,
             'factor' => $tax->field_factor->value
           ];
         }
+      }
+      if(count($node->get('field_trm_s')->getValue()) < 1){
+        $paramsCurrencies = [];
+        foreach ($settings['currencies'] as $key => $value) {
+          if(isset($value['tid'])){
+            $parag = Paragraph::create([
+              'type' => 'trm_parameters',
+              'field_currency_param' => [ 'target_id' => $value['tid'] ],
+              'field_trm_param' => $value['factor'],
+            ]);
+            if($parag->save()){
+              $paramsCurrencies[] = [
+                'target_id' => $parag->id(),
+                'target_revision_id' => $parag->getRevisionId(),
+              ];
+            }
+          }
+        }
+        $node->set('field_trm_s', $paramsCurrencies);
+        $node->save();
+      }
+      foreach ($node->get('field_trm_s')->referencedEntities() as $key => $trm) {
+        $settings['parameters'][] = [
+          'name' => $trm->field_currency_param->entity->name->value,
+          'tid' => $trm->field_currency_param->target_id,
+          'factor' => $trm->field_trm_param->value
+        ];
       }
 
       $shipping_cost_origin = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([

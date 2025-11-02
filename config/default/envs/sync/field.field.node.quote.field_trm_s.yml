@@ -12,7 +12,7 @@ id: node.quote.field_trm_s
 field_name: field_trm_s
 entity_type: node
 bundle: quote
-label: "Trm's"
+label: 'Monedas y trm de compra'
 description: ''
 required: false
 translatable: false

@@ -307,7 +307,10 @@
 }
 
 .quote-table .td-product {
-  min-width: 300px;
+  min-width: 230px;
+  position: sticky;
+  left: 60px;
+  background-color: #fff;
 }
 
 .quote-table .td-check {
@@ -328,7 +331,6 @@
   height: 12px;
   transform: scale(1.5);
 }
-
 
 .quote-table .td-small {
   min-width: 60px;
@@ -455,9 +457,4 @@
 
 #block-gin-content{
   max-width: none !important;
-}
-
-#field-trm-s-values tbody{
-  display: flex !important;
-  flex-wrap: wrap !important;
 }

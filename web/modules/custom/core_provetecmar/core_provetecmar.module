@@ -19,56 +19,60 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
     if(!empty($nodeQuote->get('moderation_state')->value) && in_array($nodeQuote->get('moderation_state')->value, $arrState) ){
       $modal = '<div class="requests-send"><span class="button-primary">Enviar Solicitudes</span></div><div class="quote-modal quote-hide"><div class="loader-overlay" style="display:none;"><div class="spinner"></div></div><div class="quote-modal--body"><div class="quote-modal--head"></div></div></div>';
     }
-    $form['field_requests_send']['#prefix'] = '<div class="quote-app"><div class="quote-table-wrapper">
-  <table class="quote-table">
-    <thead>
-      <tr>
-        <th class="td-small td-check">
-          <span>No.</span>
-          <div class="check-succ"></div>
-        </th>
-        <th class="td-product">Producto</th>
-        <th class="td-small">Cantidad</th>
-        <th>Peso total</th>
-        <th>Total</th>
-        <th class="td-medium">Empresa</th>
-        <th class="td-medium">Región entrega</th>
-        <th>Impuesto (%)</th>
-        <th>Costo Unitario USD</th>
-        <th>Costo total (USD)</th>
-        <th>Gravamen (%)</th>
-        <th>Margen (%)</th>
-        <th>Incoterm</th>
-        <th>Factor cost</th>
-        <th class="td-medium">Tipo envío</th>
-        <th class="td-mar">Tipo contenedor</th>
-        <th class="td-mar">Qty</th>
-        <th class="td-mar">Entrega contenedor</th>
-        <th>Vr Unitario (USD)</th>
-        <th>Vr Total (USD)</th>
-        <th>Factor</th>
-        <th>Tiempo entrega</th>
-        <th>Comentarios</th>
-        <th class="td-small td-delete">🗑️</th>
-      </tr>
-    </thead>
-    <tbody id="quote-lines">
+    $form['field_requests_send']['#prefix'] = 
+    '<div class="quote-app">
+      <div class="quote-table-wrapper">
+        <table class="quote-table">
+          <thead>
+            <tr>
+              <th class="td-small td-check">
+                <span>No.</span>
+                <div class="check-succ"></div>
+              </th>
+              <th class="td-product">Producto</th>
+              <th class="td-small">Cantidad</th>
+              <th>Moneda</th>
+              <th>Peso total</th>
+              <th>Total</th>
+              <th class="td-medium">Empresa</th>
+              <th class="td-medium">Región entrega</th>
+              <th>Incoterm</th>
+              <th>Marca</th>
+              <th>Impuesto (%)</th>
+              <th>Costo Unitario USD</th>
+              <th>Costo total (USD)</th>
+              <th>Gravamen (%)</th>
+              <th>Margen (%)</th>
+              <th>Factor cost</th>
+              <th class="td-medium">Tipo envío</th>
+              <th class="td-mar">Tipo contenedor</th>
+              <th class="td-mar">Qty</th>
+              <th class="td-mar">Entrega contenedor</th>
+              <th>Vr Unitario (USD)</th>
+              <th>Vr Total (USD)</th>
+              <th>Factor</th>
+              <th>Tiempo entrega(Prov)</th>
+              <th>Tiempo entrega(Cliente)</th>
+              <th>Comentarios</th>
+              <th class="td-small td-delete">🗑️</th>
+            </tr>
+          </thead>
+          <tbody id="quote-lines">
 
-    </tbody>
-  </table>
-
-
-  </div>
-  <div class="table-actions">
-      <span class="btn add-line">➕ Agregar línea</span>
-      '.$modal.'
-  </div>
-  </div><div class="quote-parameters"></div><div class="quote-messages"></div>';
+          </tbody>
+        </table>
+      </div>
+      <div class="table-actions">
+          <span class="btn add-line">➕ Agregar línea</span>
+          '.$modal.'
+      </div>
+    </div>
+    <div class="quote-parameters"></div><div class="quote-messages"></div>';
 
     
     $settings = [];
     $serviceParam = \Drupal::service('core_provetecmar.parameters_quote');
-    $settings = $serviceParam->getParameters();
+    $settings = $serviceParam->getParameters($nodeQuote);
     $settings['items'] = $serviceParam->getData($nodeQuote);
     $settings['nid'] = $nodeQuote->nid->value;
     $form['actions']['submit']['#validate'][] = '_quote_validation_custom';
@@ -117,24 +121,6 @@ function _quote_validation_custom($form, \Drupal\Core\Form\FormStateInterface $f
 
 }
 
-function core_fogafin_entity_presave(\Drupal\Core\Entity\EntityInterface $entity) : void {
-  dd($entity);
-  if ($entity instanceof ContentEntityInterface && $entity->isTranslatable()) {
-    $route_match = \Drupal::routeMatch();
-    \Drupal::service('content_translation.synchronizer')->synchronizeFields($entity, $entity->language()
-      ->getId(), $route_match->getParameter('source_langcode'));
-  }
-}
-function core_fogafin_node_presave(\Drupal\Core\Entity\EntityInterface $entity) {
-  dd($entity->bundle());
-  if ($entity->bundle() === 'mi_tipo_con_paragraphs') {
-    if ($entity->hasField('field_mis_paragraphs')) {
-      // Eliminar TODOS los párrafos del valor a guardar
-      $entity->set('field_mis_paragraphs', []);
-    }
-  }
-}
-
 /**
  * Submit custom quote
  */
@@ -142,11 +128,7 @@ function _quote_submit_custom($form, \Drupal\Core\Form\FormStateInterface $form_
 
     $input = $form_state->getUserInput();
   if (isset($input['field_products'])) {
-    dd($input['field_products']);
     $input['field_products'] = []; // ✅ Aquí puedes asignar array vacío
-    // O eliminar completamente:
-    // unset($input['field_paragraphs']);
-
     $form_state->setUserInput($input);
   }
 

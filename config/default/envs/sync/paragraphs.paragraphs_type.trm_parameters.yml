@@ -3,7 +3,7 @@ langcode: es
 status: true
 dependencies: {  }
 id: trm_parameters
-label: 'Parámetros trm'
+label: TRM
 icon_uuid: null
 icon_default: null
 description: 'Asignación trm para líneas de cotización'

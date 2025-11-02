@@ -106,6 +106,7 @@ class SetLinesQuoteService {
               'field_total' => $line['field_total'],
               'field_delivery_region' => [ 'target_id' => $line['field_delivery_region']],
               'field_company' => [ 'target_id' => $line['field_company']],
+              'field_currency_line' => [ 'target_id' => $line['field_currency_line']],
               'field_tax' => $line['field_tax'],
               'field_cost' => $line['field_cost'],
               'field_total_cost' => $line['field_total_cost'],
@@ -121,7 +122,9 @@ class SetLinesQuoteService {
               'field_total_sale' => $line['field_total_sale'],
               'field_sale_factor' => $line['field_sale_factor'],
               'field_delivery_time' => $line['field_delivery_time'],
+              'field_delivery_time_client' => $line['field_delivery_time_client'],
               'field_comments' => $line['field_comments'],
+              'field_brand' => $line['field_brand'],
             ]);
             if($paragraph->save()){
               $arrayParagraph[] = [
@@ -130,10 +133,8 @@ class SetLinesQuoteService {
               ];
             }
           }
-          if(!empty($arrayParagraph)){
-            $node->set('field_products', $arrayParagraph);
-            $node->save();
-          }
+          $node->set('field_products', $arrayParagraph);
+          $node->save();
           return ['success' => TRUE, 'paragraphs' => $node->get('field_products')->referencedEntities()];
       } catch (\Throwable $th) {
         return ['success' => FALSE];

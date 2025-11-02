@@ -42,11 +42,11 @@ export class FormQuote{
     getTotalField(container){
         let rest = 0;
         if(container.length > 0){
-        container.forEach(el => {
-            if(el.value && el.value > 0){
-            rest = rest + parseFloat(el.value);
-            }
-        });
+            container.forEach(el => {
+                if(el.value && el.value > 0){
+                rest = rest + parseFloat(el.value);
+                }
+            });
         }
         return rest;
     }
@@ -55,9 +55,22 @@ export class FormQuote{
         return this.lines.find(item => item.nid == nid);
     }
 
+    incoterms(tr){
+        const saleInco = document.querySelector('[name*="field_incoterms"]');
+        const purchInco = tr.querySelector('[name*="field_incoterm"]');
+        this.ui.incotermsMatriz(tr,this.getTextSelect(saleInco)+this.getTextSelect(purchInco));
+    }
+
+    getTextSelect(selectEle){
+        const index = selectEle.selectedIndex;
+        const optionSelected = selectEle.options[index];
+        return optionSelected.textContent;
+    }
+
     calculate(input){
         let obj = {};
         const tr = input.closest('tr');
+        this.incoterms(tr);
         const prop = input.name.replace('[]','');
         obj[prop] = input.value;
         obj['nid'] = tr.dataset.id;
@@ -65,6 +78,7 @@ export class FormQuote{
         this.calc.containerRow = tr;
         this.calc.nid = tr.dataset.id;
         this.calc.dataProduct = this.getObjLine(this.calc.nid);
+        this.calc.dataProduct.currency = tr.querySelector('[name*="field_currency_line"]').value;
         this.calc.process();
         obj = this.instanceField(tr);
         obj['nid'] = tr.dataset.id;
@@ -77,7 +91,7 @@ export class FormQuote{
         fields.forEach(el => {
             props[el.name.replace('[]','')] = el.value;
         });
-
+        
         return props;
     }
 
@@ -92,6 +106,8 @@ export class FormQuote{
 
     setLine(data, oldnid = null) {
         if (this.lines.length > 0) {
+            if(data.nid == null)
+                return;
             if( oldnid != null && data.nid != oldnid )
                 this.lines = this.lines.filter(line => line.nid !== oldnid);
             const search = this.lines.find(line => line.nid === data.nid);

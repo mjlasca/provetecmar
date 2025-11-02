@@ -32,6 +32,8 @@ export class QuoteUi {
     this.container_delivery = this.settings.container_delivery;
     this.incoterms = this.settings.incoterms;
     this.margin = this.settings.margin;
+    this.currencies = this.settings.currencies;
+    this.brand_line = this.settings.brand_line;
     //span check th prmary
     this.succ = document.querySelector('.check-succ');
     this.succ.innerHTML = '<input type="checkbox" >';
@@ -102,6 +104,8 @@ export class QuoteUi {
     tr.append(fieldProduct);
     const fieldCant = this.fieldInput({'name':'field_cant[]', 'type': 'number', 'value':  data.field_cant ?? '' });
     tr.append(fieldCant);
+    const fieldCurrency = this.fieldSelect({'name' : 'field_currency_line[]', 'value':  data.field_currency_line ?? ''}, this.currencies);
+    tr.append(fieldCurrency);
     const fieldWeight = this.fieldInput({ 'name': 'field_weight_total[]', 'type': 'number', 'readOnly':true, 'value':  data.field_weight_total ?? '' });
     tr.append(fieldWeight);
     const fieldTotal = this.fieldInput({ 'name': 'field_total[]', 'type': 'number', 'readOnly':true, 'value':  data.field_total ?? '' });
@@ -110,6 +114,10 @@ export class QuoteUi {
     tr.append(fieldCompany);
     const fieldDelivery = this.fieldSelect({'name': 'field_delivery_region[]', 'value':  data.field_delivery_region ?? ''}, this.deliveries)
     tr.append(fieldDelivery);
+    const fieldIncoterm = this.fieldSelect({'name' : 'field_incoterm[]', 'value':  data.field_incoterm ?? ''}, this.incoterms);
+    tr.append(fieldIncoterm);
+    const fieldBrand = this.fieldSelect({'name' : 'field_brand[]', 'value':  data.field_brand ?? ''}, this.brand_line);
+    tr.append(fieldBrand);
     const fieldTax = this.fieldInput({'name' : 'field_tax[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_taxs ?? ''});
     tr.append(fieldTax);
     const fieldCost = this.fieldInput({'name' : 'field_cost[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_cost ?? ''});
@@ -120,8 +128,6 @@ export class QuoteUi {
     tr.append(fieldAssessment);
     const fieldMargin = this.fieldSelect({'name' : 'field_margin[]', 'value':  data.field_margin ?? ''}, this.margin);
     tr.append(fieldMargin);
-    const fieldIncoterm = this.fieldSelect({'name' : 'field_incoterm[]', 'value':  data.field_incoterm ?? ''}, this.incoterms);
-    tr.append(fieldIncoterm);
     const fieldLandedCost = this.fieldInput({'name' : 'field_landed_cost[]', 'type' : 'number', 'value':  data.field_landed_cost ?? ''});
     tr.append(fieldLandedCost);
     const fieldShippingMethod = this.fieldSelect({'name' : 'field_shipping_method[]', 'value':  data.field_shipping_method ?? ''}, this.shipping_method);
@@ -141,10 +147,15 @@ export class QuoteUi {
     tr.append(fieldTotalSale);
     const fieldSaleFactor = this.fieldInput({'name' : 'field_sale_factor[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_sale_factor ?? ''});
     tr.append(fieldSaleFactor);
-    const fieldDeliveryTime = this.fieldInput({'name' : 'field_delivery_time[]', 'type' : 'text', 'value':  data.field_delivery_time ?? ''});
+    const fieldDeliveryTime = this.fieldInput({'name' : 'field_delivery_time[]', 'type' : 'number', 'value':  data.field_delivery_time ?? ''});
     tr.append(fieldDeliveryTime);
+    const fieldDeliveryTimeClient = this.fieldInput({'name' : 'field_delivery_time_client[]', 'type' : 'number', 'value':  data.field_delivery_time_client ?? ''});
+    tr.append(fieldDeliveryTimeClient);
     const fieldComments = this.fieldInput({'name' : 'field_comments[]', 'type' : 'text', 'value':  data.field_comments ?? ''});
     tr.append(fieldComments);
+    if(data.field_shipping_method && data.field_shipping_method == 120){
+      this.showContainer(tr,120);
+    }
     const tdBtn = document.createElement('td');
     tdBtn.classList = ['td-small td-delete'];
     const btnRemove = document.createElement('button');
@@ -303,9 +314,7 @@ export class QuoteUi {
     if( !confirm('¿Está segur@ de eliminar esta líena?') )
       return;
     const tr = e.target.closest('tr');
-    console.log("prim",this.products.lines);
     this.products.lines = this.products.lines.filter(item => item.nid != tr.dataset.id);
-    console.log("seg",this.products.lines);
     tr.remove();
     this.counter();
   }
@@ -355,7 +364,6 @@ export class QuoteUi {
   }
 
   showContainer(container, val) {
-   
     const containerType = container.querySelector(
       '[name*="field_container_type"]'
     );
@@ -363,7 +371,6 @@ export class QuoteUi {
       '[name*="field_container_delivery"]'
     );
     const qty = container.querySelector('[name*="field_qty"]');
-     console.log(val);
     containerType.disabled = true;
     containerDelivery.disabled = true;
     qty.disabled = true;
@@ -372,6 +379,10 @@ export class QuoteUi {
       containerType.disabled = false;
       containerDelivery.disabled = false;
       qty.disabled = false;
+    }else{
+      containerType.value = "";
+      containerDelivery.value = "";
+      qty.value = "";
     }
   }
 
@@ -511,6 +522,37 @@ export class QuoteUi {
     checks.forEach(element => {
       element.checked = status;
     });
+  }
+
+  incotermsMatriz(tr, cell){
+    const assessment = tr.querySelector('[name*="field_assessment"]');
+    const shipping = tr.querySelector('[name*="field_shipping_method"]');
+    if(!assessment && !shipping)
+      return;
+    cell = cell.toLowerCase();
+    assessment.disabled = false;
+    shipping.disabled = false;
+    switch (cell) {
+      case 'exwexw':
+      case 'fobfob':
+      case 'cifcif':
+      case 'dapdap':
+      case 'ddpddp':
+        assessment.value = 0;
+        shipping.value = '';
+        assessment.disabled = true;
+        shipping.disabled = true;
+        break;
+      case 'fobexw':
+      case 'ciffob':
+      case 'cifexw':
+      case 'dapexw':
+      case 'dapcif':
+      case 'dapfob':
+        assessment.disabled = true;
+        break;
+    }
+    this.showContainer(tr, shipping.value);
   }
 
 }
