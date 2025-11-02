@@ -8,6 +8,8 @@ dependencies:
     - field.field.node.purchase_order.field_provider
     - field.field.node.purchase_order.field_quote
     - field.field.node.purchase_order.field_quoter
+    - field.field.node.purchase_order.field_requests_send
+    - field.field.node.purchase_order.field_trm_s
     - node.type.purchase_order
   module:
     - entity_reference_revisions
@@ -61,6 +63,25 @@ content:
       link: true
     third_party_settings: {  }
     weight: 111
+    region: content
+  field_requests_send:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 110
+    region: content
+  field_trm_s:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 121
     region: content
   links:
     settings: {  }

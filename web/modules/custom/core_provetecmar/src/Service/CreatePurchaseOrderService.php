@@ -47,7 +47,7 @@ class CreatePurchaseOrderService {
         'field_description' => $node->field_description->target_id,
         'field_provider' => $key,
         'field_quote' => $node->nid->value,
-        'title' => $node->title->value
+        'title' => 'Orden de compra de '.$node->title->value
       ]);
       $new_paragraphs = [];
       foreach ($group['paragraphs'] as $key => $paragraph) {
@@ -81,6 +81,17 @@ class CreatePurchaseOrderService {
         $new_paragraphs[] = ['target_id' => $new_paragraph->id(), 'target_revision_id' => $new_paragraph->getRevisionId()];
       }
       $nodePurchase->set('field_products',$new_paragraphs);
+      $trms_paragraph = [];
+      foreach ($node->get('field_trm_s')->referencedEntities() as $k => $trms) {
+        $new_paragraph = Paragraph::create([
+          'type' => $trms->bundle(),
+        ]);
+        $new_paragraph->set('field_currency_param', $trms->get('field_currency_param')->target_id);
+        $new_paragraph->set('field_trm_param', $trms->get('field_trm_param')->value);
+        $new_paragraph->save();
+        $trms_paragraph[] = ['target_id' => $new_paragraph->id(), 'target_revision_id' => $new_paragraph->getRevisionId()];
+      }
+      $nodePurchase->set('field_trm_s',$trms_paragraph);
       if($nodePurchase->save()){
         $result = ['success' => TRUE, 'msg' => 'Las órdenes de compra se han generado con éxito'];
       }

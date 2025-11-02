@@ -20,7 +20,7 @@ export class QuoteUi {
   }
 
   init(){
-    this.addLine.addEventListener('click', () => {
+    this.addLine?.addEventListener('click', () => {
       this.setLine({});
     });
     this.rfqs = this.settings.group_companies;
