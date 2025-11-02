@@ -4,12 +4,10 @@ status: true
 dependencies:
   config:
     - field.field.node.product.field_description
-    - field.field.node.product.field_id_unique
     - field.field.node.product.field_manufacturer
     - field.field.node.product.field_part
     - field.field.node.product.field_product_type
     - field.field.node.product.field_provider
-    - field.field.node.product.field_purchase_currency
     - field.field.node.product.field_unit
     - field.field.node.product.field_unit_cost
     - field.field.node.product.field_unit_weight
@@ -27,14 +25,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 103
-    region: content
-  field_id_unique:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 107
     region: content
   field_manufacturer:
     type: entity_reference_label
@@ -67,14 +57,6 @@ content:
       link: true
     third_party_settings: {  }
     weight: 101
-    region: content
-  field_purchase_currency:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 106
     region: content
   field_unit:
     type: entity_reference_label

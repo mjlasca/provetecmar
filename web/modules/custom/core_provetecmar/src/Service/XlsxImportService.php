@@ -127,16 +127,20 @@ class XlsxImportService {
             ->getStorage('node')
             ->getQuery()
             ->condition('type', 'product')
-            ->condition('field_part', $row[6] ?? '')
+            ->condition('field_part', $row[6])
             ->accessCheck(FALSE)
             ->execute();
           
+          $partPref = '';
           if (!empty($nids)) {
             $nid = reset($nids);
             $product = $this->entityTypeManager
               ->getStorage('node')
               ->load($nid);
           } else {
+            
+            if(empty($row[6]))
+              $partPref = 'SPN-';
             $product = $this->entityTypeManager
               ->getStorage('node')
               ->create([
@@ -152,11 +156,15 @@ class XlsxImportService {
               $manufacturer = $this->validateTaxonomy('manufacturer',$row[4]);
               if($manufacturer != FALSE)
                 $product->set('field_manufacturer',$manufacturer);
-            }  
+            }
             $product->set('title', str_replace('"','', $row[2] ) ?? '');
             $product->set('field_description', $row[3] ?? '');
 
             if($product->save()){
+              if(!empty($partPref)){
+                $product->set('field_part', $partPref.$product->nid->value);
+                $product->save();
+              }
               $paragraphProd = [
               'type' => 'items', 
               'field_product' => [

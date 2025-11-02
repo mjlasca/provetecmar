@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <title>Cotización</title>
   <style>
+    @page {
+      margin: 100px 0px;
+      font-family: DejaVu Sans, sans-serif;
+      font-size: 12px;
+    }
+    /*
     html, body { 
       margin:0 !important; 
       padding:0 !important; 
@@ -12,14 +18,14 @@
       font-family: DejaVu Sans, sans-serif;
       font-size: 12px;
       mso-line-height-rule:exactly;
-    }
+    }*/
 
     header {
       position: fixed;
-      top: 0px;
+      top: -100px;
       left: 0;
-      right: 0;
       text-align: center;
+      height: 300px;
     }
 
     table td{
@@ -33,6 +39,8 @@
     content{
       display: flex;
       justify-content: center;
+      align-item:top;
+      width:95%; 
     }
 
     content > div{
@@ -65,6 +73,12 @@
     .table {
       width: 100%;
       border-collapse: collapse;
+      page-break-inside: auto;
+    }
+
+    .table tr {
+      page-break-inside: avoid;
+      page-break-after: auto;
     }
 
     .table th,
@@ -87,21 +101,16 @@
     
     footer {
       position: fixed;
-      bottom: -10px;
+      bottom: -100px;
       left: 0;
-      right: 0;
+      width: 100%;
       border-top: 1px solid #ccc;
       font-size: 12px;
       color: #666;
-    }
-
-    .footer {
       background: #1a1a1a;
       color: #fff;
       padding: 15px 20px;
       font-size: 11px;
-      display: flex;
-      gap: 10px;
     }
 
     .total-row tr{
@@ -116,8 +125,9 @@
       color: #fdd000;
     }
 
-    
-
+    .page-number:before {
+      content: counter(page);
+    }
   </style>
 </head>
 <body>
@@ -222,6 +232,9 @@
         <span class="highlight">correo@provetecmar.com</span><br>
         <span class="highlight">+57 320 256 3263</span>
       </div>
+    </div>
+    <div>
+      Página <span class="page-number"></span>
     </div>
   </footer>
 

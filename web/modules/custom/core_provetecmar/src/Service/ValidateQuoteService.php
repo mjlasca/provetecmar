@@ -119,14 +119,23 @@ class ValidateQuoteService {
      *  Message validation for success true or false
      */
     function validateProduct(Node $product) : array {
-      if(
-        $product->field_unit_weight->value != 0 &&
-        $product->field_unit_cost->value != 0 &&
-        $product->field_provider->target_id != ''
-      ){
+      $msg = '';
+      if( !empty($product->field_unit_weight->value) && $product->field_unit_weight->value < 1 ){
+        $msg .= "El producto {$product->title->value} no tiene un peso asignado";
+      }
+
+      if( !empty($product->field_unit_cost->value) && $product->field_unit_cost->value < 1  ){
+        $msg .= "El producto {$product->title->value} no tiene un costo unitario asignado";
+      }
+     
+      if( empty($product->field_provider->target_id) ){
+        $msg .= "El producto {$product->title->value} no tiene un proveedor asignado";
+      }
+
+      if( empty($msg) ){
         return ['success' => TRUE];
       }else{
-        return ['success' => FALSE, 'msg' => "El producto {$product->title->value} no está completo"];
+        return ['success' => FALSE, 'msg' => $msg ];
       }
     }
 

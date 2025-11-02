@@ -5,7 +5,7 @@ dependencies:
   config:
     - field.storage.node.field_purchase_currency
     - node.type.provider
-    - taxonomy.vocabulary.currency
+    - taxonomy.vocabulary.trm_a_usd
 id: node.provider.field_purchase_currency
 field_name: field_purchase_currency
 entity_type: node
@@ -20,7 +20,7 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      currency: currency
+      trm_a_usd: trm_a_usd
     sort:
       field: name
       direction: asc

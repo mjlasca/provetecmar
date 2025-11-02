@@ -286,10 +286,12 @@ class ParametersQuoteService {
           ];
         }
       }
-      if(count($node->get('field_trm_s')->getValue()) < 1){
+      if(!empty($node->nid->value) && count($node->get('field_trm_s')->getValue()) < 2){
+        $node->set('field_trm_s', []);
+        $node->save();
         $paramsCurrencies = [];
         foreach ($settings['currencies'] as $key => $value) {
-          if(isset($value['tid'])){
+          if(isset($value['factor'])){
             $parag = Paragraph::create([
               'type' => 'trm_parameters',
               'field_currency_param' => [ 'target_id' => $value['tid'] ],
@@ -307,11 +309,13 @@ class ParametersQuoteService {
         $node->save();
       }
       foreach ($node->get('field_trm_s')->referencedEntities() as $key => $trm) {
-        $settings['parameters'][] = [
-          'name' => $trm->field_currency_param->entity->name->value,
-          'tid' => $trm->field_currency_param->target_id,
-          'factor' => $trm->field_trm_param->value
-        ];
+        if(!empty($trm->field_currency_param->entity->name->value)){
+          $settings['parameters'][] = [
+            'name' => $trm->field_currency_param->entity->name->value,
+            'tid' => $trm->field_currency_param->target_id,
+            'factor' => $trm->field_trm_param->value
+          ];
+        }
       }
 
       $shipping_cost_origin = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
