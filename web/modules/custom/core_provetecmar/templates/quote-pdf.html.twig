@@ -10,11 +10,11 @@
       font-size: 12px;
     }
     /*
-    html, body { 
-      margin:0 !important; 
-      padding:0 !important; 
-      height:100% !important; 
-      width:95% !important; 
+    html, body {
+      margin:0 !important;
+      padding:0 !important;
+      height:100% !important;
+      width:95% !important;
       font-family: DejaVu Sans, sans-serif;
       font-size: 12px;
       mso-line-height-rule:exactly;
@@ -41,7 +41,7 @@
       display: flex;
       justify-content: center;
       align-item:top;
-      width:95%; 
+      width:95%;
     }
 
     content > div{
@@ -99,7 +99,7 @@
       font-weight: bold;
       margin-bottom: 4px;
     }
-    
+
     footer {
       position: fixed;
       bottom: -100px;
@@ -188,29 +188,29 @@
                   <div>{{ item.description }}</div>
                 </td>
                 <td style="text-align:center; border-right:solid 1px #ddd;">{{ item.cant }} / {{ item.unit }}</td>
-                <td style="text-align:right; border-right:solid 1px #ddd;">{{ item.price|number_format(2, ',', '.') }}</td>
-                <td style="text-align:right;">{{ item.price_total|number_format(2, ',', '.') }}</td>
+                <td style="text-align:right; border-right:solid 1px #ddd;">{{ (item.price * data.node.trm)|number_format(2, ',', '.') }}</td>
+                <td style="text-align:right;">{{ ( item.price_total * data.node.trm )|number_format(2, ',', '.') }}</td>
               </tr>
             {% endfor %}
           </tbody>
           <tfoot style="font-size:12px;">
-            
+
             <tr class="total-row" >
               <td>Validez: <br>{{ data.node.valid }}</td>
               <td>Incoterm: <br><strong>{{ data.node.incoterm }}</strong></td>
               <td>TRM: <br><strong>{{ data.node.trm }}</strong></td>
               <td colspan="2" >SUBTOTAL</td>
-              <td style="text-align:right;">{{data.subtotal|number_format(2, ',', '.') }}</td>
+              <td style="text-align:right;">{{ ( data.subtotal * data.node.trm )|number_format(2, ',', '.') }}</td>
             </tr>
             <tr class="total-row">
               <td colspan="3" ></td>
               <td  colspan="2">IMPUESTOS ({{ data.node.tax|number_format(0) }}%)</td>
-              <td style="text-align:right;">{{ data.tax_total|number_format(2, ',', '.') }}</td>
+              <td style="text-align:right;">{{ ( data.tax_total * data.node.trm )|number_format(2, ',', '.') }}</td>
             </tr>
             <tr class="total-row">
               <td colspan="3" ></td>
               <td colspan="2" >TOTAL</td>
-              <td style="text-align:right;">{{data.total|number_format(2, ',', '.') }}</td>
+              <td style="text-align:right;">{{ ( data.total * data.node.trm )|number_format(2, ',', '.') }}</td>
             </tr>
             {% if data.node.observation %}
               <tr>
@@ -222,7 +222,7 @@
     </div>
 
   </content>
-  
+
 
   <!-- Footer -->
   <footer>
