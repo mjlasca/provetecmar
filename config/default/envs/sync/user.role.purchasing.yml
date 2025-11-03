@@ -1,0 +1,9 @@
+uuid: e4431338-ba1b-4f33-aaec-9198b755c3d4
+langcode: es
+status: true
+dependencies: {  }
+id: purchasing
+label: Compras
+weight: 6
+is_admin: false
+permissions: {  }

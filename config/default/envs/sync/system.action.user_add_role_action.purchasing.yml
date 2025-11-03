@@ -1,0 +1,14 @@
+uuid: 8720ac29-6a7a-42d9-9cdc-2bae530b2836
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.purchasing
+  module:
+    - user
+id: user_add_role_action.purchasing
+label: 'Añade el rol Compras al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: purchasing
