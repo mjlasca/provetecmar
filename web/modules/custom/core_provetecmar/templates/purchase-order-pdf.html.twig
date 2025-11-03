@@ -10,11 +10,11 @@
       font-size: 12px;
     }
     /*
-    html, body { 
-      margin:0 !important; 
-      padding:0 !important; 
-      height:100% !important; 
-      width:95% !important; 
+    html, body {
+      margin:0 !important;
+      padding:0 !important;
+      height:100% !important;
+      width:95% !important;
       font-family: DejaVu Sans, sans-serif;
       font-size: 12px;
       mso-line-height-rule:exactly;
@@ -41,7 +41,7 @@
       display: flex;
       justify-content: center;
       align-item:top;
-      width:95%; 
+      width:95%;
     }
 
     content > div{
@@ -98,7 +98,7 @@
       font-weight: bold;
       margin-bottom: 4px;
     }
-    
+
     footer {
       position: fixed;
       bottom: -100px;
@@ -156,7 +156,6 @@
             <td>Cliente: <br><strong>{{ data.client.name }}</strong></td>
             <td>Teléfono: <br><strong>{{ data.client.phone }}</strong></td>
             <td>Email: <br><strong>{{ data.client.email }}</strong></td>
-            <td>Moneda: <br><strong>{{ data.client.currency }}</strong></td>
           </tr>
           </table>
         </div>
@@ -193,25 +192,20 @@
             {% endfor %}
           </tbody>
           <tfoot style="font-size:12px;">
-            
+
             <tr class="total-row" >
-              <td>Validez: <br>{{ data.node.valid }}</td>
+              <td></td>
               <td>Incoterm: <br><strong>{{ data.node.incoterm }}</strong></td>
-              <td>TRM: <br><strong>{{ data.node.trm }}</strong></td>
+              <td></td>>
               <td colspan="2" >SUBTOTAL</td>
               <td style="text-align:right;">{{data.subtotal|number_format(2, ',', '.') }}</td>
             </tr>
-            {% if data.node.observation %}
-              <tr>
-                <td colspan="4">Observaciones: <br>{{ data.node.observation }}</td>
-              </tr>
-            {% endif %}
           </tfoot>
         </table>
     </div>
 
   </content>
-  
+
 
   <!-- Footer -->
   <footer>
