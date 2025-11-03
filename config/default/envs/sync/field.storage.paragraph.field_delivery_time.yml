@@ -1,4 +1,4 @@
-uuid: ef008ca3-774a-45c5-9cd3-5871e219b9e1
+uuid: 4c6ed6e5-8b9e-4cdd-b50f-c36ec79e0329
 langcode: es
 status: true
 dependencies:
@@ -7,11 +7,10 @@ dependencies:
 id: paragraph.field_delivery_time
 field_name: field_delivery_time
 entity_type: paragraph
-type: string
+type: integer
 settings:
-  max_length: 255
-  case_sensitive: false
-  is_ascii: false
+  unsigned: false
+  size: normal
 module: core
 locked: false
 cardinality: 1

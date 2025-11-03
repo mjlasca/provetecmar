@@ -2,24 +2,35 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Orden de Compra</title>
+  <title>Cotización</title>
   <style>
-    html, body { 
-      margin:0 !important; 
-      padding:0 !important; 
-      height:100% !important; 
-      width:95% !important; 
+    @page {
+      margin: 100px 0px;
+      font-family: DejaVu Sans, sans-serif;
+      font-size: 12px;
+    }
+    /*
+    html, body {
+      margin:0 !important;
+      padding:0 !important;
+      height:100% !important;
+      width:95% !important;
       font-family: DejaVu Sans, sans-serif;
       font-size: 12px;
       mso-line-height-rule:exactly;
-    }
+    }*/
 
     header {
       position: fixed;
-      top: -60px;  /* distancia desde el borde del papel */
+      top: -100px;
       left: 0;
-      right: 0;
       text-align: center;
+      height: 300px;
+      width: 100%
+    }
+
+    table td{
+      padding: 0px 5px;
     }
 
     .logo img {
@@ -29,6 +40,8 @@
     content{
       display: flex;
       justify-content: center;
+      align-item:top;
+      width:95%;
     }
 
     content > div{
@@ -42,7 +55,7 @@
     }
 
     .title-section h1 {
-      font-size: 34px;
+      font-size: 28px;
       font-weight: bold;
       margin: 0;
     }
@@ -50,7 +63,6 @@
     .title-section .number {
       font-size: 14px;
       font-weight: bold;
-      text-align: left;
     }
 
     .meta {
@@ -61,6 +73,12 @@
     .table {
       width: 100%;
       border-collapse: collapse;
+      page-break-inside: auto;
+    }
+
+    .table tr {
+      page-break-inside: avoid;
+      page-break-after: auto;
     }
 
     .table th,
@@ -73,31 +91,30 @@
       background: #f3f3f3;
       text-align: center;
       font-weight: bold;
-      font-size: 20px;
+      font-size: 15px;
     }
 
     .item-title {
       font-weight: bold;
       margin-bottom: 4px;
     }
-    
+
     footer {
       position: fixed;
-      bottom: -10px;
+      bottom: -100px;
       left: 0;
-      right: 0;
+      width: 100%;
       border-top: 1px solid #ccc;
       font-size: 12px;
       color: #666;
-    }
-
-    .footer {
       background: #1a1a1a;
       color: #fff;
       padding: 15px 20px;
       font-size: 11px;
-      display: flex;
-      gap: 10px;
+    }
+
+    .total-row tr{
+      padding: 0 10px;
     }
 
     .total-row td {
@@ -108,8 +125,9 @@
       color: #fdd000;
     }
 
-    
-
+    .page-number:before {
+      content: counter(page);
+    }
   </style>
 </head>
 <body>
@@ -123,47 +141,71 @@
 
   <content>
     <div>
-        <!-- Título de Orden de Compra -->
+        <!-- Título de cotización -->
         <div class="title-section">
-          <h1>Orden de Compra</h1>
+          <h1>Orden de compra</h1>
           <div class="number">No. {{ data.nid }}</div>
         </div>
 
         <!-- Datos cliente -->
         <div class="meta">
-          <div>Fecha: {{ data.date }}</div>
-          <div>Proveedor: <strong>{{ data.provider }}</strong></div>
+
+        <table style="border:0;">
+          <tr>
+            <td>Fecha: <br>{{ data.date }}</td>
+            <td>Cliente: <br><strong>{{ data.client.name }}</strong></td>
+            <td>Teléfono: <br><strong>{{ data.client.phone }}</strong></td>
+            <td>Email: <br><strong>{{ data.client.email }}</strong></td>
+          </tr>
+          </table>
         </div>
 
         <!-- Tabla de productos -->
         <table class="table" style="border:0px;">
           <thead>
             <tr>
-              <th style="width:60%;text-align:left">Título OC</th>
-              <th style="width:20%">Cant./Unidad</th>
-              <th style="width:20%">Precio</th>
+              <th style="width:5%;text-align:center">Item</th>
+              <th style="width:10%;text-align:left">Parte No.</th>
+              <th style="width:45%;text-align:left">Detalle</th>
+              <th style="width:8%">Cant. Unidad</th>
+              <th style="width:12%">Vr Unit.</th>
+              <th style="width:20%">Vr Total</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody style="border-bottom: 2px solid #000;margin-bottom:10px;">
             {% for item in data.items %}
               <tr style="border-top:solid 1px #ddd;">
+                <td style="border-right:solid 1px #ddd;text-aling:center;">
+                  {{ loop.index }}
+                </td>
+                <td style="border-right:solid 1px #ddd;">
+                  {{ item.part }}
+                </td>
                 <td style="border-right:solid 1px #ddd;">
                   <div class="item-title">{{ item.title }}</div>
                   <div>{{ item.description }}</div>
                 </td>
                 <td style="text-align:center; border-right:solid 1px #ddd;">{{ item.cant }} / {{ item.unit }}</td>
-                <td style="text-align:right;">{{ item.price }}</td>
+                <td style="text-align:right; border-right:solid 1px #ddd;">{{ item.price|number_format(2, ',', '.') }}</td>
+                <td style="text-align:right;">{{ item.price_total|number_format(2, ',', '.') }}</td>
               </tr>
             {% endfor %}
-            <tr class="total-row" style="font-size:16px;">
-              <td colspan="2" >TOTAL</td>
-              <td style="text-align:right;">{{ data.total }}</td>
-            </tr>
           </tbody>
+          <tfoot style="font-size:12px;">
+
+            <tr class="total-row" >
+              <td></td>
+              <td>Incoterm: <br><strong>{{ data.node.incoterm }}</strong></td>
+              <td></td>>
+              <td colspan="2" >SUBTOTAL</td>
+              <td style="text-align:right;">{{data.subtotal|number_format(2, ',', '.') }}</td>
+            </tr>
+          </tfoot>
         </table>
     </div>
+
   </content>
-  
+
 
   <!-- Footer -->
   <footer>

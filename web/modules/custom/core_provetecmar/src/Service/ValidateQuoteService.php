@@ -51,19 +51,19 @@ class ValidateQuoteService {
      *
      * @param \GuzzleHttp\ClientInterface $http_client
      *   The HTTP client service used to make external API requests.
-     * 
+     *
      * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
      *   The logger factory service used to get a logger channel for this module.
-     * 
+     *
      * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
      *   Manage storage entity
-     * 
+     *
      * @param \Drupal\file\FileRepositoryInterface $fileRepository
      *   Manage files
-     * 
+     *
      * @param \Drupal\Core\File\FileUrlGeneratorInterface $fileUrlGenerator
      *   Generate url's
-     * 
+     *
      * @param \Drupal\Core\File\FileSystemInterface $fileSystem
      *   Manage files
      */
@@ -108,7 +108,7 @@ class ValidateQuoteService {
       }
 
       return ['success' => TRUE];
-      
+
     }
 
     /**
@@ -119,14 +119,23 @@ class ValidateQuoteService {
      *  Message validation for success true or false
      */
     function validateProduct(Node $product) : array {
-      if(
-        $product->field_unit_weight->value != 0 &&
-        $product->field_unit_cost->value != 0 &&
-        $product->field_provider->target_id != ''
-      ){
+      $msg = '';
+      if( !empty($product->field_unit_weight->value) && $product->field_unit_weight->value < 1 ){
+        $msg .= "El producto {$product->title->value} no tiene un peso asignado";
+      }
+
+      if( !empty($product->field_unit_cost->value) && $product->field_unit_cost->value < 1  ){
+        $msg .= "El producto {$product->title->value} no tiene un costo unitario asignado";
+      }
+     
+      if( empty($product->field_provider->target_id) ){
+        $msg .= "El producto {$product->title->value} no tiene un proveedor asignado";
+      }
+
+      if( empty($msg) ){
         return ['success' => TRUE];
       }else{
-        return ['success' => FALSE, 'msg' => "El producto {$product->title->value} no está completo"];
+        return ['success' => FALSE, 'msg' => $msg ];
       }
     }
 

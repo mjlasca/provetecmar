@@ -11,133 +11,93 @@ use Drupal\Core\Render\Markup;
  * Implementa hook_form_alter().
  */
 function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  if ($form_id === 'node_quote_edit_form' || $form_id === 'node_quote_form') {
-    //$form['field_products']['#access'] = FALSE;
-    $form['field_requests_send']['#prefix'] = '<div class="quote-app"></div><div class="quote-parameters"></div><div class="quote-messages"></div>';
+  if ($form_id === 'node_quote_edit_form' || $form_id === 'node_quote_form' || $form_id === 'node_purchase_order_edit_form' || $form_id === 'node_purchase_order_form') {
+    $form['field_products']['#access'] = FALSE;
     $nodeQuote = $form_state->getFormObject()->getEntity();
+    $freeze = FALSE;
+    $modal = '';
+    //moderation state for send requests
     $arrState = ['assignment','price_change'];
     if(!empty($nodeQuote->get('moderation_state')->value) && in_array($nodeQuote->get('moderation_state')->value, $arrState) ){
-      $form['field_products']['#suffix'] = '<div class="requests-send"><span class="button-primary">Enviar Solicitudes</span></div><div class="quote-modal quote-hide"><div class="loader-overlay" style="display:none;"><div class="spinner"></div></div><div class="quote-modal--body"><div class="quote-modal--head"></div></div></div>';
+      $modal = '<div class="requests-send"><span class="button-primary">Enviar Solicitudes</span></div><div class="quote-modal quote-hide"><div class="loader-overlay" style="display:none;"><div class="spinner"></div></div><div class="quote-modal--body"><div class="quote-modal--head"></div></div></div>';
     }
-    if (isset($form['field_products']['widget'])) {
-      $settings = [];
-
-      $taxes = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
-        'vid' => 'taxes'
-      ]);
-      if(!empty($taxes)){
-        foreach ($taxes as $k => $tax) {
-          $settings['taxes'][] = [
-            'rfq' => $tax->field_rfq->target_id,
-            'region' => $tax->field_origin->target_id,
-            'tax' => $tax->field_tax->value,
-          ];
-        }
-      }
-
-      $providerList = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties([
-        'type' => 'provider',
-        'status' => 1
-      ]);
-      foreach ($providerList as $key => $prov) {
-        $settings['providers_list'][] = [
-            'nid' => $prov->nid->value,
-            'title' => $prov->title->value,
-            'mail' => $prov->field_email->value
-        ];
-      }
-
-      $taxs = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
-        'vid' => 'trm_a_usd'
-      ]);
-      if(!empty($taxs)){
-        foreach ($taxs as $key => $tax) {
-          $settings['parameters'][] = [
-            'name' => $tax->name->value,
-            'tid' => $tax->tid->value,
-            'factor' => $tax->field_factor->value
-          ];
-        }
-      }
-
-      $shipping_cost_origin = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
-        'vid' => 'shipping_cost_origin'
-      ]);
-      if(!empty($shipping_cost_origin)){
-        foreach ($shipping_cost_origin as $k => $term) {
-          $settings['shipping'][] = [
-            'name' => $term->name->value,
-            'shipping_method' => $term->field_shipping_method->target_id,
-            'origin' => $term->field_origin->target_id,
-            'dimension' => $term->field_dimension->target_id,
-            'cost' => $term->field_cost->value,
-            'customs' => $term->field_customs->value,
-            'type_delivery' => $term->field_shipping_method->entity->field_type_delivery->value ?? null
-          ];
-        }
-      }
-
-      $container_delivery = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
-        'vid' => 'container_delivery'
-      ]);
-      if(!empty($container_delivery)){
-        foreach ($container_delivery as $k => $term) {
-          $settings['container_delivery'][] = [
-            'name' => $term->name->value,
-            'shipping_method' => $term->field_customs->value,
-            'tid' => $term->tid->value
-          ];
-        }
-      }
-
-      
-      foreach ($form['field_products']['widget'] as $delta => &$paragraph_item) {
-        if (is_numeric($delta) && isset($paragraph_item['subform']['field_product'])) {
-          if (!empty($paragraph_item['subform']['field_product']['widget'][0]['target_id']['#default_value'])) {
-            $node = $paragraph_item['subform']['field_product']['widget'][0]['target_id']['#default_value'];
-            $nid = $node->id();
-            if(
-              $node->field_unit_weight->value != 0 &&
-              $node->field_unit_cost->value != 0
-            ){
-              $settings['quote_settings'][] = [
-                'nid' => $nid,
-                'class' => 'product-success',
-                'currency' => [
-                    'tid' => $node->field_purchase_currency->target_id ?? 0,
-                    'cost' => $paragraph_item['subform']['field_total']['widget'][0]['target_id']['#default_value'] ?? 0
-                  ]
-              ];
-            }else{
-              $settings['quote_settings'][] = [
-                'nid' => $nid,
-                'class' => 'product-warning',
-                'currency' => [
-                    'tid' => $node->field_purchase_currency->target_id ?? 0,
-                    'cost' => $paragraph_item['subform']['field_total']['widget'][0]['target_id']['#default_value'] ?? 0
-                  ]
-              ];
-            }
-            $paragraph_item['#attributes']['class'][] = 'valid-'.$nid;
-            $paragraph_item['#attributes']['data-node'] = $nid;
-            $paragraph_item['#attributes']['data-currency'] = $node->field_purchase_currency->target_id ?? 0;
-            $paragraph_item['subform']['field_product']['#prefix'] = '<a data-nid="'.$nid.'" href="/node/' . $nid . '/edit" class="show-product" target="_blank">+</a>';
-          }
-        }
-      }
-    }
-    $form['actions']['submit']['#validate'][] = '_quote_validation_custom';
-    $form['actions']['submit']['#submit'][] = '_quote_submit_custom';
-    $arrState = ['assignment','price_change'];
-    $settings['process'] = TRUE;
+    //moderation state for client offer ready
     $arrState = ['published','offer_ready'];
     if(!empty($nodeQuote->get('moderation_state')->value) && in_array($nodeQuote->get('moderation_state')->value, $arrState) ){
-      $settings['process'] = FALSE;
+      $freeze = TRUE;
+    }
+    $form['field_trm_s']['#disabled'] = $freeze;
+    $addline = '<span class="btn add-line">➕ Agregar línea</span>';
+    if($freeze)
+      $addline = '';
+    $form['field_requests_send']['#prefix'] =
+    '<div class="quote-app">
+      <div class="quote-table-wrapper">
+        <table class="quote-table">
+          <thead>
+            <tr>
+              <th class="td-small td-check">
+                <span>No.</span>
+                <div class="check-succ"></div>
+              </th>
+              <th class="td-product">Producto</th>
+              <th class="td-small">Cantidad</th>
+              <th>Moneda</th>
+              <th>Peso total</th>
+              <th>Total</th>
+              <th class="td-medium">Empresa</th>
+              <th class="td-medium">Región entrega</th>
+              <th>Incoterm</th>
+              <th>Marca</th>
+              <th>Impuesto (%)</th>
+              <th>Costo Unitario USD</th>
+              <th>Costo total (USD)</th>
+              <th>Gravamen (%)</th>
+              <th>Margen (%)</th>
+              <th>Factor cost</th>
+              <th class="td-medium">Tipo envío</th>
+              <th class="td-mar">Tipo contenedor</th>
+              <th class="td-mar">Qty</th>
+              <th class="td-mar">Entrega contenedor</th>
+              <th>Vr Unitario (USD)</th>
+              <th>Vr Total (USD)</th>
+              <th>Factor</th>
+              <th>Tiempo entrega(Prov)</th>
+              <th>Tiempo entrega(Cliente)</th>
+              <th>Comentarios</th>
+              <th class="td-small td-delete">🗑️</th>
+            </tr>
+          </thead>
+          <tbody id="quote-lines">
+
+          </tbody>
+        </table>
+      </div>
+      <div class="table-actions">
+          '.$addline.'
+          '.$modal.'
+      </div>
+    </div>
+    <div class="quote-parameters"></div><div class="quote-messages"></div>';
+    $settings = [];
+    $serviceParam = \Drupal::service('core_provetecmar.parameters_quote');
+    $settings = $serviceParam->getParameters($nodeQuote);
+    $settings['items'] = $serviceParam->getData($nodeQuote);
+    $settings['nid'] = $nodeQuote->nid->value;
+    $form['actions']['submit']['#validate'][] = '_quote_validation_custom';
+    array_unshift($form['actions']['submit']['#submit'], '_quote_submit_custom');
+    $settings['process'] = $freeze;
+    if($form_id === 'node_quote_form'){
+      $settings['process'] = -1;
+      $form['field_trm_s']['#access'] = FALSE;
+      $form['field_items_import']['#access'] = FALSE;
+    }
+    if($form_id == 'node_purchase_order_edit_form'){
+      $form['field_quote']['#disabled'] = TRUE;
+      $form['field_quoter']['#disabled'] = TRUE;
+      $form['field_provider']['#disabled'] = TRUE;
     }
     $form['#attached']['drupalSettings'] = $settings;
-    $form['#attached']['library'][] = 'core_provetecmar/quote';
-  }
-  if ($form_id === 'node_purchase_order_edit_form' || $form_id === 'node_purchase_order_form') {
     $form['#attached']['library'][] = 'core_provetecmar/quote';
   }
 }
@@ -157,7 +117,6 @@ function _quote_validation_custom($form, \Drupal\Core\Form\FormStateInterface $f
       Markup::create('<ul>' . $resultImport['message'] . '</ul>')
     );
   }
-
   $valQuote = \Drupal::service('core_provetecmar.validate_quote');
   $resultVal = $valQuote->validateQuote($node, $form, $form_state);
   if(!$resultVal['success'])
@@ -166,9 +125,9 @@ function _quote_validation_custom($form, \Drupal\Core\Form\FormStateInterface $f
       $form_state->setErrorByName(
         "field_products][{$value['k']}][subform][field_product",
         Markup::create($value['msg'])
-      );  
+      );
     }
-    
+
   }
 
 }
@@ -177,11 +136,18 @@ function _quote_validation_custom($form, \Drupal\Core\Form\FormStateInterface $f
  * Submit custom quote
  */
 function _quote_submit_custom($form, \Drupal\Core\Form\FormStateInterface $form_state) {
-  // Ejemplo: obtener el nodo.
+
+    $input = $form_state->getUserInput();
+  if (isset($input['field_products'])) {
+    $input['field_products'] = []; // ✅ Aquí puedes asignar array vacío
+    $form_state->setUserInput($input);
+  }
+
+
   $node = $form_state->getFormObject()->getEntity();
   $service = \Drupal::service('core_provetecmar.importxlsx');
   $resultImport = $service->importXlsx($form, $form_state);
-  if(isset($resultImport['success'])){
+  /*if(isset($resultImport['success'])){
     if($resultImport['success'])
       \Drupal::messenger()->addStatus($resultImport['message']);
     else{
@@ -190,7 +156,7 @@ function _quote_submit_custom($form, \Drupal\Core\Form\FormStateInterface $form_
         Markup::create($resultImport['message'])
       );
     }
-  }
+  }*/
 
   $values = $form_state->getValues();
   if (isset($values['field_requests_send']) && $node->field_requests_send->value == 1){

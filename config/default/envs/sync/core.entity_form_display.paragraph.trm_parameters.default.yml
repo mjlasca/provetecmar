@@ -1,0 +1,55 @@
+uuid: 70d74886-724e-4ab2-8573-5feed88109fd
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.trm_parameters.field_currency_param
+    - field.field.paragraph.trm_parameters.field_trm_param
+    - paragraphs.paragraphs_type.trm_parameters
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_flex:
+      children:
+        - field_currency_param
+        - field_trm_param
+      label: Flex
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: flex
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+id: paragraph.trm_parameters.default
+targetEntityType: paragraph
+bundle: trm_parameters
+mode: default
+content:
+  field_currency_param:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_trm_param:
+    type: number
+    weight: 2
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

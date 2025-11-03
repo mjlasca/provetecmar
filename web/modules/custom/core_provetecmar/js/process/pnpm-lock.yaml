@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@tarekraafat/autocomplete.js':
+        specifier: ^10.2.9
+        version: 10.2.9
     devDependencies:
       vite:
         specifier: ^7.1.7
@@ -280,6 +284,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@tarekraafat/autocomplete.js@10.2.9':
+    resolution: {integrity: sha512-A7OP3iJDTWeO85M3Vxu391acu9SmDguormHpMZ13khuyM180dKl9O1gAXSDA322XwkYuUU1Ad7WchW1TQNNuDw==}
+
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
@@ -516,6 +523,8 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.52.2':
     optional: true
+
+  '@tarekraafat/autocomplete.js@10.2.9': {}
 
   '@types/estree@1.0.8': {}
 

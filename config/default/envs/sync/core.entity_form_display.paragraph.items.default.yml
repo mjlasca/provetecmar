@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.items.field_assessment
+    - field.field.paragraph.items.field_brand
     - field.field.paragraph.items.field_cant
     - field.field.paragraph.items.field_check
     - field.field.paragraph.items.field_comments
@@ -11,8 +12,10 @@ dependencies:
     - field.field.paragraph.items.field_container_delivery
     - field.field.paragraph.items.field_container_type
     - field.field.paragraph.items.field_cost
+    - field.field.paragraph.items.field_currency_line
     - field.field.paragraph.items.field_delivery_region
     - field.field.paragraph.items.field_delivery_time
+    - field.field.paragraph.items.field_delivery_time_client
     - field.field.paragraph.items.field_incoterm
     - field.field.paragraph.items.field_landed_cost
     - field.field.paragraph.items.field_margin
@@ -35,6 +38,7 @@ third_party_settings:
       children:
         - field_cant
         - field_product
+        - field_currency_line
         - field_weight_total
         - field_total
         - field_margin
@@ -42,10 +46,11 @@ third_party_settings:
         - field_company
         - field_delivery_region
         - field_incoterm
-        - field_delivery_time
         - field_comments
         - field_shipping_method
         - group_container
+        - field_delivery_time
+        - field_delivery_time_client
       label: dive
       region: content
       parent_name: ''
@@ -121,7 +126,13 @@ mode: default
 content:
   field_assessment:
     type: options_select
-    weight: 7
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_brand:
+    type: options_select
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -149,7 +160,7 @@ content:
     third_party_settings: {  }
   field_company:
     type: options_select
-    weight: 8
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -172,23 +183,35 @@ content:
     settings:
       placeholder: ''
     third_party_settings: {  }
+  field_currency_line:
+    type: options_select
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_delivery_region:
     type: options_select
-    weight: 9
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
   field_delivery_time:
-    type: string_textfield
-    weight: 11
+    type: number
+    weight: 15
     region: content
     settings:
-      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_delivery_time_client:
+    type: number
+    weight: 16
+    region: content
+    settings:
       placeholder: ''
     third_party_settings: {  }
   field_incoterm:
     type: options_select
-    weight: 10
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -201,7 +224,7 @@ content:
     third_party_settings: {  }
   field_margin:
     type: options_select
-    weight: 6
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -244,7 +267,7 @@ content:
     third_party_settings: {  }
   field_total:
     type: number
-    weight: 5
+    weight: 6
     region: content
     settings:
       placeholder: ''
@@ -272,7 +295,7 @@ content:
     third_party_settings: {  }
   field_weight_total:
     type: number
-    weight: 4
+    weight: 5
     region: content
     settings:
       placeholder: ''

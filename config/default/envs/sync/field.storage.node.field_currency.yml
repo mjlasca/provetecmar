@@ -1,17 +1,16 @@
-uuid: 8635d86b-0d3c-4f17-8cc2-fe9e2b132234
+uuid: 91bf5ac4-1d2d-4b5a-9ba6-601ebfd5babc
 langcode: es
 status: true
 dependencies:
   module:
     - node
-id: node.field_id_unique
-field_name: field_id_unique
+    - taxonomy
+id: node.field_currency
+field_name: field_currency
 entity_type: node
-type: string
+type: entity_reference
 settings:
-  max_length: 255
-  case_sensitive: false
-  is_ascii: false
+  target_type: taxonomy_term
 module: core
 locked: false
 cardinality: 1

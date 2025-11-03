@@ -1,18 +1,18 @@
-uuid: 3b838838-c603-4718-ba50-8321d37fa71f
+uuid: 0a1a1ba5-621b-4755-8c5f-4f7b4bd0882f
 langcode: es
 status: true
 dependencies:
   config:
-    - field.storage.node.field_purchase_currency
-    - node.type.product
+    - field.storage.paragraph.field_currency_line
+    - paragraphs.paragraphs_type.items
     - taxonomy.vocabulary.trm_a_usd
-id: node.product.field_purchase_currency
-field_name: field_purchase_currency
-entity_type: node
-bundle: product
-label: 'Moneda de compra'
+id: paragraph.items.field_currency_line
+field_name: field_currency_line
+entity_type: paragraph
+bundle: items
+label: Moneda
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''

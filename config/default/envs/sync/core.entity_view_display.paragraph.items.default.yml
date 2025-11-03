@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.items.field_assessment
+    - field.field.paragraph.items.field_brand
     - field.field.paragraph.items.field_cant
     - field.field.paragraph.items.field_check
     - field.field.paragraph.items.field_comments
@@ -11,8 +12,10 @@ dependencies:
     - field.field.paragraph.items.field_container_delivery
     - field.field.paragraph.items.field_container_type
     - field.field.paragraph.items.field_cost
+    - field.field.paragraph.items.field_currency_line
     - field.field.paragraph.items.field_delivery_region
     - field.field.paragraph.items.field_delivery_time
+    - field.field.paragraph.items.field_delivery_time_client
     - field.field.paragraph.items.field_incoterm
     - field.field.paragraph.items.field_landed_cost
     - field.field.paragraph.items.field_margin
@@ -39,6 +42,14 @@ content:
       link: true
     third_party_settings: {  }
     weight: 11
+    region: content
+  field_brand:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 26
     region: content
   field_cant:
     type: number_decimal
@@ -104,6 +115,14 @@ content:
     third_party_settings: {  }
     weight: 16
     region: content
+  field_currency_line:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 23
+    region: content
   field_delivery_region:
     type: entity_reference_label
     label: above
@@ -113,12 +132,22 @@ content:
     weight: 6
     region: content
   field_delivery_time:
-    type: string
+    type: number_integer
     label: above
     settings:
-      link_to_entity: false
+      thousand_separator: ''
+      prefix_suffix: true
     third_party_settings: {  }
-    weight: 7
+    weight: 24
+    region: content
+  field_delivery_time_client:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 25
     region: content
   field_incoterm:
     type: entity_reference_label

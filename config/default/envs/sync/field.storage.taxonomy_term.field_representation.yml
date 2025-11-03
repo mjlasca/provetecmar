@@ -1,0 +1,27 @@
+uuid: fb8d0c1e-4986-45ef-b7bf-9db191326d6a
+langcode: es
+status: true
+dependencies:
+  module:
+    - options
+    - taxonomy
+id: taxonomy_term.field_representation
+field_name: field_representation
+entity_type: taxonomy_term
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: representada
+      label: Representada
+    -
+      value: no_representada
+      label: 'No representada'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

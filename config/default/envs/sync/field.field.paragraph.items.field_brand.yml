@@ -1,0 +1,29 @@
+uuid: 653573e6-2b1f-44c1-a96e-aa34a34fbc07
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_brand
+    - paragraphs.paragraphs_type.items
+    - taxonomy.vocabulary.brand_line
+id: paragraph.items.field_brand
+field_name: field_brand
+entity_type: paragraph
+bundle: items
+label: Marca
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      brand_line: brand_line
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,29 @@
+uuid: 35e9be90-f48b-43ea-a313-bc4442f53440
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rfq
+    - node.type.quote
+    - taxonomy.vocabulary.group_companies
+id: node.quote.field_rfq
+field_name: field_rfq
+entity_type: node
+bundle: quote
+label: 'RFQ (Cliente)'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      group_companies: group_companies
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

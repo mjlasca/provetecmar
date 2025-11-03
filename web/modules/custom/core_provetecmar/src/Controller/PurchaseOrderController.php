@@ -90,25 +90,29 @@ class PurchaseOrderController extends ControllerBase implements ContainerInjecti
    */
   public function download($nid, $return = 'pdf') : Response {
     $node = $this->entityTypeManager->getStorage('node')->load($nid);
-    
+
     if(!empty($node->created->value)){
       $dt = new DrupalDateTime("@".$node->created->value);
       $date = $dt->format("d \\d\\e F \\d\\e\\l Y");
     }
-    
+
     $paragraphs =  $node->field_products->referencedEntities();
     $items = [];
     $total = 0;
     foreach ($paragraphs as $k => $paragraph) {
-      $items[] = [
-        'title' => $paragraph->field_product->entity->title->value,
-        'description' => $paragraph->field_product->entity->field_description->value,
-        'cant' => $paragraph->field_cant->value,
-        'unit' => $paragraph->field_product->entity->field_unit->entity->name->value,
-        'price' => $paragraph->field_total_sale->value
-      ];
-      if(!empty( $paragraph->field_total_sale->value )){
-        $total +=  $paragraph->field_total_sale->value;
+      if($paragraph->field_check->value == 1){
+        $items[] = [
+          'title' => $paragraph->field_product->entity->title->value,
+          'part' => $paragraph->field_product->entity->field_part->value,
+          'description' => $paragraph->field_product->entity->field_description->value,
+          'cant' => $paragraph->field_cant->value,
+          'unit' => $paragraph->field_product->entity->field_unit->entity->name->value,
+          'price' => $paragraph->field_cost->value,
+          'price_total' => $paragraph->field_total_cost->value
+        ];
+        if(!empty( $paragraph->field_total_cost->value )){
+          $total +=  $paragraph->field_total_cost->value;
+        }
       }
     }
     $base_path = \Drupal::service('extension.list.module')->getPath('core_provetecmar');
@@ -119,13 +123,20 @@ class PurchaseOrderController extends ControllerBase implements ContainerInjecti
       '#data' => [
         'nid' => $node->nid->value,
         'date' => $date,
-        'provider' => $node->field_provider->entity->title->value,
+        'client' => [
+          'name' => $node->field_provider->entity->title->value,
+          'phone' => $node->field_provider->entity->field_phone->value,
+          'email' => $node->field_provider->entity->field_email->value,
+        ],
+        'node' => [
+          //'trm' => $node->field_trm->value,
+          'incoterm' => $node->field_incoterms->entity->name->value
+        ],
         'items' => $items,
-        'total' => $total,
-        'base64Logo' => $base64Logo
+        'subtotal' => $total,
+        'base64Logo' => $base64Logo,
       ],
     ];
-
     $htmlPdf = $this->renderer->renderPlain($build);
 
     $options = new Options();

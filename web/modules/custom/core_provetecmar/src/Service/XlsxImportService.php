@@ -97,7 +97,12 @@ class XlsxImportService {
     try 
     {
       $nodeQuote = $form_state->getFormObject()->getEntity();
+      if(count($nodeQuote->get('field_products')->getValue()) > 0){
+        return ['success' => TRUE];
+      }
       $file_input = $form_state->getValue(['field_items_import', 0]);
+      if(empty($file_input['fids']) || !isset($file_input['fids'][0]) )
+        return ['success' => TRUE];
       if (!empty($file_input['fids'][0])) {
         $fid = $file_input['fids'][0];
         $file = File::load($fid);
@@ -122,16 +127,20 @@ class XlsxImportService {
             ->getStorage('node')
             ->getQuery()
             ->condition('type', 'product')
-            ->condition('field_part', $row[6] ?? '')
+            ->condition('field_part', $row[6])
             ->accessCheck(FALSE)
             ->execute();
           
+          $partPref = '';
           if (!empty($nids)) {
             $nid = reset($nids);
             $product = $this->entityTypeManager
               ->getStorage('node')
               ->load($nid);
           } else {
+            
+            if(empty($row[6]))
+              $partPref = 'SPN-';
             $product = $this->entityTypeManager
               ->getStorage('node')
               ->create([
@@ -147,25 +156,29 @@ class XlsxImportService {
               $manufacturer = $this->validateTaxonomy('manufacturer',$row[4]);
               if($manufacturer != FALSE)
                 $product->set('field_manufacturer',$manufacturer);
-            }  
+            }
             $product->set('title', str_replace('"','', $row[2] ) ?? '');
             $product->set('field_description', $row[3] ?? '');
 
             if($product->save()){
+              if(!empty($partPref)){
+                $product->set('field_part', $partPref.$product->nid->value);
+                $product->save();
+              }
               $paragraphProd = [
-                'type' => 'items', 
-                'field_product' => [
-                  'target_id' => $product->id(),
-                  ]
-                ];
-                if(!empty($row[7]) && $row[7])
-                  $paragraphProd['field_cant'] = trim($row[7]);
-                if(!empty($row[9]) && $row[9])
-                  $paragraphProd['field_comments'] = trim($row[9]);
-                
-                $paragraph = Paragraph::create($paragraphProd);
-                if($paragraph->save()){
-                  $arrayParagraph = $nodeQuote->get('field_products')->getValue() ?? [];
+              'type' => 'items', 
+              'field_product' => [
+                'target_id' => $product->id(),
+                ]
+              ];
+              if(!empty($row[7]) && $row[7])
+                $paragraphProd['field_cant'] = trim($row[7]);
+              if(!empty($row[9]) && $row[9])
+                $paragraphProd['field_comments'] = trim($row[9]);
+              
+              $paragraph = Paragraph::create($paragraphProd);
+              if($paragraph->save()){
+                $arrayParagraph = $nodeQuote->get('field_products')->getValue() ?? [];
                 $arrayParagraph[] = [
                   'target_id' => $paragraph->id(),
                   'target_revision_id' => $paragraph->getRevisionId(),

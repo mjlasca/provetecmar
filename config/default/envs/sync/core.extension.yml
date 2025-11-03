@@ -8,6 +8,9 @@ module:
   block: 0
   block_content: 0
   breakpoint: 0
+  charts: 0
+  charts_api_example: 0
+  charts_chartjs: 0
   ckeditor5: 0
   comment: 0
   config: 0
@@ -15,6 +18,7 @@ module:
   content_moderation: 0
   contextual: 0
   core_provetecmar: 0
+  date_filter: 0
   datetime: 0
   dblog: 0
   dynamic_page_cache: 0

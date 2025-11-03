@@ -13,7 +13,7 @@ services:
 
   core_provetecmar.mailsendrequest:
     class: Drupal\core_provetecmar\Service\MailSendRequests
-    arguments: ['@core_provetecmar.mailer', '@renderer', '@current_user', '@file_system']    
+    arguments: ['@core_provetecmar.mailer', '@renderer', '@current_user', '@file_system']
 
   core_provetecmar.validate_quote:
     class: Drupal\core_provetecmar\Service\ValidateQuoteService
@@ -22,3 +22,11 @@ services:
   core_provetecmar.quote_create_purchase:
     class: Drupal\core_provetecmar\Service\CreatePurchaseOrderService
     arguments: ['@entity_type.manager']
+
+  core_provetecmar.parameters_quote:
+    class: Drupal\core_provetecmar\Service\ParametersQuoteService
+    arguments: ['@http_client', '@logger.factory', '@entity_type.manager', '@file.repository', '@file_url_generator', '@file_system']
+
+  core_provetecmar.save_lines_quote:
+    class: Drupal\core_provetecmar\Service\SetLinesQuoteService
+    arguments: ['@http_client', '@logger.factory', '@entity_type.manager', '@file.repository', '@file_url_generator', '@file_system']

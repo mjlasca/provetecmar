@@ -2,6 +2,15 @@
   max-width: 100% !important;
 }
 
+#gin-sticky-edit-preview{
+  display: none;
+}
+
+.quote-flex .fieldset__wrapper{
+  display: flex;
+  gap: 6px;
+}
+
 .overlay-modal {
   position: fixed;
   top: 50%;
@@ -112,13 +121,17 @@
 }
 
 .error-quote--content {
-  margin-top: -15px;
+  background-color: rgb(240, 111, 111);
 }
 
-.error-quote--content p {
-  color: #ffffff;
-  background-color: red;
-  padding: 5px 10px;
+.error-quote--content:hover {
+  background-color: rgb(240, 111, 111);
+}
+
+.error-quote--msg{
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .quote-sale{
@@ -168,7 +181,7 @@
     height: 30px;
     font-size: 16px;
 }
-    
+
 .quote-modal--body .form .selected-items {
     display: flex;
     flex-direction: column;
@@ -263,4 +276,185 @@
   .quote-modal--body{
     width: 90%;
   }
+}
+
+.quote-table-wrapper {
+  width: 100%;
+}
+
+.quote-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 1400px; /* Permite scroll horizontal */
+}
+
+.quote-table tr:focus-within {
+    background-color: #f0f8ff;
+    border: 1px solid #007bff;
+}
+
+.quote-table td {
+  border: 1px solid #eee;
+}
+
+.quote-table th,
+.quote-table td {
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle;
+  min-width: 150px;
+}
+
+.quote-table .td-product {
+  min-width: 230px;
+  position: sticky;
+  left: 60px;
+  background-color: #fff;
+}
+
+.quote-table .td-check {
+  min-width: 60px;
+  max-width: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  left: 0;
+  background-color: #fff;
+}
+
+.quote-table .td-check input[type="checkbox"]{
+  width: 12px;
+  height: 12px;
+  transform: scale(1.5);
+}
+
+.quote-table .td-small {
+  min-width: 60px;
+  max-width: 60px;
+}
+
+.quote-table .td-medium {
+  min-width: 250px;
+}
+
+.quote-table thead {
+  background: #f1f1f1;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.quote-table input,
+.quote-table select {
+  width: 100%;
+  padding: 5px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.center {
+  text-align: center;
+}
+
+.btn {
+  border: none;
+  border-radius: 6px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.td-delete{
+  position: sticky;
+  right: 0;
+  background-color: white;
+}
+
+.btn-remove {
+  background: #ff6666;
+  color: white;
+}
+
+.btn-remove:hover {
+  background: #e05555;
+}
+
+.btn-add {
+  background: #ffc700;
+  color: #000;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.table-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+  .quote-table-wrapper {
+    overflow-x: scroll;
+  }
+}
+
+
+.product-suggestion {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  position: absolute;
+  background: #fff;
+  max-width: 400px;
+  width: 100%;
+  z-index: 1000;
+  display: none;
+}
+
+.product-suggestion ul{
+  list-style-type: none !important;
+  margin-left: 0 !important;
+}
+
+.suggestion-item {
+  padding: 5px 10px;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+}
+
+.suggestion-item:hover {
+  background-color: #007BFF;
+}
+
+.product-suggestion li.active {
+  background-color: #007BFF;
+  color: white;
+}
+
+.custom-tooltip {
+    position: absolute;
+    background-color: #e05555;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.msg-draft{
+  text-align: center;
+  background-color: #f1ffa4;
+}
+
+#block-gin-content{
+  max-width: none !important;
 }

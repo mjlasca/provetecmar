@@ -10,7 +10,7 @@ id: node.quote.field_incoterms
 field_name: field_incoterms
 entity_type: node
 bundle: quote
-label: 'Incoterms (entrega cliente)'
+label: 'Incoterm (venta)'
 description: ''
 required: true
 translatable: false

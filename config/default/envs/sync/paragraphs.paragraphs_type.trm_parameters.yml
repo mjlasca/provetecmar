@@ -1,0 +1,10 @@
+uuid: 322d9b72-2174-4726-8b22-dcd6ef782cf6
+langcode: es
+status: true
+dependencies: {  }
+id: trm_parameters
+label: TRM
+icon_uuid: null
+icon_default: null
+description: 'Asignación trm para líneas de cotización'
+behavior_plugins: {  }

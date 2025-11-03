@@ -1,0 +1,23 @@
+uuid: 6e2f93f6-4afa-4039-b0fb-0d525fbf559e
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_trm_param
+    - paragraphs.paragraphs_type.trm_parameters
+id: paragraph.trm_parameters.field_trm_param
+field_name: field_trm_param
+entity_type: paragraph
+bundle: trm_parameters
+label: TRM
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\core_provetecmar\Service\CreatePurchaseOrderService;
 use Drupal\core_provetecmar\Service\MailSendRequests;
+use Drupal\core_provetecmar\Service\SetLinesQuoteService;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -55,21 +56,27 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
    *
    * @var \Drupal\Core\Messenger\MessengerInterface
    */
-  protected $messenger;  
+  protected $messenger;
 
   /**
    * Service createPurchase
    *
    * @var \Drupal\core_provetecmar\Service\CreatePurchaseOrderService
    */
-  protected $createPurchaseService;  
+  protected $createPurchaseService;
 
   /**
    * Service send requests
-   * 
+   *
    * @var \Drupal\core_provetecmar\Service\MailSendRequests;
    */
   protected $mailSendRequests;
+
+  /**
+   * Set lines for save paragraph
+   * @var \Drupal\core_provetecmar\Service\SetLinesQuoteService
+   */
+  protected $setLine;
 
 
   public function __construct(
@@ -81,6 +88,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     MessengerInterface $messenger,
     CreatePurchaseOrderService $createPurchaseService,
     MailSendRequests $mailSendRequests,
+    SetLinesQuoteService $setLinesQuote
     ) {
     $this->mailer = $mailer;
     $this->languageManager = $language_manager;
@@ -90,6 +98,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     $this->messenger = $messenger;
     $this->createPurchaseService = $createPurchaseService;
     $this->mailSendRequests = $mailSendRequests;
+    $this->setLine = $setLinesQuote;
   }
 
   public static function create(ContainerInterface $container) {
@@ -102,6 +111,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
       $container->get('messenger'),
       $container->get('core_provetecmar.quote_create_purchase'),
       $container->get('core_provetecmar.mailsendrequest'),
+      $container->get('core_provetecmar.save_lines_quote'),
     );
   }
 
@@ -113,7 +123,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
   public function sendMailRequests($items) : array {
     $result = ['success' => false];
     foreach ($items as $key => $item) {
-      
+
     }
     if($this->mailer->sendMail(
       'mjlasca@gmail.com',
@@ -151,18 +161,34 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
    *  Id node
    * @return JsonResponse / RedirectResponse;
    */
-  public function getProduct($nid) : mixed {
-    $node = $this->entityTypeManager->getStorage('node')->load($nid);
+  public function getProduct($keyword) : mixed {
+    $query = $this->entityTypeManager
+      ->getStorage('node')
+      ->getQuery()
+      ->condition('title', '%' . $keyword . '%', 'LIKE')
+      ->condition('type', 'product')
+      ->accessCheck(TRUE);
+
+    $nids = $query->execute();
+
+    $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($nids);
+    if(empty($nodes))
+      return new JsonResponse(['success' => TRUE, 'products' => []], 200);
     $result = [];
-    if(!empty($node)){
-      $result['nid'] = $node->nid->value ?? 0;
-      $result['weight'] = $node->field_unit_weight->value ?? 0;
-      $result['cost_unit'] = $node->field_unit_cost->value ?? 0;
-      $result['provider'] = $node->field_provider->target_id ?? 0;
-      $result['currency'] = $node->field_purchase_currency->target_id ?? 0;
+    foreach ($nodes as $key => $node) {
+      if(!empty($node)){
+        $result[] = [
+          'nid' => $node->nid->value ?? 0,
+          'name' => $node->title->value ?? 0,
+          'weight' => $node->field_unit_weight->value ?? 0,
+          'cost_unit' => $node->field_unit_cost->value ?? 0,
+          'provider' => $node->field_provider->target_id ?? 0,
+          'currency' => $node->field_purchase_currency->target_id ?? 0,
+        ];
+      }
     }
     if(!empty($result))
-      return new JsonResponse(['success' => TRUE, 'product' => $result], 200);
+      return new JsonResponse(['success' => TRUE, 'products' => $result], 200);
     return new JsonResponse(['success' => 'invalid request method'], 400);
   }
 
@@ -174,22 +200,24 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
    */
   public function download($nid, $return = 'pdf') : Response {
     $node = $this->entityTypeManager->getStorage('node')->load($nid);
-    
+
     if(!empty($node->created->value)){
       $dt = new DrupalDateTime("@".$node->created->value);
       $date = $dt->format("d \\d\\e F \\d\\e\\l Y");
     }
-    
+
     $paragraphs =  $node->field_products->referencedEntities();
     $items = [];
     $total = 0;
     foreach ($paragraphs as $k => $paragraph) {
       $items[] = [
         'title' => $paragraph->field_product->entity->title->value,
+        'part' => $paragraph->field_product->entity->field_part->value,
         'description' => $paragraph->field_product->entity->field_description->value,
         'cant' => $paragraph->field_cant->value,
         'unit' => $paragraph->field_product->entity->field_unit->entity->name->value,
-        'price' => $paragraph->field_total_sale->value
+        'price' => $paragraph->field_unit_sale->value,
+        'price_total' => $paragraph->field_total_sale->value
       ];
       if(!empty( $paragraph->field_total_sale->value )){
         $total +=  $paragraph->field_total_sale->value;
@@ -197,16 +225,36 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     }
     $base_path = \Drupal::service('extension.list.module')->getPath('core_provetecmar');
     $base64Logo = 'data:image/jpeg;base64,' . base64_encode(file_get_contents("$base_path/assets/banner-provetecmar.jpg"));
+    if(!empty($node->field_rfq->target_id && !empty($node->field_rfq->entity->field_image->entity))){
+      $urlImageSecond = $node->field_rfq->entity->field_image->entity->getFileUri();
+      $base64Logo =  'data:image/jpeg;base64,' . base64_encode(file_get_contents($urlImageSecond));
+    }
 
+    $tax = $total * ( $node->field_quote_tax->value/100) ;
+    $total_fu = $total + $tax;
     $build = [
       '#theme' => 'quote_pdf',
       '#data' => [
         'nid' => $node->nid->value,
         'date' => $date,
-        'client' => $node->field_customer->entity->title->value,
+        'client' => [
+          'name' => $node->field_customer->entity->title->value,
+          'phone' => $node->field_customer->entity->field_phone->value,
+          'email' => $node->field_customer->entity->field_email->value,
+          'currency' => $node->field_currency->entity->name->value
+        ],
+        'node' => [
+          'valid' => $node->field_valid->value,
+          'observation' => $node->field_observaciones->value,
+          'tax' => $node->field_quote_tax->value,
+          'trm' => $node->field_trm->value,
+          'incoterm' => $node->field_incoterms->entity->name->value
+        ],
         'items' => $items,
-        'total' => $total,
-        'base64Logo' => $base64Logo
+        'subtotal' => $total,
+        'tax_total' => $tax,
+        'total' => $total_fu,
+        'base64Logo' => $base64Logo,
       ],
     ];
     $htmlPdf = $this->renderer->renderPlain($build);
@@ -221,7 +269,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
 
     $pdfContent = $dompdf->output();
 
-    
+
     if($return == 'mail'){
       $pdfPath = 'public://cotización-' . $node->nid->value . '.pdf';
       file_put_contents($this->fileSystem->realpath($pdfPath), $pdfContent);
@@ -237,7 +285,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
          $this->messenger->addMessage("Se ha enviado PDF de cotización correctamente a {$to}");
         $response->send();
       }
-        
+
     }else{
       $response = new Response($pdfContent);
       $response->headers->set('Content-Type', 'application/pdf');
@@ -284,5 +332,19 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     if($res['success'])
       return new JsonResponse(['success' => $res['success'], 'msg' => $res['msg']], 200);
     return new JsonResponse(['msg' => $res['msg']], 500);
+  }
+
+  /**
+   * Send requests
+   * @return Response
+   */
+  function saveLinesQuote($nid, Request $req) : JsonResponse {
+    if(empty($nid))
+      return new JsonResponse(['success' => FALSE], 400);
+    $data['lines'] = json_decode($req->getContent(), TRUE);
+    $data['node'] = $this->entityTypeManager->getStorage('node')->load($nid);
+    $result = $this->setLine->saveLines($data);
+    return new JsonResponse($result, 200);
+
   }
 }

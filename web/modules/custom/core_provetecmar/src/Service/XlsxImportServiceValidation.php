@@ -124,14 +124,10 @@ class XlsxImportServiceValidation {
       $message = '';
       foreach ($rows as $key => $row) {
         if($key > 1 && !empty($row[1]) && !empty($row[2]) && !empty($row[3]) ){
-          if(empty($row[0]))
-              $message .= "<li>El código es obligatorio. Item #$row[0]</li>";
           if(empty($row[2]))
               $message .= "<li>El nombre es obligatorio. Item #$row[0]</li>";
           if(empty($row[3]))
               $message .= "<li>La descripción es obligatoria. Item #$row[0]</li>";
-          if(empty($row[6]))
-              $message .= "<li>El Parte No. es obligatorio. Item #$row[0]</li>";
           if(empty($row[7]))
               $message .= "<li>La cantidad es obligatoria. Item #$row[0]</li>";
           if(empty($row[8]))

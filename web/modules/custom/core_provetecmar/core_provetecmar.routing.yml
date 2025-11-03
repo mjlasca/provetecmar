@@ -7,7 +7,7 @@ core_provetecmar.send_mail_requests:
     _permission: 'access content'
 
 core_provetecmar.get_product_for_quote:
-  path: '/get-product-quote/{nid}'
+  path: '/get-product-quote/{keyword}'
   defaults:
     _controller: '\Drupal\core_provetecmar\Controller\QuoteController::getProduct'
     _title: 'Get product'
@@ -36,7 +36,7 @@ core_provetecmar.purchase_download_pdf:
     _controller: '\Drupal\core_provetecmar\Controller\PurchaseOrderController::download'
     _title: 'Download purchase order'
   requirements:
-    _permission: 'access content'    
+    _permission: 'access content'
 
 core_provetecmar.quote_create_purchase:
   path: '/quote/purchase-order/{nid}'
@@ -44,13 +44,22 @@ core_provetecmar.quote_create_purchase:
     _controller: '\Drupal\core_provetecmar\Controller\QuoteController::generatePurchase'
     _title: 'Generate purchase order'
   requirements:
-    _permission: 'access content'    
-    
+    _permission: 'access content'
+
 core_provetecmar.quote_send_requests:
   path: '/send-request'
   defaults:
     _controller: '\Drupal\core_provetecmar\Controller\QuoteController::sendRequests'
     _title: 'Send requests'
+  requirements:
+    _permission: 'access content'
+  methods: [POST]
+
+core_provetecmar.quote_save_lines:
+  path: '/save-lines/{nid}'
+  defaults:
+    _controller: '\Drupal\core_provetecmar\Controller\QuoteController::saveLinesQuote'
+    _title: 'Save lines quote'
   requirements:
     _permission: 'access content'
   methods: [POST]

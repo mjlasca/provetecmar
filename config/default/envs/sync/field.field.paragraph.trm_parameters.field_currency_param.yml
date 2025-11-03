@@ -1,0 +1,29 @@
+uuid: 1c64adce-342c-4330-9588-7cd0dd6f1a90
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_currency_param
+    - paragraphs.paragraphs_type.trm_parameters
+    - taxonomy.vocabulary.trm_a_usd
+id: paragraph.trm_parameters.field_currency_param
+field_name: field_currency_param
+entity_type: paragraph
+bundle: trm_parameters
+label: Moneda
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      trm_a_usd: trm_a_usd
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
