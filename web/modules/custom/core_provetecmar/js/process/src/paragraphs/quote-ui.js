@@ -95,9 +95,10 @@ export class QuoteUi {
   }
 
   line(data){
+    console.log(data);
     const tr = document.createElement('tr');
     tr.classList = ['line-product']
-    const fieldCheck = this.fieldInput({'name':'field_check[]', 'type': 'checkbox'});
+    const fieldCheck = this.fieldInput({'name':'field_check[]', 'type': 'checkbox', 'value': '1', 'checked' : data.field_check == 1 ? true : false});
     fieldCheck.classList = ['td-check'];
     tr.append(fieldCheck);
     const fieldProduct = this.fieldInput({'name':'field_product[]', 'type': 'text', 'autocomplete': 'off', 'value':  data.field_product ?? '' });
@@ -200,16 +201,20 @@ export class QuoteUi {
     if(props.type == 'checkbox'){
       inp.addEventListener('change', (e) => this.requestsShow(e.target));
     }
-    
+
     inp.addEventListener('change', (e) =>  this.products.calculate(e.target));
     return td;
   }
 
   requestsShow(check){
-    if(check.checked)
-      this.btnRequests.style.display = 'block';
-    else
-      this.btnRequests.style.display = 'none';
+    if(check.checked){
+      if(this.btnRequests)
+        this.btnRequests.style.display = 'block';
+    }
+    else{
+      if(this.btnRequests)
+        this.btnRequests.style.display = 'none';
+    }
   }
 
   async autoComplete(e, contain){

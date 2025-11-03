@@ -91,9 +91,13 @@ export class FormQuote{
         const fields = tr.querySelectorAll('input[name*="field_"] , select[name*="field_"]');
         let props = {};
         fields.forEach(el => {
-            props[el.name.replace('[]','')] = el.value;
+            if(el.name == 'field_check[]'){
+                props['field_check'] = el.checked ? 1 : 0;
+            }else{
+                props[el.name.replace('[]','')] = el.value;
+            }
         });
-        
+
         return props;
     }
 

@@ -59,6 +59,13 @@ type_settings:
         - review
       to: draft
       weight: 0
+    draft_to_review:
+      label: 'Borrador a revisión'
+      from:
+        - draft
+        - published
+      to: review
+      weight: 7
     keep_in_draft:
       label: 'Mantener en borrador'
       from:

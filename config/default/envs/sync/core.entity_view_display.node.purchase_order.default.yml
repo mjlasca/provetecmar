@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.purchase_order.field_description
+    - field.field.node.purchase_order.field_incoterms
     - field.field.node.purchase_order.field_products
     - field.field.node.purchase_order.field_provider
     - field.field.node.purchase_order.field_quote
@@ -30,6 +31,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 103
+    region: content
+  field_incoterms:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 113
     region: content
   field_products:
     type: entity_reference_revisions_entity_view

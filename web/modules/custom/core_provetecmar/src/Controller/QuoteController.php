@@ -225,7 +225,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     }
     $base_path = \Drupal::service('extension.list.module')->getPath('core_provetecmar');
     $base64Logo = 'data:image/jpeg;base64,' . base64_encode(file_get_contents("$base_path/assets/banner-provetecmar.jpg"));
-    if(!empty($node->field_rfq->target_id)){
+    if(!empty($node->field_rfq->target_id && !empty($node->field_rfq->entity->field_image->entity))){
       $urlImageSecond = $node->field_rfq->entity->field_image->entity->getFileUri();
       $base64Logo =  'data:image/jpeg;base64,' . base64_encode(file_get_contents($urlImageSecond));
     }

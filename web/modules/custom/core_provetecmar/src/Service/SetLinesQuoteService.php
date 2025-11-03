@@ -126,6 +126,8 @@ class SetLinesQuoteService {
               'field_comments' => $line['field_comments'],
               'field_brand' => $line['field_brand'],
             ]);
+            if($node->type->target_id == 'purchase_order')
+              $paragraph->set('field_check',$line['field_check']);
             if($paragraph->save()){
               $arrayParagraph[] = [
                 'target_id' => $paragraph->id(),

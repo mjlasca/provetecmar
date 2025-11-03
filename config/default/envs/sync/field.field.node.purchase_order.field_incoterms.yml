@@ -1,0 +1,29 @@
+uuid: 294c69df-5b46-431d-9368-2c3cc8cdb5b0
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_incoterms
+    - node.type.purchase_order
+    - taxonomy.vocabulary.incoterms
+id: node.purchase_order.field_incoterms
+field_name: field_incoterms
+entity_type: node
+bundle: purchase_order
+label: 'Incoterm (venta)'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      incoterms: incoterms
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -92,6 +92,11 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
       $form['field_trm_s']['#access'] = FALSE;
       $form['field_items_import']['#access'] = FALSE;
     }
+    if($form_id == 'node_purchase_order_edit_form'){
+      $form['field_quote']['#disabled'] = TRUE;
+      $form['field_quoter']['#disabled'] = TRUE;
+      $form['field_provider']['#disabled'] = TRUE;
+    }
     $form['#attached']['drupalSettings'] = $settings;
     $form['#attached']['library'][] = 'core_provetecmar/quote';
   }

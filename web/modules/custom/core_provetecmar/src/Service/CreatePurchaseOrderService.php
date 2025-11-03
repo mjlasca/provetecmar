@@ -47,7 +47,8 @@ class CreatePurchaseOrderService {
         'field_description' => $node->field_description->target_id,
         'field_provider' => $key,
         'field_quote' => $node->nid->value,
-        'title' => 'Orden de compra de '.$node->title->value
+        'title' => 'Orden de compra de '.$node->title->value,
+        'field_incoterms' => $node->field_incoterms->target_id
       ]);
       $new_paragraphs = [];
       foreach ($group['paragraphs'] as $key => $paragraph) {
@@ -74,6 +75,9 @@ class CreatePurchaseOrderService {
         $new_paragraph->set('field_delivery_time', $paragraph->get('field_delivery_time')->value);
         $new_paragraph->set('field_container_type', $paragraph->get('field_container_type')->target_id);
         $new_paragraph->set('field_shipping_method', $paragraph->get('field_shipping_method')->target_id);
+        $new_paragraph->set('field_currency_line', $paragraph->get('field_currency_line')->target_id);
+        $new_paragraph->set('field_brand', $paragraph->get('field_brand')->target_id);
+        $new_paragraph->set('field_delivery_time_client', $paragraph->get('field_delivery_time_client')->target_id);
         $new_paragraph->set('field_total', $paragraph->get('field_total')->value);
         $new_paragraph->set('field_total_sale', $paragraph->get('field_total_sale')->value);
         $new_paragraph->set('field_unit_sale', $paragraph->get('field_unit_sale')->value);
