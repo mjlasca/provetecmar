@@ -1,0 +1,13 @@
+.dashboard{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 600px;
+}
+
+.dashboard-views{
+    display: flex;
+    flex-wrap: wrap;
+}
