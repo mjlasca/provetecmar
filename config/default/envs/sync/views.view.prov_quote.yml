@@ -7,10 +7,12 @@ dependencies:
     - field.storage.node.field_provider
     - field.storage.node.field_quoter
     - field.storage.node.field_rfq
+    - field.storage.paragraph.field_brand
     - field.storage.user.field_lastname
     - field.storage.user.field_name
     - node.type.purchase_order
     - node.type.quote
+    - workflows.workflow.purchase_order
     - workflows.workflow.quote_flow
   module:
     - charts
@@ -773,11 +775,11 @@ display:
             max: ''
             value: ''
           group: 1
-          exposed: true
+          exposed: false
           expose:
             operator_id: created_op
             label: 'Fecha de autoría'
-            description: ''
+            description: null
             use_operator: false
             operator: created_op
             operator_limit_selection: false
@@ -788,11 +790,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              content_editor: '0'
-              administrator: '0'
-              engineer: '0'
-              user_administrator: '0'
             min_placeholder: null
             max_placeholder: null
             placeholder: null
@@ -894,7 +891,6 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - url
         - url.query_args
         - 'user.node_grants:view'
         - user.permissions
@@ -1904,6 +1900,1035 @@ display:
       group_by: true
       display_description: ''
       header: {  }
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:workflow_list'
+  block_6:
+    id: block_6
+    display_title: 'Top 10 de marcas'
+    display_plugin: block
+    position: 3
+    display_options:
+      fields:
+        field_brand:
+          id: field_brand
+          table: paragraph__field_brand
+          field: field_brand
+          relationship: field_products
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: Marca
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns:
+            target_id: target_id
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        id:
+          id: id
+          table: paragraphs_item_field_data
+          field: id
+          relationship: field_products
+          group_type: count_distinct
+          admin_label: ''
+          entity_type: paragraph
+          entity_field: id
+          plugin_id: field
+          label: Items
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+          group_column: value
+          group_columns:
+            value: value
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          set_precision: false
+          precision: 0
+          decimal: .
+          format_plural: 0
+          format_plural_string: !!binary MQNAY291bnQ=
+          prefix: ''
+          suffix: ''
+      sorts: {  }
+      arguments: {  }
+      filters:
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            quote: quote
+        created:
+          id: created
+          table: node_field_data
+          field: created
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: created
+          plugin_id: date
+          operator: between
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: created_op
+            label: 'Fecha de autoría'
+            description: null
+            use_operator: false
+            operator: created_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: created
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: null
+            max_placeholder: null
+            placeholder: null
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          type: date
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          columns:
+            field_rfq: field_rfq
+            nid: nid
+          default: '-1'
+          info:
+            field_rfq:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            nid:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          override: true
+          sticky: false
+          summary: ''
+          empty_table: false
+          caption: ''
+          description: ''
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline: {  }
+          separator: ''
+          hide_empty: false
+      defaults:
+        group_by: false
+        style: false
+        row: false
+        relationships: false
+        fields: false
+        sorts: false
+        arguments: false
+        filters: false
+        filter_groups: false
+      relationships:
+        field_products:
+          id: field_products
+          table: node__field_products
+          field: field_products
+          relationship: none
+          group_type: group
+          admin_label: 'field_products: Párrafo'
+          plugin_id: standard
+          required: false
+      group_by: true
+      display_description: ''
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.paragraph.field_brand'
+  block_7:
+    id: block_7
+    display_title: 'Órdenes sin procesar'
+    display_plugin: block
+    position: 3
+    display_options:
+      fields:
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: type
+          plugin_id: field
+          label: 'Tipo de contenido'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns:
+            target_id: target_id
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        nid:
+          id: nid
+          table: node_field_data
+          field: nid
+          relationship: none
+          group_type: count_distinct
+          admin_label: ''
+          entity_type: node
+          entity_field: nid
+          plugin_id: field
+          label: ID
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+          group_column: value
+          group_columns:
+            value: value
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+      sorts: {  }
+      arguments: {  }
+      filters:
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          operator: in
+          value:
+            quote: quote
+            purchase_order: purchase_order
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        created:
+          id: created
+          table: node_field_data
+          field: created
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: created
+          plugin_id: date
+          operator: between
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: created_op
+            label: 'Fecha de autoría'
+            description: null
+            use_operator: false
+            operator: created_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: created
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: null
+            max_placeholder: null
+            placeholder: null
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          type: date
+        moderation_state:
+          id: moderation_state
+          table: node_field_data
+          field: moderation_state
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: moderation_state_filter
+          operator: in
+          value:
+            purchase_order-draft: purchase_order-draft
+            quote_flow-published: quote_flow-published
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      style:
+        type: chart
+        options:
+          grouping: {  }
+          chart_settings:
+            library: chartjs
+            type: pie
+            fields:
+              label: type
+              stacking: false
+              data_providers:
+                type:
+                  enabled: false
+                  color: '#006fb0'
+                  weight: 2
+                nid:
+                  enabled: true
+                  color: '#ff6bd8'
+                  weight: 2
+            display:
+              title: ''
+              title_position: out
+              subtitle: ''
+              data_labels: true
+              data_markers: true
+              connect_nulls: false
+              legend_position: right
+              background: ''
+              three_dimensional: 0
+              polar: 0
+              tooltips: true
+              dimensions:
+                width: ''
+                width_units: '%'
+                height: ''
+                height_units: ''
+              gauge:
+                max: '100'
+                min: '0'
+                green_from: '85'
+                green_to: '100'
+                yellow_from: '50'
+                yellow_to: '85'
+                red_from: '0'
+                red_to: '50'
+              color_changer: false
+            xaxis:
+              title: ''
+              labels_rotation: '0'
+            yaxis:
+              title: ''
+              min: ''
+              max: ''
+              prefix: ''
+              suffix: ''
+              decimal_count: ''
+              labels_rotation: '0'
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline: {  }
+          separator: ''
+          hide_empty: false
+      defaults:
+        group_by: false
+        style: false
+        row: false
+        relationships: false
+        fields: false
+        sorts: false
+        arguments: false
+        filters: false
+        filter_groups: false
+      relationships:
+        field_products:
+          id: field_products
+          table: node__field_products
+          field: field_products
+          relationship: none
+          group_type: group
+          admin_label: 'field_products: Párrafo'
+          plugin_id: standard
+          required: false
+      group_by: true
+      display_description: ''
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:workflow_list'
+  block_8:
+    id: block_8
+    display_title: 'Costo vs Venta'
+    display_plugin: block
+    position: 3
+    display_options:
+      fields:
+        field_total_cost:
+          id: field_total_cost
+          table: paragraph__field_total_cost
+          field: field_total_cost
+          relationship: field_products
+          group_type: sum
+          admin_label: ''
+          plugin_id: field
+          label: 'Costo total'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_decimal
+          settings:
+            thousand_separator: ''
+            decimal_separator: .
+            scale: 2
+            prefix_suffix: true
+          group_column: value
+          group_columns:
+            value: value
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_total_sale:
+          id: field_total_sale
+          table: paragraph__field_total_sale
+          field: field_total_sale
+          relationship: field_products
+          group_type: sum
+          admin_label: ''
+          plugin_id: field
+          label: 'Venta Total'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_decimal
+          settings:
+            thousand_separator: ''
+            decimal_separator: .
+            scale: 2
+            prefix_suffix: true
+          group_column: value
+          group_columns:
+            value: value
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+      sorts: {  }
+      arguments: {  }
+      filters:
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          operator: in
+          value:
+            purchase_order: purchase_order
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        created:
+          id: created
+          table: node_field_data
+          field: created
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: created
+          plugin_id: date
+          operator: between
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: created_op
+            label: 'Fecha de autoría'
+            description: null
+            use_operator: false
+            operator: created_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: created
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: null
+            max_placeholder: null
+            placeholder: null
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          type: date
+        moderation_state:
+          id: moderation_state
+          table: node_field_data
+          field: moderation_state
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: moderation_state_filter
+          operator: in
+          value:
+            purchase_order-draft: purchase_order-draft
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      style:
+        type: chart
+        options:
+          grouping: {  }
+          chart_settings:
+            library: chartjs
+            type: pie
+            fields:
+              label: ''
+              stacking: false
+              data_providers:
+                field_total_cost:
+                  enabled: true
+                  color: '#efff0f'
+                  weight: 2
+                field_total_sale:
+                  enabled: true
+                  color: '#0ab81e'
+                  weight: 2
+            display:
+              title: ''
+              title_position: out
+              subtitle: ''
+              data_labels: true
+              data_markers: true
+              connect_nulls: false
+              legend_position: right
+              background: ''
+              three_dimensional: 0
+              polar: 0
+              tooltips: true
+              dimensions:
+                width: ''
+                width_units: '%'
+                height: ''
+                height_units: ''
+              gauge:
+                max: '100'
+                min: '0'
+                green_from: '85'
+                green_to: '100'
+                yellow_from: '50'
+                yellow_to: '85'
+                red_from: '0'
+                red_to: '50'
+              color_changer: false
+            xaxis:
+              title: ''
+              labels_rotation: '0'
+            yaxis:
+              title: ''
+              min: ''
+              max: ''
+              prefix: ''
+              suffix: ''
+              decimal_count: ''
+              labels_rotation: '0'
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline: {  }
+          separator: ''
+          hide_empty: false
+      defaults:
+        group_by: false
+        style: false
+        row: false
+        relationships: false
+        fields: false
+        sorts: false
+        arguments: false
+        filters: false
+        filter_groups: false
+      relationships:
+        field_products:
+          id: field_products
+          table: node__field_products
+          field: field_products
+          relationship: none
+          group_type: group
+          admin_label: 'field_products: Párrafo'
+          plugin_id: standard
+          required: false
+      group_by: true
+      display_description: ''
       display_extenders: {  }
     cache_metadata:
       max-age: -1

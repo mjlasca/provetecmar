@@ -11,3 +11,13 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.dashboard-views--charts{
+    justify-content: space-between;
+    display: flex;
+}
+
+.total-views--panel_blue{
+    border-color: aqua;
+}
+
