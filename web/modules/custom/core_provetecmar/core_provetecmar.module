@@ -221,6 +221,11 @@ function core_provetecmar_theme($existing, $type, $theme, $path) {
         'items' => [],
       ],
     ],
+    'dashboard' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+    ],
   ];
 }
 

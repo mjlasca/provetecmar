@@ -63,3 +63,11 @@ core_provetecmar.quote_save_lines:
   requirements:
     _permission: 'access content'
   methods: [POST]
+
+core_provetecmar.dashboard:
+  path: '/admin/dashboard'
+  defaults:
+    _controller: '\Drupal\core_provetecmar\Controller\DashboardController::build'
+    _title: 'Dashboard build'
+  requirements:
+    _permission: 'access content'

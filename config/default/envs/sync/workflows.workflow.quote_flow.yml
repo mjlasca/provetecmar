@@ -36,6 +36,11 @@ type_settings:
       weight: 1
       published: true
       default_revision: true
+    rejected_client:
+      label: 'Rechazada por cliente'
+      weight: 2
+      published: false
+      default_revision: false
   transitions:
     assignment_assignment:
       label: 'Mantener en asignación'
@@ -73,6 +78,12 @@ type_settings:
         - offer_ready
       to: published
       weight: 5
+    offer_ready_to_rejected:
+      label: 'Offer ready  to rejected'
+      from:
+        - offer_ready
+      to: rejected_client
+      weight: 14
     price_change_offer:
       label: 'Pasar a oferta'
       from:
