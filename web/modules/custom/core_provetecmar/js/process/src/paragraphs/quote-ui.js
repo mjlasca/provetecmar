@@ -36,7 +36,8 @@ export class QuoteUi {
     this.brand_line = this.settings.brand_line;
     //span check th prmary
     this.succ = document.querySelector('.check-succ');
-    this.succ.innerHTML = '<input type="checkbox" >';
+    if(!this.settings.process)
+      this.succ.innerHTML = '<input type="checkbox" >';
     this.succ.addEventListener('change', (e) => this.manageCheck(e));
     this.btnRequests = document.querySelector('.requests-send');
     if(this.btnRequests)
@@ -46,6 +47,8 @@ export class QuoteUi {
   fieldSelect(props, options){
     const td = document.createElement('td');
     const sele = document.createElement('select');
+    if(this.settings.process)
+      props['disabled'] = true;
     if (props) {
         Object.assign(sele, props);
     }
@@ -180,6 +183,8 @@ export class QuoteUi {
   fieldInput(props = null){
     const td = document.createElement('td');
     const inp = document.createElement('input');
+    if(this.settings.process)
+      props['disabled'] = true;
     if (props) {
         Object.assign(inp, props);
     }

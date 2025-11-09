@@ -88,15 +88,17 @@ class DashboardController extends ControllerBase implements ContainerInjectionIn
    * @return Array
    */
   public function build() : array {
-      $variables = [
-        'nombre' => 'Mundo',
-        'lista_items' => ['Item 1', 'Item 2', 'Item 3'],
-      ];
-
-      return [
-        '#theme' => 'dashboard',
-        '#data' => $variables,
-      ];
+    $request = \Drupal::request();
+    $arr = \Drupal::request()->query->all();
+    $min = $arr['created']['min'] ?? NULL;
+    $max = $arr['created']['max'] ?? NULL;
+    $date['datemin'] = $min;
+    $date['datemax'] = $max;
+    
+    return [
+      '#theme' => 'dashboard',
+      '#data' => $date,
+    ];
   }
 
 }

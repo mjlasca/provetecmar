@@ -5,6 +5,21 @@ import "./style.css";
 (function ($, Drupal, once) {
   Drupal.behaviors.Quote = {
     attach: function (context, settings) {
+      const form = context.querySelector('.node-form');
+      const detailsProducts = context.querySelector('#edit-group-insumos');
+      const tabs = context.querySelectorAll('.horizontal-tab-button');
+      if(tabs){
+        tabs.forEach(tab => {
+          tab.addEventListener('click', (e) => {
+            form.style.maxWidth = "1420px"
+            if(detailsProducts.style.display != 'none')
+            {
+              form.style.width = "4870px";
+              form.style.maxWidth  = "none"; 
+            }
+          });
+        });
+      }
       let formObj = null;
       if(context){
         const tableParam = document.querySelector('#field-trm-s-values tbody');

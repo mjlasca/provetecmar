@@ -79,7 +79,20 @@
   <div{{ content_attributes.addClass(['node__content']) }}>
     <div class="dashboard">
       <div class="dashboard-views">
-        {{ drupal_view('prov_quote', 'block_9') }}
+        <form class="date-filter" method="get">
+          <label>
+            <span class="label-text">Fecha inicial </span>
+            <input class="date-input" type="date" name="created[min][date]" value="{{ data.datemin.date }}" />
+          </label>
+
+          <label>
+            <span class="label-text">Fecha final</span>
+            <input class="date-input" type="date" name="created[max][date]" value="{{ data.datemax.date }}" />
+          </label>
+
+          <button class="filter-btn" type="submit">Aplicar</button>
+        </form>
+
       </div>
       <div class="dashboard-views">
         <div class="total-views--panel_blue">
@@ -93,22 +106,22 @@
         </div>
 
       </div>
-      <div class="dashboard-views dashboard-views--charts">
-        <div>
+      <div class="dashboard-views--charts">
+        <div class="content-dash">
           <h4>Marcas más cotizadas</h4>
           {{ drupal_view('prov_quote', 'block_6') }}
         </div>
-        <div>
+        <div class="content-dash">
           <h4>Empresas que cotizaron</h4>
           {{ drupal_view('prov_quote', 'block_1') }}
         </div>
       </div>
-      <div class="dashboard-views dashboard-views--charts">
-        <div>
+      <div class="dashboard-views--charts">
+        <div class="content-dash">
           <h4>Predicción de ingresos</h4>
           {{ drupal_view('prov_quote', 'block_8') }}
         </div>
-        <div>
+        <div class="content-dash">
           <h4>Órdenes de compra no iniciadas</h4>
           {{ drupal_view('prov_quote', 'block_7') }}
         </div>

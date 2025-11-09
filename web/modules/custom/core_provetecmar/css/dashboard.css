@@ -10,14 +10,145 @@
 .dashboard-views{
     display: flex;
     flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1200px;
 }
 
 .dashboard-views--charts{
-    justify-content: space-between;
     display: flex;
+    justify-content: space-between;
+    gap: 10px;
 }
 
-.total-views--panel_blue{
-    border-color: aqua;
+.total-views--panel_blue .view-content{
+    background-color: #92bfff;
 }
 
+.total-views--panel_cream .view-content{
+    background-color: #ffe897;
+}
+
+.total-views--panel_orange .view-content{
+    background-color: #ff8000;
+}
+
+.content-dash{
+    min-width: 500px;
+    width: 100%;
+    min-height: 576px;
+}
+
+.content-dash .view-content{
+    min-width: 500px;
+    width: 100%;
+    min-height: 576px;
+}
+
+.view-filters{
+    display: none;
+}
+
+/* CSS: estilo para inputs date y botón */
+.date-filter{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;             /* responsive: se parte en pantallas pequeñas */
+  margin: 18px 0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* etiqueta y texto */
+.date-filter label{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* texto de la label pequeño */
+.label-text{
+  font-weight: 500;
+}
+
+/* estilos base para los date inputs */
+.date-input {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  padding: 8px 36px 8px 12px;
+  height: 38px;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(16,24,40,0.04);
+  font-size: 14px;
+  color: #111827;
+  cursor: pointer;
+  transition: box-shadow .15s ease, border-color .15s ease, transform .06s ease;
+  position: relative;
+  min-width: 170px;
+}
+
+/* focus visible */
+.date-input:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 6px 18px rgba(25,118,210,0.12);
+  transform: translateY(-1px);
+}
+
+/* Estilo del icono del calendario */
+.date-input::-webkit-calendar-picker-indicator {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 34px;
+  height: 34px;
+  margin: 0;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 18px 18px;
+  opacity: .95;
+  border-radius: 6px;
+  background-color: transparent;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231976d2'><path d='M7 10h5v5H7z' opacity='.0'/><path d='M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM5 20V9h14l.002 11H5z'/></svg>");
+}
+
+/* Quita el pseudo-elemento que causaba el doble icono */
+.date-input[type="date"]::after {
+  content: none;
+}
+
+
+/* Botón aplicar */
+.filter-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background: linear-gradient(180deg,#1976d2,#155fa8); /* azul agradable */
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(25,118,210,0.12);
+  transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease;
+  white-space: nowrap;
+}
+
+/* hover / active */
+.filter-btn:hover{ transform: translateY(-2px); box-shadow: 0 12px 26px rgba(25,118,210,0.16); }
+.filter-btn:active{ transform: translateY(0); box-shadow: 0 6px 12px rgba(25,118,210,0.10); }
+.filter-btn:disabled{ opacity: .6; cursor: not-allowed; box-shadow: none; transform: none; }
+
+/* tamaños pequeños (responsive) */
+@media (max-width: 560px){
+  .date-filter{ gap: 10px; }
+  .date-filter label{ min-width: 100%; }
+  .date-input{ width: 100%; min-width: auto; }
+  .filter-btn{ width: 100%; }
+}
