@@ -1,0 +1,134 @@
+uuid: 5887f136-8d63-4b99-bb44-ea89ba828e23
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.quote
+  module:
+    - content_moderation
+id: quote_flow
+label: 'Flujo de cotización'
+type: content_moderation
+type_settings:
+  states:
+    assignment:
+      label: Asignación
+      weight: -2
+      published: false
+      default_revision: true
+    draft:
+      label: 'Sin asignar'
+      weight: -3
+      published: false
+      default_revision: false
+    offer_ready:
+      label: 'Oferta lista'
+      weight: 0
+      published: false
+      default_revision: true
+    price_change:
+      label: 'Cambio de precio'
+      weight: -1
+      published: false
+      default_revision: true
+    published:
+      label: 'Orden de compra'
+      weight: 1
+      published: true
+      default_revision: true
+    rejected_client:
+      label: 'Rechazada por cliente'
+      weight: 2
+      published: false
+      default_revision: false
+  transitions:
+    assignment_assignment:
+      label: 'Mantener en asignación'
+      from:
+        - assignment
+      to: assignment
+      weight: 9
+    assignment_price_change:
+      label: 'Pasar a cambio de precios'
+      from:
+        - assignment
+      to: price_change
+      weight: 3
+    create_new_draft:
+      label: 'Dejar sin asignar'
+      from:
+        - draft
+      to: draft
+      weight: 0
+    draft_assignment:
+      label: 'Asignar a ingeniero'
+      from:
+        - draft
+      to: assignment
+      weight: 2
+    list_offer_to_list_offer:
+      label: 'list offer to list offer'
+      from:
+        - offer_ready
+      to: offer_ready
+      weight: 13
+    offer_published:
+      label: 'Pasar a orden de compra'
+      from:
+        - offer_ready
+      to: published
+      weight: 5
+    offer_ready_to_rejected:
+      label: 'Offer ready  to rejected'
+      from:
+        - offer_ready
+      to: rejected_client
+      weight: 14
+    price_change_offer:
+      label: 'Pasar a oferta'
+      from:
+        - price_change
+      to: offer_ready
+      weight: 4
+    price_change_to_price_change:
+      label: 'Mantener en cambio de precio'
+      from:
+        - price_change
+      to: price_change
+      weight: 10
+    purchase_order_to_purchase:
+      label: 'Mantener en orden de compra'
+      from:
+        - published
+      to: published
+      weight: 11
+    purchase_order_to_purchase_offer:
+      label: 'Orden de compra a oferta lista'
+      from:
+        - published
+      to: offer_ready
+      weight: 12
+    quitar_asignacion:
+      label: 'Quitar asignación'
+      from:
+        - assignment
+        - offer_ready
+      to: draft
+      weight: 6
+    return_to_price_change:
+      label: 'Devolver a cambio de precios'
+      from:
+        - offer_ready
+      to: price_change
+      weight: 8
+    return_to_quote:
+      label: 'Devolver a ingeniero cotizador'
+      from:
+        - offer_ready
+        - price_change
+      to: assignment
+      weight: 7
+  entity_types:
+    node:
+      - quote
+  default_moderation_state: draft
