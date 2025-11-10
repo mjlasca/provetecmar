@@ -9,6 +9,7 @@
 
 .dashboard-views{
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
     max-width: 1200px;
@@ -146,9 +147,13 @@
 .filter-btn:disabled{ opacity: .6; cursor: not-allowed; box-shadow: none; transform: none; }
 
 /* tamaños pequeños (responsive) */
-@media (max-width: 560px){
+@media (max-width: 760px){
   .date-filter{ gap: 10px; }
   .date-filter label{ min-width: 100%; }
   .date-input{ width: 100%; min-width: auto; }
   .filter-btn{ width: 100%; }
+  .dashboard-views--charts{
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
 }
