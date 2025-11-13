@@ -5,11 +5,12 @@ dependencies:
   config:
     - user.role.user_administrator
     - workflows.workflow.editorial
+    - workflows.workflow.purchase_order
     - workflows.workflow.quote_flow
 id: purchase_order
 label: 'Orden de compra'
 format: html
-subject: 'La cotización [node:title] está lista para enviar al cliente'
+subject: 'La cotización [node:title] fue aprobada por el cliente'
 recipient_types:
   role:
     id: role
@@ -25,5 +26,6 @@ body:
 replyTo: ''
 transitions:
   editorial: {  }
+  purchase_order: {  }
   quote_flow:
     offer_published: offer_published

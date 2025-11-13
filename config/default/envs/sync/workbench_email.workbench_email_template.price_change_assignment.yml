@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - workflows.workflow.editorial
+    - workflows.workflow.purchase_order
     - workflows.workflow.quote_flow
 id: price_change_assignment
 label: 'Cambio de precio a Asignación'
@@ -17,10 +18,11 @@ recipient_types:
     settings: {  }
 bundles: {  }
 body:
-  value: '<div style="background-color:#f6f8fa;font-family:Arial, sans-serif;padding:30px;"><div style="background-color:#ffffff;border-radius:6px;box-shadow:0 2px 5px rgba(0,0,0,0.05);margin:auto;max-width:600px;padding:30px;"><h2 style="border-bottom:1px solid #ddd;padding-bottom:10px;">Corrección de items</h2><p>Hola <strong>[node:author:mail]</strong>,</p><p>Se te ha devuelto la cotización, por favor revisar</p><ul><li><strong>Título:</strong> [node:title]</li><li><p><strong>Fecha de creación:</strong> [node:created]</p><p>&nbsp;</p></li></ul><p>Puedes revisar la cotización en el siguiente enlace:</p><p><a style="background-color:#FFC700;border-radius:4px;color:#000;display:inline-block;font-weigh:400;padding:10px 20px;text-decoration:none;" href="[node:url]">Ver Cotización</a></p><p style="color:#888;font-size:12px;margin-top:30px;">Este mensaje fue generado automáticamente por el sistema. Por favor, no respondas a este correo.</p></div></div>'
+  value: '<div style="background-color:#f6f8fa;font-family:Arial, sans-serif;padding:30px;"><div style="background-color:#ffffff;border-radius:6px;box-shadow:0 2px 5px rgba(0,0,0,0.05);margin:auto;max-width:600px;padding:30px;"><h2 style="border-bottom:1px solid #ddd;padding-bottom:10px;">Corrección de items</h2><p>Se te ha devuelto la cotización, por favor revisar</p><ul><li><strong>Título:</strong> [node:title]</li><li><p><strong>Fecha de creación:</strong> [node:created]</p><p>&nbsp;</p></li></ul><p>Puedes revisar la cotización en el siguiente enlace, en la pestaña revisiones podrá ver los comentarios a tener en cuenta</p><p><a style="background-color:#FFC700;border-radius:4px;color:#000;display:inline-block;font-weigh:400;padding:10px 20px;text-decoration:none;" href="[node:url]">Ver Cotización</a></p><p style="color:#888;font-size:12px;margin-top:30px;">Este mensaje fue generado automáticamente por el sistema. Por favor, no respondas a este correo.</p></div></div>'
   format: full_html
 replyTo: ''
 transitions:
   editorial: {  }
+  purchase_order: {  }
   quote_flow:
     return_to_quote: return_to_quote

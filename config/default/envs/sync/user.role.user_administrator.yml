@@ -18,6 +18,7 @@ dependencies:
     - taxonomy.vocabulary.product_type
     - taxonomy.vocabulary.unit_of_measurement
     - workflows.workflow.editorial
+    - workflows.workflow.purchase_order
     - workflows.workflow.quote_flow
   module:
     - content_moderation
@@ -121,13 +122,21 @@ permissions:
   - 'revert term revisions in product_type'
   - 'revert term revisions in unit_of_measurement'
   - 'use editorial transition create_new_draft'
+  - 'use purchase_order transition draft_to_review'
+  - 'use purchase_order transition keep_in_draft'
+  - 'use purchase_order transition keep_in_review'
+  - 'use purchase_order transition publish'
   - 'use quote_flow transition assignment_assignment'
   - 'use quote_flow transition assignment_price_change'
   - 'use quote_flow transition create_new_draft'
   - 'use quote_flow transition draft_assignment'
+  - 'use quote_flow transition list_offer_to_list_offer'
   - 'use quote_flow transition offer_published'
+  - 'use quote_flow transition offer_ready_to_rejected'
   - 'use quote_flow transition price_change_offer'
   - 'use quote_flow transition price_change_to_price_change'
+  - 'use quote_flow transition purchase_order_to_purchase'
+  - 'use quote_flow transition purchase_order_to_purchase_offer'
   - 'use quote_flow transition quitar_asignacion'
   - 'use quote_flow transition return_to_price_change'
   - 'use quote_flow transition return_to_quote'
