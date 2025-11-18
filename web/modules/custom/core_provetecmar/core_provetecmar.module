@@ -96,6 +96,8 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
       $form['field_quote']['#disabled'] = TRUE;
       $form['field_quoter']['#disabled'] = TRUE;
       $form['field_provider']['#disabled'] = TRUE;
+      $form['field_trm_s']['#disabled'] = TRUE;
+      $form['field_incoterms']['#disabled'] = TRUE;
     }
     $form['#attached']['drupalSettings'] = $settings;
     $form['#attached']['library'][] = 'core_provetecmar/quote';

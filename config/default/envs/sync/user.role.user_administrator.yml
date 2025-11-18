@@ -6,16 +6,27 @@ dependencies:
     - node.type.customer
     - node.type.product
     - node.type.provider
+    - node.type.purchase_order
     - node.type.quote
+    - taxonomy.vocabulary.assessment
     - taxonomy.vocabulary.brand_line
     - taxonomy.vocabulary.business_lines
+    - taxonomy.vocabulary.container_delivery
+    - taxonomy.vocabulary.container_type
     - taxonomy.vocabulary.currency
     - taxonomy.vocabulary.customer_segment
     - taxonomy.vocabulary.delivery_region
+    - taxonomy.vocabulary.destination
     - taxonomy.vocabulary.document_type
     - taxonomy.vocabulary.group_companies
     - taxonomy.vocabulary.incoterms
+    - taxonomy.vocabulary.manufacturer
+    - taxonomy.vocabulary.margin
     - taxonomy.vocabulary.product_type
+    - taxonomy.vocabulary.shipping_cost_origin
+    - taxonomy.vocabulary.shipping_method
+    - taxonomy.vocabulary.taxes
+    - taxonomy.vocabulary.trm_a_usd
     - taxonomy.vocabulary.unit_of_measurement
     - workflows.workflow.editorial
     - workflows.workflow.purchase_order
@@ -45,17 +56,26 @@ permissions:
   - 'create product content'
   - 'create provider content'
   - 'create quote content'
+  - 'create terms in assessment'
   - 'create terms in brand_line'
   - 'create terms in business_lines'
+  - 'create terms in container_delivery'
+  - 'create terms in container_type'
   - 'create terms in currency'
   - 'create terms in customer_segment'
   - 'create terms in delivery_region'
+  - 'create terms in destination'
   - 'create terms in document_type'
   - 'create terms in group_companies'
   - 'create terms in incoterms'
+  - 'create terms in manufacturer'
+  - 'create terms in margin'
   - 'create terms in product_type'
+  - 'create terms in shipping_cost_origin'
+  - 'create terms in shipping_method'
+  - 'create terms in taxes'
+  - 'create terms in trm_a_usd'
   - 'create terms in unit_of_measurement'
-  - 'delete all revisions'
   - 'delete any customer content'
   - 'delete any product content'
   - 'delete any provider content'
@@ -68,25 +88,25 @@ permissions:
   - 'delete product revisions'
   - 'delete provider revisions'
   - 'delete quote revisions'
-  - 'delete term revisions in brand_line'
-  - 'delete term revisions in business_lines'
-  - 'delete term revisions in currency'
-  - 'delete term revisions in customer_segment'
-  - 'delete term revisions in delivery_region'
-  - 'delete term revisions in document_type'
-  - 'delete term revisions in group_companies'
-  - 'delete term revisions in incoterms'
-  - 'delete term revisions in product_type'
-  - 'delete term revisions in unit_of_measurement'
+  - 'delete terms in assessment'
   - 'delete terms in brand_line'
   - 'delete terms in business_lines'
+  - 'delete terms in container_delivery'
+  - 'delete terms in container_type'
   - 'delete terms in currency'
   - 'delete terms in customer_segment'
   - 'delete terms in delivery_region'
+  - 'delete terms in destination'
   - 'delete terms in document_type'
   - 'delete terms in group_companies'
   - 'delete terms in incoterms'
+  - 'delete terms in manufacturer'
+  - 'delete terms in margin'
   - 'delete terms in product_type'
+  - 'delete terms in shipping_cost_origin'
+  - 'delete terms in shipping_method'
+  - 'delete terms in taxes'
+  - 'delete terms in trm_a_usd'
   - 'delete terms in unit_of_measurement'
   - 'edit any customer content'
   - 'edit any product content'
@@ -96,15 +116,25 @@ permissions:
   - 'edit own product content'
   - 'edit own provider content'
   - 'edit own quote content'
+  - 'edit terms in assessment'
   - 'edit terms in brand_line'
   - 'edit terms in business_lines'
+  - 'edit terms in container_delivery'
+  - 'edit terms in container_type'
   - 'edit terms in currency'
   - 'edit terms in customer_segment'
   - 'edit terms in delivery_region'
+  - 'edit terms in destination'
   - 'edit terms in document_type'
   - 'edit terms in group_companies'
   - 'edit terms in incoterms'
+  - 'edit terms in manufacturer'
+  - 'edit terms in margin'
   - 'edit terms in product_type'
+  - 'edit terms in shipping_cost_origin'
+  - 'edit terms in shipping_method'
+  - 'edit terms in taxes'
+  - 'edit terms in trm_a_usd'
   - 'edit terms in unit_of_measurement'
   - 'revert all revisions'
   - 'revert customer revisions'
@@ -113,13 +143,17 @@ permissions:
   - 'revert quote revisions'
   - 'revert term revisions in brand_line'
   - 'revert term revisions in business_lines'
+  - 'revert term revisions in container_type'
   - 'revert term revisions in currency'
   - 'revert term revisions in customer_segment'
   - 'revert term revisions in delivery_region'
   - 'revert term revisions in document_type'
   - 'revert term revisions in group_companies'
   - 'revert term revisions in incoterms'
+  - 'revert term revisions in margin'
   - 'revert term revisions in product_type'
+  - 'revert term revisions in shipping_method'
+  - 'revert term revisions in trm_a_usd'
   - 'revert term revisions in unit_of_measurement'
   - 'use editorial transition create_new_draft'
   - 'use purchase_order transition draft_to_review'
@@ -141,6 +175,7 @@ permissions:
   - 'use quote_flow transition return_to_price_change'
   - 'use quote_flow transition return_to_quote'
   - 'view all revisions'
+  - 'view all taxonomy revisions'
   - 'view any unpublished content'
   - 'view customer revisions'
   - 'view field_quoter'
@@ -149,16 +184,27 @@ permissions:
   - 'view own unpublished content'
   - 'view product revisions'
   - 'view provider revisions'
+  - 'view purchase_order revisions'
   - 'view quote revisions'
+  - 'view term revisions in assessment'
   - 'view term revisions in brand_line'
   - 'view term revisions in business_lines'
+  - 'view term revisions in container_delivery'
+  - 'view term revisions in container_type'
   - 'view term revisions in currency'
   - 'view term revisions in customer_segment'
   - 'view term revisions in delivery_region'
+  - 'view term revisions in destination'
   - 'view term revisions in document_type'
   - 'view term revisions in group_companies'
   - 'view term revisions in incoterms'
+  - 'view term revisions in manufacturer'
+  - 'view term revisions in margin'
   - 'view term revisions in product_type'
+  - 'view term revisions in shipping_cost_origin'
+  - 'view term revisions in shipping_method'
+  - 'view term revisions in taxes'
+  - 'view term revisions in trm_a_usd'
   - 'view term revisions in unit_of_measurement'
   - 'view the administration theme'
   - 'view user email addresses'
