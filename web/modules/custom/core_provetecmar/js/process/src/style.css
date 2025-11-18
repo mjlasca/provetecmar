@@ -458,3 +458,8 @@
 #block-gin-content{
   max-width: none !important;
 }
+
+.requests-send{
+  position: sticky;
+  right: 10px;
+}

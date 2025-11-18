@@ -204,21 +204,25 @@ export class QuoteUi {
       inp.step = 0.01;
     }
     if(props.type == 'checkbox'){
-      inp.addEventListener('change', (e) => this.requestsShow(e.target));
+      inp.addEventListener('change', (e) => this.requestsShow());
     }
 
     inp.addEventListener('change', (e) =>  this.products.calculate(e.target));
     return td;
   }
 
-  requestsShow(check){
-    if(check.checked){
-      if(this.btnRequests)
-        this.btnRequests.style.display = 'block';
-    }
-    else{
-      if(this.btnRequests)
-        this.btnRequests.style.display = 'none';
+  requestsShow(check = false){
+    this.btnRequests.style.display = 'none';  
+    const checks = document.querySelectorAll('input[name="field_check[]"]');
+    let ch = 0;
+    checks.forEach(el => {
+      if(el.checked){
+        ch++;
+        return;
+      }
+    });
+    if(ch > 0 || check){
+      this.btnRequests.style.display = 'block';
     }
   }
 
@@ -527,13 +531,13 @@ export class QuoteUi {
 
   manageCheck(e){
     const status = e.target.checked;
-    this.requestsShow(e.target);
     const checks = this.app.querySelectorAll('input[type="checkbox"]');
     if(checks.length < 1)
       return;
     checks.forEach(element => {
       element.checked = status;
     });
+    this.requestsShow(status);
   }
 
   incotermsMatriz(tr, cell){

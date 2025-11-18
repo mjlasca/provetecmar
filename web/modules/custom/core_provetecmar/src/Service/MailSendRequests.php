@@ -67,11 +67,11 @@ class MailSendRequests {
           $lineProducts[] = [
             'title' => $productNode->title->value,
             'description' => $productNode->field_description->value,
+            'part_num' => strpos($productNode->field_part->value, 'SPN-') !== FALSE ? '' : $productNode->field_part->value ,
             'cant' => $product['cant']
           ];
         }
       }
-
       $result = array_map(function($item) use ($lineProducts) {
         $item['items'] = $lineProducts;
         return $item;
