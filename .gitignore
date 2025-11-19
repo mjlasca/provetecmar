@@ -9,6 +9,7 @@
 /web/sites/*/files
 /web/sites/*/private
 /web/sites/simpletest
+deploy.sh
 
 # Directories specific to this template
 /web/libraries
