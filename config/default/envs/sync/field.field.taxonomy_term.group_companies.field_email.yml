@@ -1,0 +1,19 @@
+uuid: d41c5d2e-2f1d-4a96-be3e-d77277a063d9
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_email
+    - taxonomy.vocabulary.group_companies
+id: taxonomy_term.group_companies.field_email
+field_name: field_email
+entity_type: taxonomy_term
+bundle: group_companies
+label: Email
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

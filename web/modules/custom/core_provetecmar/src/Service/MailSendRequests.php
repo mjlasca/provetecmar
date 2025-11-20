@@ -9,7 +9,9 @@ use Drupal\core_provetecmar\Entity\MailLog;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\taxonomy\Entity\Term;
 use Psy\Readline\Hoa\Console;
+
 
 class MailSendRequests {
 
@@ -61,22 +63,29 @@ class MailSendRequests {
     try {
       $lineProducts = [];
       $node = Node::load($productsProvider['node']);
+      $companyData = [];
       foreach ($productsProvider['products'] as $k => $product) {
         $productNode = Node::load($product['nid']);
+        $company = Term::load($product['company']);
         if(!empty($product)){
           $lineProducts[] = [
             'title' => $productNode->title->value,
             'description' => $productNode->field_description->value,
             'part_num' => strpos($productNode->field_part->value, 'SPN-') !== FALSE ? '' : $productNode->field_part->value ,
-            'cant' => $product['cant']
+            'cant' => $product['cant'],
           ];
+          if(empty($companyData)){
+            $companyData['name'] = $company->name->value;
+            $companyData['info'] = $company->field_data_company->value;
+            $companyData['email'] = $company->field_email->value;
+            $companyData['phone'] = $company->field_phone->value;
+          }
         }
       }
       $result = array_map(function($item) use ($lineProducts) {
         $item['items'] = $lineProducts;
         return $item;
       }, $productsProvider['providers']);
-
       foreach ($result as $key => $prov) {
         $to = $prov['mail'];
         $data['provider'] = $prov['title'];
@@ -86,6 +95,7 @@ class MailSendRequests {
           '#rfq_number' => "RFQ-{$node->nid->value}",
           '#data' => $data,
           '#items' => $prov['items'],
+          '#company_data' => $companyData
         ];
 
         $html = $this->renderer->renderPlain($build);

@@ -79,7 +79,8 @@ export class Requests{
             if(check.checked && paragraph.querySelector('input[name*="field_product"]').value != '' && paragraph.dataset.id != ''){
                 this.products.push({
                     'nid': paragraph.dataset.id,
-                    'cant': paragraph.querySelector('input[name*="field_cant"]').value
+                    'cant': paragraph.querySelector('input[name*="field_cant"]').value,
+                    'company': paragraph.querySelector('select[name*="field_company"]').value
                 });
             }
         });

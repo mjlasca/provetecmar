@@ -3,7 +3,10 @@ langcode: es
 status: true
 dependencies:
   config:
+    - field.field.taxonomy_term.group_companies.field_data_company
+    - field.field.taxonomy_term.group_companies.field_email
     - field.field.taxonomy_term.group_companies.field_image
+    - field.field.taxonomy_term.group_companies.field_phone
     - taxonomy.vocabulary.group_companies
   module:
     - image
@@ -20,6 +23,20 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
+  field_data_company:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
   field_image:
     type: image
     label: above
@@ -30,6 +47,13 @@ content:
         attribute: lazy
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_phone:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
     region: content
 hidden:
   langcode: true

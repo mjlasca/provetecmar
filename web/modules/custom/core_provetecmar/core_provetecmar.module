@@ -193,6 +193,7 @@ function core_provetecmar_theme($existing, $type, $theme, $path) {
         'rfq_number' => NULL,
         'data' => NULL,
         'items' => [],
+        'company_data' => []
       ],
     ],
     'rfq_pdf_mail' => [
