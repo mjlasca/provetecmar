@@ -1,0 +1,19 @@
+uuid: 3055e67e-9b7a-44b8-90f7-a8d2a6ad840a
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_email2
+    - node.type.customer
+id: node.customer.field_email2
+field_name: field_email2
+entity_type: node
+bundle: customer
+label: 'Email secundario'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

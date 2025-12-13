@@ -8,11 +8,13 @@ dependencies:
     - field.field.node.customer.field_document
     - field.field.node.customer.field_document_type
     - field.field.node.customer.field_email
+    - field.field.node.customer.field_email2
     - field.field.node.customer.field_phone
     - field.field.node.customer.field_purchase_currency
     - field.field.node.customer.field_web
     - node.type.customer
   module:
+    - content_moderation
     - link
     - path
 id: node.customer.default
@@ -36,7 +38,7 @@ content:
     third_party_settings: {  }
   field_customer_segment:
     type: options_select
-    weight: 15
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -62,6 +64,14 @@ content:
       placeholder: ''
       size: 60
     third_party_settings: {  }
+  field_email2:
+    type: email_default
+    weight: 14
+    region: content
+    settings:
+      placeholder: ''
+      size: 60
+    third_party_settings: {  }
   field_phone:
     type: string_textfield
     weight: 11
@@ -72,7 +82,7 @@ content:
     third_party_settings: {  }
   field_purchase_currency:
     type: options_select
-    weight: 14
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -90,6 +100,12 @@ content:
     region: content
     settings:
       include_locked: true
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 17
+    region: content
+    settings: {  }
     third_party_settings: {  }
   path:
     type: path
