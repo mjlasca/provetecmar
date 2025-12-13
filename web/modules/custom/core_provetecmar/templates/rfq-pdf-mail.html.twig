@@ -94,7 +94,7 @@
                       <th align="left" style="padding:10px 12px; font-size:12px; font-weight:700; color:#334155; border-bottom:1px solid #e5e7eb;">#</th>
                       <th align="left" style="padding:10px 12px; font-size:12px; font-weight:700; color:#334155; border-bottom:1px solid #e5e7eb;">Producto / Descripción</th>
                       <th align="left" style="padding:10px 12px; font-size:12px; font-weight:700; color:#334155; border-bottom:1px solid #e5e7eb;">Parte No.</th>
-                      <th align="left" style="padding:10px 12px; font-size:12px; font-weight:700; color:#334155; border-bottom:1px solid #e5e7eb;">Cantidad</th>
+                      <th align="left" style="padding:10px 12px; font-size:12px; font-weight:700; color:#334155; border-bottom:1px solid #e5e7eb;">Unidad/Cant.</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -108,7 +108,7 @@
                           {{item.part_num}}
                         </td>
                         <td style="padding:10px 12px; font-size:12px; color:#111827; border-bottom:1px solid #e5e7eb;">
-                          {{item.cant}}
+                          {{item.unit}} / {{item.cant}}
                         </td>
                       </tr>  
                     {% endfor %}

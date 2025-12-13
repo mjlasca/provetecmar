@@ -71,6 +71,7 @@ class MailSendRequests {
           $lineProducts[] = [
             'title' => $productNode->title->value,
             'description' => $productNode->field_description->value,
+            'unit' => $productNode->field_unit->entity->name->value,
             'part_num' => strpos($productNode->field_part->value, 'SPN-') !== FALSE ? '' : $productNode->field_part->value ,
             'cant' => $product['cant'],
           ];
