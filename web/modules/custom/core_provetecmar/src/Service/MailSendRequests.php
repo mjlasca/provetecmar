@@ -98,7 +98,7 @@ class MailSendRequests {
           '#items' => $prov['items'],
           '#company_data' => $companyData
         ];
-
+        
         $html = $this->renderer->renderPlain($build);
 
         $build = [
@@ -107,8 +107,9 @@ class MailSendRequests {
           '#rfq_number' => "RFQ-{$node->nid->value}",
           '#data' => $data,
           '#items' => $prov['items'],
+          '#company_data' => $companyData
         ];
-
+        
         $htmlPdf = $this->renderer->renderPlain($build);
 
         $options = new Options();

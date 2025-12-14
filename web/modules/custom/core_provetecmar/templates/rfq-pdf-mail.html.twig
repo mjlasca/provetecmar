@@ -51,7 +51,7 @@
 
     <!-- Preheader (invisible) -->
     <div style="display:none; font-size:1px; color:#f4f6f8; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all;">
-      Solicitud de cotización de {{company_name}} — referencia {{rfq_number}}.
+      Solicitud de cotización de {{company_data.name}} — referencia {{rfq_number}}.
     </div>
 
     <!--[if mso]>
@@ -70,7 +70,7 @@
                 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                   <tr>
                     <td align="left" style="color:#000; font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:24px; font-weight:600;">
-                      {{company_name}}
+                      {{company_data.name}}
                     </td>
                     <td align="right" style="color:#000; font-family:Arial, Helvetica, sans-serif; font-size:12px;">
                       Ref: {{rfq_number}}
@@ -85,7 +85,7 @@
               <td class="p-24" style="padding:24px; font-family:Arial, Helvetica, sans-serif; color:#101828;">
                 <h1 style="margin:0 0 8px; font-size:20px; line-height:28px;">Solicitud de cotización</h1>
                 <p style="margin:0 0 16px; font-size:14px; line-height:22px; color:#475467;">Hola {{data.provider}},</p>
-                <p style="margin:0 0 16px; font-size:14px; line-height:22px; color:#475467;">{{requester_name}} de <strong>{{company_name}}</strong> solicita su amable cotización para los siguientes productos. Le agradecemos indicar precios, tiempos de entrega, disponibilidad, condiciones de pago y garantías.</p>
+                <p style="margin:0 0 16px; font-size:14px; line-height:22px; color:#475467;"><strong>{{company_data.name}}</strong> solicita su amable cotización para los productos en el PDF adjunto. Le agradecemos indicar precios, tiempos de entrega, disponibilidad, condiciones de pago y garantías.</p>
 
                 <!-- Products Table -->
                 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #e5e7eb; overflow:hidden;">
@@ -124,7 +124,6 @@
                         <li>Validez de la oferta mínima: {{validity_days}} días</li>
                         <li>Tiempo de entrega estimado: {{lead_time}}</li>
                         <li>Garantía mínima: {{warranty}}</li>
-                        <li>Moneda de cotización: {{currency}}</li>
                         <li>Incluya costos de envío e impuestos aplicables</li>
                       </ul>
                     </td>
@@ -141,17 +140,15 @@
                   <tr>
                     <td class="stack" style="width:50%; vertical-align:top; padding:0 0 12px;">
                       <p style="margin:0 0 6px; font-size:12px; color:#111827;"><strong>Contacto</strong></p>
-                      <p style="margin:0; font-size:12px; color:#475467;">{{requester_name}} — {{requester_role}}<br>
-                        Tel: 44456666<br>
-                        Email: <a href="mailto:">solicitudes@provetecmar.com</a>
+                      <p style="margin:0; font-size:12px; color:#475467;"> — <br>
+                        Tel: {{ company_data.phone }}<br>
+                        Email: <a href="mailto:">{{ company_data.email }}</a>
                       </p>
                     </td>
                     <td class="stack" style="width:50%; vertical-align:top;">
                       <p style="margin:0 0 6px; font-size:12px; color:#111827;"><strong>Datos de la empresa</strong></p>
-                      <p style="margin:0; font-size:12px; color:#475467;">{{company_name}}<br>
-                        NIT: 555555555<br>
-                        Dirección: Calle falsa 123<br>
-                        Ciudad: Bogotá, Colombia</p>
+                      <p style="margin:0; font-size:12px; color:#475467;">{{company_data.name}}<br>
+                        {{ company_data.info|replace({"\r\n": "<br>"})|raw }}
                     </td>
                   </tr>
                 </table>
@@ -162,8 +159,8 @@
             <!-- Footer -->
             <tr>
               <td style="padding:16px 24px; background:#f8fafc; font-family:Arial, Helvetica, sans-serif; text-align:center;">
-                <p style="margin:0 0 6px; font-size:11px; color:#64748b;">Asunto sugerido: <em>Solicitud de cotización {{rfq_number}} — {{company_name}}</em></p>
-                <p style="margin:0; font-size:11px; color:#64748b;">Este mensaje fue enviado por {{company_name}}. Si recibió este correo por error, por favor elimínelo.</p>
+                <p style="margin:0 0 6px; font-size:11px; color:#64748b;">Asunto sugerido: <em>Solicitud de cotización {{rfq_number}} — {{company_data.name}}</em></p>
+                <p style="margin:0; font-size:11px; color:#64748b;">Este mensaje fue enviado por {{company_data.name}}. Si recibió este correo por error, por favor elimínelo.</p>
               </td>
             </tr>
           </table>
