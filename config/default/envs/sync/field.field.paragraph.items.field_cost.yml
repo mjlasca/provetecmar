@@ -9,7 +9,7 @@ id: paragraph.items.field_cost
 field_name: field_cost
 entity_type: paragraph
 bundle: items
-label: 'Costo Unitario USD'
+label: 'Costo Unitario (USD)'
 description: ''
 required: false
 translatable: false

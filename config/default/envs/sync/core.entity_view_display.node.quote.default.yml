@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.quote.field_currency
     - field.field.node.quote.field_current_state
     - field.field.node.quote.field_customer
+    - field.field.node.quote.field_date_limit
     - field.field.node.quote.field_description
     - field.field.node.quote.field_detail_quote
     - field.field.node.quote.field_incoterms
@@ -21,6 +22,7 @@ dependencies:
     - field.field.node.quote.field_valid
     - node.type.quote
   module:
+    - datetime
     - entity_reference_revisions
     - file
     - text
@@ -58,6 +60,15 @@ content:
       link: true
     third_party_settings: {  }
     weight: 101
+    region: content
+  field_date_limit:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 122
     region: content
   field_description:
     type: basic_string

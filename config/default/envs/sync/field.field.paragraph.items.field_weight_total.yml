@@ -9,7 +9,7 @@ id: paragraph.items.field_weight_total
 field_name: field_weight_total
 entity_type: paragraph
 bundle: items
-label: 'Peso total'
+label: 'Peso total (kg)'
 description: ''
 required: false
 translatable: false

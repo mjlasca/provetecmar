@@ -1,0 +1,21 @@
+uuid: 9c408590-ad38-4e3d-933e-0e94f09182d0
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_limit
+    - node.type.quote
+  module:
+    - datetime
+id: node.quote.field_date_limit
+field_name: field_date_limit
+entity_type: node
+bundle: quote
+label: 'Fecha límite'
+description: 'Fecha límite para enviar oferta al cliente'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime
