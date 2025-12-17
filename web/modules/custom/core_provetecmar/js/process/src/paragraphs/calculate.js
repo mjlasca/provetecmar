@@ -33,7 +33,7 @@ export class Calculate {
   costTotal() {
     const fieldCant = this.containerRow.querySelector('[name*="field_cant"]');
     const fieldTotal = this.containerRow.querySelector('[name*="field_total"]');
-    if (fieldCant.value != '' && this.dataProduct.cost_unit != null){
+    if (fieldCant.value != '' && this.dataProduct.cost_unit != null) {
       fieldTotal.value =
         parseFloat(this.dataProduct.cost_unit) * parseFloat(fieldCant.value);
       const upd = this.formQuote.lines.find(item => item.nid == this.nid);
@@ -63,7 +63,7 @@ export class Calculate {
   vrCosttUsd() {
     let result = this.dataProduct.cost_unit ?? 0;
     const trm = this.getTrm();
-    if(trm == undefined){
+    if (trm == undefined) {
       return;
     }
     if (result > 0) {
@@ -89,38 +89,38 @@ export class Calculate {
       '[name*="field_assessment"]'
     );
     const landed = this.containerRow.querySelector(
-        '[name*="field_landed_cost"]'
+      '[name*="field_landed_cost"]'
     );
     let result = 0;
     landed.value = 0;
     if (cost && cost.value > 0) {
       const shipp = this.getShipping();
       console.log("shipp", shipp);
-      if( shipp != undefined && shipp.hasOwnProperty('type_delivery') ){
-        if(shipp.type_delivery == 'aer'){
-            let optionSelect = 0;
-            if(assessment && assessment.value != ''){
-              optionSelect = assessment.options[assessment.selectedIndex];
-              optionSelect = optionSelect.textContent;
-            }
-            result = this.dataProduct.weight * shipp.cost;
-            result = parseFloat(cost.value) + parseFloat(result);
-            result = result * ((1 + parseFloat(optionSelect) / 100) / cost.value);
-            if (landed)
-                landed.value = result.toFixed(2);
+      if (shipp != undefined && shipp.hasOwnProperty('type_delivery')) {
+        if (shipp.type_delivery == 'aer') {
+          let optionSelect = 0;
+          if (assessment && assessment.value != '') {
+            optionSelect = assessment.options[assessment.selectedIndex];
+            optionSelect = optionSelect.textContent;
+          }
+          result = this.dataProduct.weight * shipp.cost;
+          result = parseFloat(cost.value) + parseFloat(result);
+          result = result * ((1 + parseFloat(optionSelect) / 100) / cost.value);
+          if (landed)
+            landed.value = result.toFixed(2);
         }
-        else{
-            if(shipp.type_delivery == 'loc'){
-                result = 1 + (parseFloat(shipp.cost) / 100);
-                landed.value = result.toFixed(2);
-            }
-            if(shipp.type_delivery == 'mar'){
-                result = parseFloat(shipp.cost);
-                landed.value = result.toFixed(2);
-            }
+        else {
+          if (shipp.type_delivery == 'loc') {
+            result = 1 + (parseFloat(shipp.cost) / 100);
+            landed.value = result.toFixed(2);
+          }
+          if (shipp.type_delivery == 'mar') {
+            result = parseFloat(shipp.cost);
+            landed.value = result.toFixed(2);
+          }
         }
-        if(shipp.type_delivery == 'defa')
-            landed.value = 1;
+        if (shipp.type_delivery == 'defa')
+          landed.value = 1;
       }
 
     }
@@ -133,11 +133,11 @@ export class Calculate {
   }
 
   getShipping() {
-    if(this.containerRow.classList.contains('error-quote--content')){
+    if (this.containerRow.classList.contains('error-quote--content')) {
       this.containerRow.classList.remove('error-quote--content');
       this.ui.tooltipRemove(this.containerRow);
     }
-    let res = {'type_delivery':'defa'};
+    let res = { 'type_delivery': 'defa' };
     const delivery = this.containerRow.querySelector(
       '[name*="field_delivery_region"]'
     );
@@ -156,8 +156,8 @@ export class Calculate {
           item.shipping_method == shippingMethod.value
       );
     }
-    if(res == undefined)
-        res = {'type_delivery':'defa', 'cost':0};
+    if (res == undefined)
+      res = { 'type_delivery': 'defa', 'cost': 0 };
 
     if (
       delivery &&
@@ -180,7 +180,7 @@ export class Calculate {
           item.origin == delivery.value &&
           item.shipping_method == shippingMethod.value
       );
-      res = {'cost' : 0, 'type_delivery' : 'mar'};
+      res = { 'cost': 0, 'type_delivery': 'mar' };
       if (
         containerType.value > 0 &&
         containerDelivery.value > 0 &&
@@ -196,7 +196,7 @@ export class Calculate {
         if (totalUsd && objRes != undefined) {
 
           let optionSelect = 0;
-          if(assessment && !assessment.disabled ){
+          if (assessment && !assessment.disabled) {
             optionSelect = assessment.options[assessment.selectedIndex];
             optionSelect = optionSelect.textContent;
           }
@@ -211,13 +211,13 @@ export class Calculate {
             const localDelivery =
               shipping * (parseFloat(customsGet.shipping_method) / 100);
             const landedCost = localDelivery + customs + asse + shipExw;
-            res = {'cost' : landedCost / parseFloat(totalUsd.value), 'type_delivery' : 'mar'};
+            res = { 'cost': landedCost / parseFloat(totalUsd.value), 'type_delivery': 'mar' };
           }
-        }else{
-            this.ui.showError(
+        } else {
+          this.ui.showError(
             this.containerRow,
-                "La información del contenedor no está completa"
-            );
+            "La información del contenedor no está completa"
+          );
         }
       } else {
         this.ui.showError(
@@ -229,7 +229,7 @@ export class Calculate {
     return res;
   }
 
-  vrUnitUsd(){
+  vrUnitUsd() {
     const cant = this.containerRow.querySelector('[name*="field_cant"]');
     const factCost = this.containerRow.querySelector('[name*="field_landed_cost"]');
     const costUnit = this.containerRow.querySelector('[name*="field_cost"]');
@@ -238,20 +238,20 @@ export class Calculate {
     const factSale = this.containerRow.querySelector('[name*="field_sale_factor"]');
     const margin = this.containerRow.querySelector('[name*="field_margin"]');
     let optionMargin = 0;
-    if(margin)
-        optionMargin = margin.options[margin.selectedIndex];
+    if (margin)
+      optionMargin = margin.options[margin.selectedIndex];
     let vrUnitRes = 0
-    if(factCost && costUnit)
-        vrUnitRes = (parseFloat(factCost.value) * parseFloat(costUnit.value)) / (1 - (parseFloat(optionMargin.textContent) / 100) );
+    if (factCost && costUnit)
+      vrUnitRes = (parseFloat(factCost.value) * parseFloat(costUnit.value)) / (1 - (parseFloat(optionMargin.textContent) / 100));
     vrUnit.value = vrUnitRes.toFixed(2);
-    vrTotal.value = (parseFloat(cant.value) *  vrUnitRes).toFixed(2);
+    vrTotal.value = (parseFloat(cant.value) * vrUnitRes).toFixed(2);
     factSale.value = (parseFloat(vrUnitRes) / parseFloat(costUnit.value)).toFixed(2);
   }
 
   async handleGetProduct() {
     this.dataProduct = await this.services.nodeProductService();
     const linkProduct = this.containerRow.querySelector(".show-product");
-    if (linkProduct){
+    if (linkProduct) {
       linkProduct.href = `/node/${this.nid}/edit`;
     }
     else {
@@ -261,10 +261,10 @@ export class Calculate {
   }
 
 
-  updateSettings(context){
+  updateSettings(context) {
     const nids = context.querySelectorAll('[data-nid]');
     let arrNid = [];
-    if(nids){
+    if (nids) {
       nids.forEach(el => {
         arrNid.push(el.getAttribute('data-nid'));
       });
@@ -288,7 +288,7 @@ export class Calculate {
     }
   }
 
-  validState(){
+  validState() {
     const dragCont = this.containerRow.closest(".paragraph-type--items");
     if (
       this.dataProduct.weight > 0 &&
