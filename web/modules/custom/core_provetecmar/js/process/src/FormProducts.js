@@ -1,13 +1,13 @@
 import { Calculate } from "./paragraphs/calculate";
 import { QuoteUi } from "./paragraphs/quote-ui";
 
-export class FormQuote{
+export class FormQuote {
     lines = [];
     form = null;
     ui = null;
     settings = [];
     calc = null;
-    constructor(form = null, settings = null){
+    constructor(form = null, settings = null) {
         this.form = form;
         this.settings = settings;
         this.ui = new QuoteUi(settings, this);
@@ -16,19 +16,19 @@ export class FormQuote{
         this.init();
     }
 
-    init(){
+    init() {
         this.form = document.querySelector('form');
         this.form.addEventListener('submit', (e) => this.formSubmit(e));
     }
 
-    totalResults(){
+    totalResults() {
         const data = {
             'totals': {
                 'cost': 0,
-                'total' : 0,
-                'weight' : 0
+                'total': 0,
+                'weight': 0
             },
-            'terms' : []
+            'terms': []
         };
         const weights = document.querySelectorAll('[name*="field_weight_total"]');
         const totalCost = document.querySelectorAll('[name*="field_total_cost"]');
@@ -39,41 +39,41 @@ export class FormQuote{
         return data;
     }
 
-    getTotalField(container){
+    getTotalField(container) {
         let rest = 0;
-        if(container.length > 0){
+        if (container.length > 0) {
             container.forEach(el => {
-                if(el.value && el.value > 0){
-                rest = rest + parseFloat(el.value);
+                if (el.value && el.value > 0) {
+                    rest = rest + parseFloat(el.value);
                 }
             });
         }
         return rest;
     }
 
-    getObjLine(nid){
+    getObjLine(nid) {
         return this.lines.find(item => item.nid == nid);
     }
 
-    incoterms(tr){
+    incoterms(tr) {
         const saleInco = document.querySelector('[name*="field_incoterms"]');
         const purchInco = tr.querySelector('[name*="field_incoterm"]');
-        this.ui.incotermsMatriz(tr,this.getTextSelect(saleInco)+this.getTextSelect(purchInco));
+        this.ui.incotermsMatriz(tr, this.getTextSelect(saleInco) + this.getTextSelect(purchInco));
     }
 
-    getTextSelect(selectEle){
+    getTextSelect(selectEle) {
         const index = selectEle.selectedIndex;
         const optionSelected = selectEle.options[index];
         return optionSelected.textContent;
     }
 
-    calculate(input){
-        if(this.settings.process)
+    calculate(input) {
+        if (this.settings.process)
             return;
         let obj = {};
         const tr = input.closest('tr');
         this.incoterms(tr);
-        const prop = input.name.replace('[]','');
+        const prop = input.name.replace('[]', '');
         obj[prop] = input.value;
         obj['nid'] = tr.dataset.id;
         this.setLine(obj);
@@ -85,24 +85,25 @@ export class FormQuote{
         obj = this.instanceField(tr);
         obj['nid'] = tr.dataset.id;
         this.setLine(obj);
+        console.log(this.lines);
     }
 
-    instanceField(tr){
+    instanceField(tr) {
         const fields = tr.querySelectorAll('input[name*="field_"] , select[name*="field_"]');
         let props = {};
         fields.forEach(el => {
-            if(el.name == 'field_check[]'){
+            if (el.name == 'field_check[]') {
                 props['field_check'] = el.checked ? 1 : 0;
-            }else{
-                props[el.name.replace('[]','')] = el.value;
+            } else {
+                props[el.name.replace('[]', '')] = el.value;
             }
         });
 
         return props;
     }
 
-    initLines(){
-        if(this.settings.items.length > 0){
+    initLines() {
+        if (this.settings.items.length > 0) {
             this.lines = this.settings.items;
             Object.values(this.lines).forEach(item => {
                 this.ui.setLine(item);
@@ -112,9 +113,9 @@ export class FormQuote{
 
     setLine(data, oldnid = null) {
         if (this.lines.length > 0) {
-            if(data.nid == null)
+            if (data.nid == null)
                 return;
-            if( oldnid != null && data.nid != oldnid )
+            if (oldnid != null && data.nid != oldnid)
                 this.lines = this.lines.filter(line => line.nid !== oldnid);
             const search = this.lines.find(line => line.nid === data.nid);
             if (search) {
@@ -151,8 +152,8 @@ export class FormQuote{
         }
     }
 
-    async sendLines(){
-        if(this.settings.process)
+    async sendLines() {
+        if (this.settings.process)
             return;
         try {
             const response = await fetch(

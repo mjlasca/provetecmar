@@ -19,7 +19,7 @@ export class QuoteUi {
     this.init();
   }
 
-  init(){
+  init() {
     this.addLine?.addEventListener('click', () => {
       this.setLine({});
     });
@@ -36,34 +36,34 @@ export class QuoteUi {
     this.brand_line = this.settings.brand_line;
     //span check th prmary
     this.succ = document.querySelector('.check-succ');
-    if(!this.settings.process)
+    if (!this.settings.process)
       this.succ.innerHTML = '<input type="checkbox" >';
     this.succ.addEventListener('change', (e) => this.manageCheck(e));
     this.btnRequests = document.querySelector('.requests-send');
-    if(this.btnRequests)
+    if (this.btnRequests)
       this.btnRequests.style.display = 'none';
   }
 
-  fieldSelect(props, options){
+  fieldSelect(props, options) {
     const td = document.createElement('td');
     const sele = document.createElement('select');
-    if(this.settings.process)
+    if (this.settings.process)
       props['disabled'] = true;
     if (props) {
-        Object.assign(sele, props);
+      Object.assign(sele, props);
     }
     Object.values(options).forEach((val) => {
       const option = document.createElement('option');
       option.value = val.tid;
-      option.textContent  = val.name;
-      if(props.value && val.tid == props.value)
+      option.textContent = val.name;
+      if (props.value && val.tid == props.value)
         option.selected = true;
       sele.appendChild(option);
     });
-    if(props.name == 'field_shipping_method[]'){
-      sele.addEventListener('change',(e) => this.showContainer(sele.closest('tr'), e.target.value));
+    if (props.name == 'field_shipping_method[]') {
+      sele.addEventListener('change', (e) => this.showContainer(sele.closest('tr'), e.target.value));
     }
-    sele.addEventListener('change', (e) =>  this.products.calculate(e.target));
+    sele.addEventListener('change', (e) => this.products.calculate(e.target));
     td.appendChild(sele);
     return td;
   }
@@ -75,161 +75,161 @@ export class QuoteUi {
     tooltip.style.display = 'none';
     element.appendChild(tooltip);
     element.addEventListener('mouseenter', (e) => {
-        tooltip.style.left = e.pageX + 10 + 'px';
-        tooltip.style.top = e.pageY + 10 + 'px';
-        tooltip.style.display = 'block';
+      tooltip.style.left = e.pageX + 10 + 'px';
+      tooltip.style.top = e.pageY + 10 + 'px';
+      tooltip.style.display = 'block';
     });
     element.addEventListener('mouseleave', () => {
-        tooltip.style.display = 'none';
+      tooltip.style.display = 'none';
     });
     element.addEventListener('mousemove', (e) => {
-        tooltip.style.left = e.pageX + 10 + 'px';
-        tooltip.style.top = e.pageY + 10 + 'px';
+      tooltip.style.left = e.pageX + 10 + 'px';
+      tooltip.style.top = e.pageY + 10 + 'px';
     });
   }
 
-  tooltipRemove(container){
+  tooltipRemove(container) {
     container.querySelector('.custom-tooltip').remove();
   }
 
-  setLine(data){
+  setLine(data) {
     this.app.appendChild(this.line(data));
     this.counter();
   }
 
-  line(data){
+  line(data) {
     console.log(data);
     const tr = document.createElement('tr');
     tr.classList = ['line-product']
-    const fieldCheck = this.fieldInput({'name':'field_check[]', 'type': 'checkbox', 'value': '1', 'checked' : data.field_check == 1 ? true : false});
+    const fieldCheck = this.fieldInput({ 'name': 'field_check[]', 'type': 'checkbox', 'value': '1', 'checked': data.field_check == 1 ? true : false });
     fieldCheck.classList = ['td-check'];
     tr.append(fieldCheck);
-    const fieldProduct = this.fieldInput({'name':'field_product[]', 'type': 'text', 'autocomplete': 'off', 'value':  data.field_product ?? '' });
+    const fieldProduct = this.fieldInput({ 'name': 'field_product[]', 'type': 'text', 'autocomplete': 'off', 'value': data.field_product ?? '' });
     tr.append(fieldProduct);
-    const fieldCant = this.fieldInput({'name':'field_cant[]', 'type': 'number', 'value':  data.field_cant ?? '' });
+    const fieldCant = this.fieldInput({ 'name': 'field_cant[]', 'type': 'number', 'value': data.field_cant ?? '' });
     tr.append(fieldCant);
-    const fieldCurrency = this.fieldSelect({'name' : 'field_currency_line[]', 'value':  data.field_currency_line ?? ''}, this.currencies);
+    const fieldCurrency = this.fieldSelect({ 'name': 'field_currency_line[]', 'value': data.field_currency_line ?? '' }, this.currencies);
     tr.append(fieldCurrency);
-    const fieldWeight = this.fieldInput({ 'name': 'field_weight_total[]', 'type': 'number', 'readOnly':true, 'value':  data.field_weight_total ?? '' });
+    const fieldWeight = this.fieldInput({ 'name': 'field_weight_total[]', 'type': 'number', 'readOnly': true, 'value': data.field_weight_total ?? '' });
     tr.append(fieldWeight);
-    const fieldTotal = this.fieldInput({ 'name': 'field_total[]', 'type': 'number', 'readOnly':true, 'value':  data.field_total ?? '' });
+    const fieldTotal = this.fieldInput({ 'name': 'field_total[]', 'type': 'number', 'readOnly': true, 'value': data.field_total ?? '' });
     tr.append(fieldTotal);
-    const fieldCompany = this.fieldSelect({'name' : 'field_company[]', 'value':  data.field_company ?? ''}, this.rfqs);
+    const fieldCompany = this.fieldSelect({ 'name': 'field_company[]', 'value': data.field_company ?? '' }, this.rfqs);
     tr.append(fieldCompany);
-    const fieldDelivery = this.fieldSelect({'name': 'field_delivery_region[]', 'value':  data.field_delivery_region ?? ''}, this.deliveries)
+    const fieldDelivery = this.fieldSelect({ 'name': 'field_delivery_region[]', 'value': data.field_delivery_region ?? '' }, this.deliveries)
     tr.append(fieldDelivery);
-    const fieldIncoterm = this.fieldSelect({'name' : 'field_incoterm[]', 'value':  data.field_incoterm ?? ''}, this.incoterms);
+    const fieldIncoterm = this.fieldSelect({ 'name': 'field_incoterm[]', 'value': data.field_incoterm ?? '' }, this.incoterms);
     tr.append(fieldIncoterm);
-    const fieldBrand = this.fieldSelect({'name' : 'field_brand[]', 'value':  data.field_brand ?? ''}, this.brand_line);
+    const fieldBrand = this.fieldSelect({ 'name': 'field_brand[]', 'value': data.field_brand ?? '' }, this.brand_line);
     tr.append(fieldBrand);
-    const fieldTax = this.fieldInput({'name' : 'field_tax[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_taxs ?? ''});
+    const fieldTax = this.fieldInput({ 'name': 'field_tax[]', 'type': 'number', 'readOnly': true, 'value': data.field_taxs ?? '' });
     tr.append(fieldTax);
-    const fieldCost = this.fieldInput({'name' : 'field_cost[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_cost ?? ''});
+    const fieldCost = this.fieldInput({ 'name': 'field_cost[]', 'type': 'number', 'readOnly': true, 'value': data.field_cost ?? '' });
     tr.append(fieldCost);
-    const fieldTotalCost = this.fieldInput({'name' : 'field_total_cost[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_total_cost ?? ''});
+    const fieldTotalCost = this.fieldInput({ 'name': 'field_total_cost[]', 'type': 'number', 'readOnly': true, 'value': data.field_total_cost ?? '' });
     tr.append(fieldTotalCost);
-    const fieldAssessment = this.fieldSelect({'name' : 'field_assessment[]', 'value':  data.field_assessment ?? ''}, this.assessment);
+    const fieldAssessment = this.fieldSelect({ 'name': 'field_assessment[]', 'value': data.field_assessment ?? '' }, this.assessment);
     tr.append(fieldAssessment);
-    const fieldMargin = this.fieldSelect({'name' : 'field_margin[]', 'value':  data.field_margin ?? ''}, this.margin);
+    const fieldMargin = this.fieldSelect({ 'name': 'field_margin[]', 'value': data.field_margin ?? '' }, this.margin);
     tr.append(fieldMargin);
-    const fieldLandedCost = this.fieldInput({'name' : 'field_landed_cost[]', 'type' : 'number', 'value':  data.field_landed_cost ?? ''});
+    const fieldLandedCost = this.fieldInput({ 'name': 'field_landed_cost[]', 'type': 'number', 'value': data.field_landed_cost ?? '' });
     tr.append(fieldLandedCost);
-    const fieldShippingMethod = this.fieldSelect({'name' : 'field_shipping_method[]', 'value':  data.field_shipping_method ?? ''}, this.shipping_method);
+    const fieldShippingMethod = this.fieldSelect({ 'name': 'field_shipping_method[]', 'value': data.field_shipping_method ?? '' }, this.shipping_method);
     tr.append(fieldShippingMethod);
-    const fieldContainerType = this.fieldSelect({'name' : 'field_container_type[]', 'value':  data.field_container_type ?? '', 'disabled':true}, this.container_type);
+    const fieldContainerType = this.fieldSelect({ 'name': 'field_container_type[]', 'value': data.field_container_type ?? '', 'disabled': true }, this.container_type);
     fieldContainerType.classList.add('td-mar');
     tr.append(fieldContainerType);
-    const fieldQty = this.fieldInput({'name' : 'field_qty[]', 'type' : 'number', 'value':  data.field_qty ?? '', 'disabled':true});
+    const fieldQty = this.fieldInput({ 'name': 'field_qty[]', 'type': 'number', 'value': data.field_qty ?? '', 'disabled': true });
     fieldQty.classList.add('td-mar');
     tr.append(fieldQty);
-    const fieldContainerDelivery = this.fieldSelect({'name' : 'field_container_delivery[]', 'value':  data.field_container_delivery ?? '', 'disabled':true}, this.container_delivery);
+    const fieldContainerDelivery = this.fieldSelect({ 'name': 'field_container_delivery[]', 'value': data.field_container_delivery ?? '', 'disabled': true }, this.container_delivery);
     fieldContainerDelivery.classList.add('td-mar');
     tr.append(fieldContainerDelivery);
-    const fieldUnitSale = this.fieldInput({'name' : 'field_unit_sale[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_unit_sale ?? ''});
+    const fieldUnitSale = this.fieldInput({ 'name': 'field_unit_sale[]', 'type': 'number', 'readOnly': true, 'value': data.field_unit_sale ?? '' });
     tr.append(fieldUnitSale);
-    const fieldTotalSale = this.fieldInput({'name' : 'field_total_sale[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_total_sale ?? ''});
+    const fieldTotalSale = this.fieldInput({ 'name': 'field_total_sale[]', 'type': 'number', 'readOnly': true, 'value': data.field_total_sale ?? '' });
     tr.append(fieldTotalSale);
-    const fieldSaleFactor = this.fieldInput({'name' : 'field_sale_factor[]', 'type' : 'number', 'readOnly': true, 'value':  data.field_sale_factor ?? ''});
+    const fieldSaleFactor = this.fieldInput({ 'name': 'field_sale_factor[]', 'type': 'number', 'readOnly': true, 'value': data.field_sale_factor ?? '' });
     tr.append(fieldSaleFactor);
-    const fieldDeliveryTime = this.fieldInput({'name' : 'field_delivery_time[]', 'type' : 'number', 'value':  data.field_delivery_time ?? ''});
+    const fieldDeliveryTime = this.fieldInput({ 'name': 'field_delivery_time[]', 'type': 'number', 'value': data.field_delivery_time ?? '' });
     tr.append(fieldDeliveryTime);
-    const fieldDeliveryTimeClient = this.fieldInput({'name' : 'field_delivery_time_client[]', 'type' : 'number', 'value':  data.field_delivery_time_client ?? ''});
+    const fieldDeliveryTimeClient = this.fieldInput({ 'name': 'field_delivery_time_client[]', 'type': 'number', 'value': data.field_delivery_time_client ?? '' });
     tr.append(fieldDeliveryTimeClient);
-    const fieldComments = this.fieldInput({'name' : 'field_comments[]', 'type' : 'text', 'value':  data.field_comments ?? ''});
+    const fieldComments = this.fieldInput({ 'name': 'field_comments[]', 'type': 'text', 'value': data.field_comments ?? '' });
     tr.append(fieldComments);
-    if(data.field_shipping_method && data.field_shipping_method == 120){
-      this.showContainer(tr,120);
+    if (data.field_shipping_method && data.field_shipping_method == 120) {
+      this.showContainer(tr, 120);
     }
     const tdBtn = document.createElement('td');
     tdBtn.classList = ['td-small td-delete'];
     const btnRemove = document.createElement('button');
-    if(!this.settings.process)
+    if (!this.settings.process)
       tdBtn.appendChild(btnRemove);
     btnRemove.classList = ['btn btn-remove']
     btnRemove.type = 'button';
     btnRemove.textContent = "🗑️";
     btnRemove.addEventListener('click', (e) => this.removeLine(e));
     tr.appendChild(tdBtn);
-    if(data.nid){
+    if (data.nid) {
       tr.dataset.id = data.nid;
       fieldProduct.querySelector('input').dataset.nid = data.nid;
     }
-    if(data.nid && !this.settings.process){
+    if (data.nid && !this.settings.process) {
       this.products.calculate(fieldProduct.querySelector('input'));
     }
     return tr;
   }
 
-  fieldInput(props = null){
+  fieldInput(props = null) {
     const td = document.createElement('td');
     const inp = document.createElement('input');
-    if(this.settings.process)
+    if (this.settings.process)
       props['disabled'] = true;
     if (props) {
-        Object.assign(inp, props);
+      Object.assign(inp, props);
     }
     td.appendChild(inp);
-    if(props.name == 'field_product[]'){
+    if (props.name == 'field_product[]') {
       const sugges = document.createElement('div');
       sugges.classList = ['product-suggestion'];
       const ul = document.createElement('ul');
       sugges.appendChild(ul);
       td.classList = ['td-product'];
       td.appendChild(sugges);
-      inp.addEventListener('input', (e) =>  this.autoComplete(e,ul));
+      inp.addEventListener('input', (e) => this.autoComplete(e, ul));
       inp.addEventListener('keydown', (e) => this.handleKeyboardNavigation(e, ul, this.itemsProducts));
       inp.addEventListener('dblclick', (e) => window.open(`/node/${e.target.dataset.nid}/edit`, '_blank'))
     }
-    if(props.type == 'number'){
+    if (props.type == 'number') {
       inp.step = 0.01;
     }
-    if(props.type == 'checkbox'){
+    if (props.type == 'checkbox') {
       inp.addEventListener('change', (e) => this.requestsShow());
     }
 
-    inp.addEventListener('change', (e) =>  this.products.calculate(e.target));
+    inp.addEventListener('change', (e) => this.products.calculate(e.target));
     return td;
   }
 
-  requestsShow(check = false){
-    this.btnRequests.style.display = 'none';  
+  requestsShow(check = false) {
+    this.btnRequests.style.display = 'none';
     const checks = document.querySelectorAll('input[name="field_check[]"]');
     let ch = 0;
     checks.forEach(el => {
-      if(el.checked){
+      if (el.checked) {
         ch++;
         return;
       }
     });
-    if(ch > 0 || check){
+    if (ch > 0 || check) {
       this.btnRequests.style.display = 'block';
     }
   }
 
-  async autoComplete(e, contain){
+  async autoComplete(e, contain) {
     contain.innerHTML = '';
     const keyword = e.target.value;
-    if(keyword.length < 3)
+    if (keyword.length < 3)
       return;
     try {
       const response = await fetch(
@@ -258,12 +258,12 @@ export class QuoteUi {
     let currentIndex = -1;
     const items = container.querySelectorAll('li');
     if (e.repeat) {
-        return;
+      return;
     }
     if (items.length === 0) return;
     container.closest('.product-suggestion').style.display = 'block';
-    items.forEach((ele,k) => {
-      if(ele.classList.contains('active')){
+    items.forEach((ele, k) => {
+      if (ele.classList.contains('active')) {
         currentIndex = k;
       }
     });
@@ -285,7 +285,7 @@ export class QuoteUi {
           input.dataset.nid = this.itemsProducts[currentIndex].nid;
           const resul = this.products.setLine(this.itemsProducts[currentIndex], input.closest('tr').dataset.id);
           input.closest('tr').dataset.id = this.itemsProducts[currentIndex].nid;
-          if(!resul.success){
+          if (!resul.success) {
             input.value = '';
             input.dataset.nid = '';
           }
@@ -315,7 +315,7 @@ export class QuoteUi {
         input.dataset.nid = item.nid;
         const resul = this.products.setLine(item, input.closest('tr').dataset.id);
         input.closest('tr').dataset.id = item.nid;
-        if(!resul.success){
+        if (!resul.success) {
           input.value = '';
           input.dataset.nid = '';
         }
@@ -326,8 +326,8 @@ export class QuoteUi {
     });
   }
 
-  removeLine(e){
-    if( !confirm('¿Está segur@ de eliminar esta líena?') )
+  removeLine(e) {
+    if (!confirm('¿Está segur@ de eliminar esta líena?'))
       return;
     const tr = e.target.closest('tr');
     this.products.lines = this.products.lines.filter(item => item.nid != tr.dataset.id);
@@ -364,7 +364,7 @@ export class QuoteUi {
       aElement.href = `/node/${nid}/edit`;
       const divProduct = container.querySelector(".field--name-field-product");
       const paragraphsSubform = divProduct.closest('.paragraphs-subform');
-      if(paragraphsSubform){
+      if (paragraphsSubform) {
         paragraphsSubform.setAttribute('data-currency', currency);
         paragraphsSubform.setAttribute('data-node', nid);
       }
@@ -390,12 +390,11 @@ export class QuoteUi {
     containerType.disabled = true;
     containerDelivery.disabled = true;
     qty.disabled = true;
-    if(val == 120)
-    {
+    if (val == 120) {
       containerType.disabled = false;
       containerDelivery.disabled = false;
       qty.disabled = false;
-    }else{
+    } else {
       containerType.value = "";
       containerDelivery.value = "";
       qty.value = "";
@@ -433,64 +432,64 @@ export class QuoteUi {
       classSet = "product-warning";
     }
     if (index !== -1) this.settings[index].class = classSet;
-    else{
-      this.settings.push({ nid: nid, class: classSet , currency : { 'tid': dataProduct.currency, 'cost': 0 }});
+    else {
+      this.settings.push({ nid: nid, class: classSet, currency: { 'tid': dataProduct.currency, 'cost': 0 } });
     }
   }
 
   parametersMarkup(data) {
     const params = document.querySelector(".quote-parameters");
-    if(params){
-        let trms = "";
-        const currencys = document.querySelectorAll('[data-currency]');
-        const objCurrenc = [];
-        currencys.forEach(el => {
-          const input = el.querySelector('[name*="field_total"]');
-          objCurrenc.push({
-            'nid' : el.getAttribute('data-node'),
-            'currency' : el.getAttribute('data-currency'),
-            'costTotal' : input.value
-          });
-          const nameT = this.parameters.find(item => item.tid == el.getAttribute('data-currency') );
-          if(nameT)
-            input.previousElementSibling.textContent = `Total (${nameT.name})`;
+    if (params) {
+      let trms = "";
+      const currencys = document.querySelectorAll('[data-currency]');
+      const objCurrenc = [];
+      currencys.forEach(el => {
+        const input = el.querySelector('[name*="field_total"]');
+        objCurrenc.push({
+          'nid': el.getAttribute('data-node'),
+          'currency': el.getAttribute('data-currency'),
+          'costTotal': input.value
         });
-        this.settings = this.settings.map(obj => ({
-          ...obj,
-          currency: {
-            ...obj.currency,
-            cost: 0
-          }
-        }));
-        Object.values(this.parameters).forEach((term) => {
-            const resF = this.settings.find(item => item.currency.tid == term.tid);
-            if(resF != undefined){
-              const totalTid = objCurrenc.reduce((total, val) => {
-                if(val.currency == term.tid){
-                  return total + parseFloat(val.costTotal);
-                }
-                return total;
-              }, 0);
-              trms += `<p class="span-left"><small>(${term.factor})</small> <b>${term.name}</b></p>
+        const nameT = this.parameters.find(item => item.tid == el.getAttribute('data-currency'));
+        if (nameT)
+          input.previousElementSibling.textContent = `Total (${nameT.name})`;
+      });
+      this.settings = this.settings.map(obj => ({
+        ...obj,
+        currency: {
+          ...obj.currency,
+          cost: 0
+        }
+      }));
+      Object.values(this.parameters).forEach((term) => {
+        const resF = this.settings.find(item => item.currency.tid == term.tid);
+        if (resF != undefined) {
+          const totalTid = objCurrenc.reduce((total, val) => {
+            if (val.currency == term.tid) {
+              return total + parseFloat(val.costTotal);
+            }
+            return total;
+          }, 0);
+          trms += `<p class="span-left"><small>(${term.factor})</small> <b>${term.name}</b></p>
                         <p class="span-${term.name}">
                             ${parseFloat(totalTid)}
                         </p>
                     `;
-            }
-        });
-        params.innerHTML = `<div class="parameters-body">
+        }
+      });
+      params.innerHTML = `<div class="parameters-body">
 
                         <div class="bar-left">
                             <div class="total-trm">${trms}</div>
                             <div class="quote-parameters--totals">
                                 <div class="total-quote">
-                                    <p class="span-left"><b>TOTAL COSTO: </b></p><p class="span-right">${ data.totals.cost ?? 0 } USD</p>
+                                    <p class="span-left"><b>TOTAL COSTO: </b></p><p class="span-right">${data.totals.cost ?? 0} USD</p>
                                 </div>
                                 <div class="total-quote">
-                                    <p class="span-left"><b>PESO TOTAL: </b></p><p class="span-right">${ data.totals.weight ?? 0 } kg</p>
+                                    <p class="span-left"><b>PESO TOTAL: </b></p><p class="span-right">${data.totals.weight ?? 0} kg</p>
                                 </div>
                                 <div class="total-quote">
-                                    <p class="span-left"><b>TOTAL COTIZADO: </b></p><p class="span-right">${ data.totals.total ?? 0 } USD</p>
+                                    <p class="span-left"><b>TOTAL COTIZADO: </b></p><p class="span-right">${data.totals.total ?? 0} USD</p>
                                 </div>
                             </div>
                         </div>
@@ -508,13 +507,13 @@ export class QuoteUi {
   }
 
   showError(container, msg) {
-    if(!container.classList.contains("error-quote--content")){
+    if (!container.classList.contains("error-quote--content")) {
       container.classList.add("error-quote--content");
       this.tooltipInit(container, msg);
     }
   }
 
-  counter(){
+  counter() {
     const count = this.app.querySelectorAll('.td-check .count-line');
     count.forEach(element => {
       element.remove();
@@ -529,10 +528,10 @@ export class QuoteUi {
     });
   }
 
-  manageCheck(e){
+  manageCheck(e) {
     const status = e.target.checked;
     const checks = this.app.querySelectorAll('input[type="checkbox"]');
-    if(checks.length < 1)
+    if (checks.length < 1)
       return;
     checks.forEach(element => {
       element.checked = status;
@@ -540,10 +539,10 @@ export class QuoteUi {
     this.requestsShow(status);
   }
 
-  incotermsMatriz(tr, cell){
+  incotermsMatriz(tr, cell) {
     const assessment = tr.querySelector('[name*="field_assessment"]');
     const shipping = tr.querySelector('[name*="field_shipping_method"]');
-    if(!assessment && !shipping)
+    if (!assessment && !shipping)
       return;
     cell = cell.toLowerCase();
     assessment.disabled = false;

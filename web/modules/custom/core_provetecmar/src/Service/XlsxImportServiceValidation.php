@@ -139,8 +139,13 @@ class XlsxImportServiceValidation {
             $message .= "<li>La unidad de medida $row[8] no es correcta. Item #$row[0]</li>";
           if(!empty($row[4])){
             $manufacturer = $this->validateTaxonomy('manufacturer',$row[4]);
-            if($manufacturer == FALSE)
-              $message .= "<li>El fabricante $row[4] no es correcto. Item #$row[0]</li>";
+            if($manufacturer == FALSE){
+              $taxNew = $this->entityTypeManager->getStorage('taxonomy_term')->create([
+                'vid'  => 'manufacturer',
+                'name' => strtoupper( $row[4] )
+              ]);
+              $taxNew->save();
+            }
           }  
         }
       }
