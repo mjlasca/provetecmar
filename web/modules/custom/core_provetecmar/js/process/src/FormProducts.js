@@ -85,7 +85,6 @@ export class FormQuote {
         obj = this.instanceField(tr);
         obj['nid'] = tr.dataset.id;
         this.setLine(obj);
-        console.log(this.lines);
     }
 
     instanceField(tr) {

@@ -1,12 +1,12 @@
 .node-form {
-  width: 4280px !important;
+  width: 4580px !important;
 }
 
-#gin-sticky-edit-preview{
+#gin-sticky-edit-preview {
   display: none;
 }
 
-.quote-flex .fieldset__wrapper{
+.quote-flex .fieldset__wrapper {
   display: flex;
   gap: 6px;
 }
@@ -21,7 +21,7 @@
   background-color: rgba(0, 0, 0, 0.199);
 }
 
-.quote-modal{
+.quote-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -76,9 +76,9 @@
   padding: 0px 5px;
 }
 
-.quote-parameters--totals{
+.quote-parameters--totals {
   display: flex;
-  gap:5px;
+  gap: 5px;
 }
 
 .toggle-btn {
@@ -107,7 +107,7 @@
   transition: transform 0.3s ease;
 }
 
-.paragraph-complete .quote-sale{
+.paragraph-complete .quote-sale {
   display: grid;
 }
 
@@ -128,16 +128,16 @@
   background-color: rgb(240, 111, 111);
 }
 
-.error-quote--msg{
+.error-quote--msg {
   position: absolute;
   top: 0;
   left: 0;
 }
 
-.quote-sale{
-    display: none;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    margin-top: 20px;
+.quote-sale {
+  display: none;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin-top: 20px;
 }
 
 
@@ -151,11 +151,11 @@
   min-height: 400px;
 }
 
-.quote-modal--form{
+.quote-modal--form {
   padding: 20px;
 }
 
-.quote-modal--body .form{
+.quote-modal--body .form {
   display: flex;
   justify-items: center;
   flex-direction: column;
@@ -164,53 +164,54 @@
 }
 
 .quote-modal--body .form ul {
-    margin-inline: 0;
+  margin-inline: 0;
 }
 
 .quote-modal--body .form li {
-    list-style: none;
-    cursor: pointer;
-    margin: 0;
-    border-bottom: 1px #eee solid;
-    margin-bottom: 2px;
+  list-style: none;
+  cursor: pointer;
+  margin: 0;
+  border-bottom: 1px #eee solid;
+  margin-bottom: 2px;
 }
 
 .quote-modal--body .form input {
-    border: 1px #eee solid;
-    border-radius: 5px;
-    height: 30px;
-    font-size: 16px;
+  border: 1px #eee solid;
+  border-radius: 5px;
+  height: 30px;
+  font-size: 16px;
+  text-align: right;
 }
 
 .quote-modal--body .form .selected-items {
-    display: flex;
-    flex-direction: column;
-    max-height: 300px;
-    overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
-.quote-modal--body .form .selected-items .tag button{
-    background-color: #FFC700;
-    border: 0px;
-    cursor: pointer;
-    margin-bottom: 2px;
+.quote-modal--body .form .selected-items .tag button {
+  background-color: #FFC700;
+  border: 0px;
+  cursor: pointer;
+  margin-bottom: 2px;
 }
 
-.quote-modal--body .form .selected-items .tag button:hover{
-    background-color: #eee;
+.quote-modal--body .form .selected-items .tag button:hover {
+  background-color: #eee;
 }
 
-.quote-modal--head{
+.quote-modal--head {
   display: flex;
   justify-content: space-between;
 }
 
-.quote-modal--head strong{
+.quote-modal--head strong {
   font-size: 20px;
   padding: 10px 20px;
 }
 
-.quote-modal--head .modal-head--close{
+.quote-modal--head .modal-head--close {
   padding: 5px;
   background-color: #FFC700;
   cursor: pointer;
@@ -221,11 +222,11 @@
   align-items: center;
 }
 
-.quote-modal--head svg{
+.quote-modal--head svg {
   width: 20px;
 }
 
-.quote-modal--button{
+.quote-modal--button {
   text-align: center;
   position: absolute;
   bottom: 0;
@@ -246,7 +247,8 @@
 }
 
 .modal-button:hover {
-  background-color: #e6b800; /* un poco más oscuro al pasar el mouse */
+  background-color: #e6b800;
+  /* un poco más oscuro al pasar el mouse */
   transform: translateY(-2px);
 }
 
@@ -263,7 +265,8 @@
 }
 
 .button-primary:hover {
-  background-color: #e6b800; /* un poco más oscuro al pasar el mouse */
+  background-color: #e6b800;
+  /* un poco más oscuro al pasar el mouse */
   transform: translateY(-2px);
 }
 
@@ -273,7 +276,8 @@
     padding: 6px 10px;
     font-size: 14px;
   }
-  .quote-modal--body{
+
+  .quote-modal--body {
     width: 90%;
   }
 }
@@ -286,12 +290,13 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 0.9rem;
-  min-width: 1400px; /* Permite scroll horizontal */
+  min-width: 1400px;
+  /* Permite scroll horizontal */
 }
 
 .quote-table tr:focus-within {
-    background-color: #f0f8ff;
-    border: 1px solid #007bff;
+  background-color: #f0f8ff;
+  border: 1px solid #007bff;
 }
 
 .quote-table td {
@@ -326,7 +331,7 @@
   background-color: #fff;
 }
 
-.quote-table .td-check input[type="checkbox"]{
+.quote-table .td-check input[type="checkbox"] {
   width: 12px;
   height: 12px;
   transform: scale(1.5);
@@ -346,6 +351,10 @@
   position: sticky;
   top: 0;
   z-index: 2;
+}
+
+.quote-table input {
+  text-align: right;
 }
 
 .quote-table input,
@@ -368,7 +377,7 @@
   cursor: pointer;
 }
 
-.td-delete{
+.td-delete {
   position: sticky;
   right: 0;
   background-color: white;
@@ -418,7 +427,7 @@
   display: none;
 }
 
-.product-suggestion ul{
+.product-suggestion ul {
   list-style-type: none !important;
   margin-left: 0 !important;
 }
@@ -440,26 +449,26 @@
 }
 
 .custom-tooltip {
-    position: absolute;
-    background-color: #e05555;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 14px;
-    z-index: 1000;
-    pointer-events: none;
+  position: absolute;
+  background-color: #e05555;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  z-index: 1000;
+  pointer-events: none;
 }
 
-.msg-draft{
+.msg-draft {
   text-align: center;
   background-color: #f1ffa4;
 }
 
-#block-gin-content{
+#block-gin-content {
   max-width: none !important;
 }
 
-.requests-send{
+.requests-send {
   position: sticky;
   right: 10px;
 }

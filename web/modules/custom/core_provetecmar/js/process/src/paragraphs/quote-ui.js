@@ -98,7 +98,6 @@ export class QuoteUi {
   }
 
   line(data) {
-    console.log(data);
     const tr = document.createElement('tr');
     tr.classList = ['line-product']
     const fieldCheck = this.fieldInput({ 'name': 'field_check[]', 'type': 'checkbox', 'value': '1', 'checked': data.field_check == 1 ? true : false });
@@ -110,8 +109,12 @@ export class QuoteUi {
     tr.append(fieldCant);
     const fieldCurrency = this.fieldSelect({ 'name': 'field_currency_line[]', 'value': data.field_currency_line ?? '' }, this.currencies);
     tr.append(fieldCurrency);
+    const fieldWeightUnit = this.fieldInput({ 'name': 'field_weight_unit[]', 'type': 'number', 'readOnly': true, 'value': data.field_weight_unit ?? '' });
+    tr.append(fieldWeightUnit);
     const fieldWeight = this.fieldInput({ 'name': 'field_weight_total[]', 'type': 'number', 'readOnly': true, 'value': data.field_weight_total ?? '' });
     tr.append(fieldWeight);
+    const fieldCostUnit = this.fieldInput({ 'name': 'field_cost_unit[]', 'type': 'number', 'readOnly': true, 'value': data.field_cost_unit ?? '' });
+    tr.append(fieldCostUnit);
     const fieldTotal = this.fieldInput({ 'name': 'field_total[]', 'type': 'number', 'readOnly': true, 'value': data.field_total ?? '' });
     tr.append(fieldTotal);
     const fieldCompany = this.fieldSelect({ 'name': 'field_company[]', 'value': data.field_company ?? '' }, this.rfqs);

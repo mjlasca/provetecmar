@@ -95,7 +95,6 @@ export class Calculate {
     landed.value = 0;
     if (cost && cost.value > 0) {
       const shipp = this.getShipping();
-      console.log("shipp", shipp);
       if (shipp != undefined && shipp.hasOwnProperty('type_delivery')) {
         if (shipp.type_delivery == 'aer') {
           let optionSelect = 0;

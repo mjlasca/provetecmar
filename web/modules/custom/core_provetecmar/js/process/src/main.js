@@ -8,28 +8,26 @@ import "./style.css";
       const form = context.querySelector('.node-form');
       const detailsProducts = context.querySelector('#edit-group-insumos');
       const tabs = context.querySelectorAll('.horizontal-tab-button');
-      if(tabs){
+      if (tabs) {
         tabs.forEach(tab => {
           tab.addEventListener('click', (e) => {
             form.style.maxWidth = "1420px"
-            if(detailsProducts.style.display != 'none')
-            {
+            if (detailsProducts.style.display != 'none') {
               form.style.width = "4870px";
-              form.style.maxWidth  = "none"; 
+              form.style.maxWidth = "none";
             }
           });
         });
       }
       let formObj = null;
-      if(context){
+      if (context) {
         const tableParam = document.querySelector('#field-trm-s-values tbody');
-        if(tableParam)
+        if (tableParam)
           tableParam.classList.add('tbody-flex');
       }
-      if(settings.process == -1)
-      {
+      if (settings.process == -1) {
         const tabLines = document.querySelector('.quote-app');
-        if(tabLines){
+        if (tabLines) {
           tabLines.innerHTML = '<div class="msg-draft"><h3>La cotización debe ser creada para crear o editar líneas...</h3></div>';
         }
         return;
