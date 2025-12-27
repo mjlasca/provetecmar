@@ -180,7 +180,6 @@
   border-radius: 5px;
   height: 30px;
   font-size: 16px;
-  text-align: right;
 }
 
 .quote-modal--body .form .selected-items {
@@ -351,10 +350,6 @@
   position: sticky;
   top: 0;
   z-index: 2;
-}
-
-.quote-table input {
-  text-align: right;
 }
 
 .quote-table input,
