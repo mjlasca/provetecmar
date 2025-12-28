@@ -42,11 +42,11 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
               </th>
               <th class="td-product">Producto</th>
               <th class="td-small">Cantidad</th>
-              <th>Moneda</th>
               <th>Peso (kg)</th>
               <th>Peso total (kg)</th>
-              <th>Costo Unit. x Moneda</th>
-              <th>Total x Moneda</th>
+              <th>Moneda</th>
+              <th>Costo Unit.</th>
+              <th>Total Moneda</th>
               <th class="td-medium">Empresa</th>
               <th class="td-medium">Región entrega</th>
               <th>Incoterm</th>

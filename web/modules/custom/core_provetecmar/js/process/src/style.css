@@ -293,9 +293,21 @@
   /* Permite scroll horizontal */
 }
 
+.quote-table td {
+  background-color: #eee;
+}
+
+.quote-table th {
+  background-color: #eee;
+}
+
 .quote-table tr:focus-within {
   background-color: #f0f8ff;
   border: 1px solid #007bff;
+}
+
+.quote-table tr {
+  border: 1px solid #eee;
 }
 
 .quote-table td {
@@ -304,17 +316,17 @@
 
 .quote-table th,
 .quote-table td {
-  padding: 5px;
+  padding: 0px 15px 0px 7px;
   text-align: center;
   vertical-align: middle;
-  min-width: 150px;
+  max-width: 150px;
 }
 
 .quote-table .td-product {
   min-width: 230px;
   position: sticky;
   left: 60px;
-  background-color: #fff;
+  z-index: 1;
 }
 
 .quote-table .td-check {
@@ -327,7 +339,8 @@
   align-items: center;
   position: sticky;
   left: 0;
-  background-color: #fff;
+  min-height: 50px;
+  z-index: 1;
 }
 
 .quote-table .td-check input[type="checkbox"] {
@@ -346,7 +359,6 @@
 }
 
 .quote-table thead {
-  background: #f1f1f1;
   position: sticky;
   top: 0;
   z-index: 2;
@@ -354,11 +366,13 @@
 
 .quote-table input,
 .quote-table select {
-  width: 100%;
-  padding: 5px;
-  font-size: 1rem;
+  padding: 0px 3px;
+  font-size: 1.05rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 100%;
+  min-height: 40px;
+  background-color: #fff;
 }
 
 .center {
@@ -470,4 +484,46 @@
 
 .inp-rigth {
   text-align: right;
+}
+
+.quote-table td:nth-child(1),
+th:nth-child(1),
+td:nth-child(2),
+th:nth-child(2),
+td:nth-child(3),
+th:nth-child(3),
+td:nth-child(6),
+th:nth-child(6),
+td:nth-child(9),
+th:nth-child(9),
+td:nth-child(10),
+th:nth-child(10),
+td:nth-child(11),
+th:nth-child(11),
+td:nth-child(12),
+th:nth-child(12),
+td:nth-child(16),
+th:nth-child(16),
+td:nth-child(17),
+th:nth-child(17),
+td:nth-child(19),
+th:nth-child(19),
+td:nth-child(20),
+th:nth-child(20),
+td:nth-child(21),
+th:nth-child(21),
+td:nth-child(22),
+th:nth-child(22),
+td:nth-child(26),
+th:nth-child(26),
+td:nth-child(27),
+th:nth-child(27),
+td:nth-child(28),
+th:nth-child(28) {
+  background-color: #d1fad1;
+  border-right: 1px solid #fff;
+}
+
+input[readonly] {
+  background-color: #eee;
 }
