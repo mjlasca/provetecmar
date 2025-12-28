@@ -1,4 +1,5 @@
 import { Services } from "./services";
+import { Utilities } from "./utilities";
 
 /**
  * Class for ui quote
@@ -105,17 +106,17 @@ export class QuoteUi {
     tr.append(fieldCheck);
     const fieldProduct = this.fieldInput({ 'name': 'field_product[]', 'type': 'text', 'autocomplete': 'off', 'value': data.field_product ?? '' });
     tr.append(fieldProduct);
-    const fieldCant = this.fieldInput({ 'name': 'field_cant[]', 'type': 'text', 'value': data.field_cant ?? '' });
+    const fieldCant = this.fieldInput({ 'name': 'field_cant[]', 'type': 'text',  'className' : 'inp-rigth', 'value': data.field_cant ?? '' });
     tr.append(fieldCant);
     const fieldCurrency = this.fieldSelect({ 'name': 'field_currency_line[]', 'value': data.field_currency_line ?? '' }, this.currencies);
     tr.append(fieldCurrency);
-    const fieldWeightUnit = this.fieldInput({ 'name': 'field_weight_unit[]', 'type': 'text', 'readOnly': true, 'value': data.weight ?? '' });
+    const fieldWeightUnit = this.fieldInput({ 'name': 'field_weight_unit[]', 'type': 'text', 'readOnly': true, 'className' : 'inp-rigth', 'value': Utilities.formatNumber(data.weight ?? '0') });
     tr.append(fieldWeightUnit);
-    const fieldWeight = this.fieldInput({ 'name': 'field_weight_total[]', 'type': 'text', 'readOnly': true, 'value': data.field_weight_total ?? '' });
+    const fieldWeight = this.fieldInput({ 'name': 'field_weight_total[]', 'type': 'text', 'readOnly': true, 'className' : 'inp-rigth', 'value': Utilities.formatNumber(data.field_weight_total ?? '0') });
     tr.append(fieldWeight);
-    const fieldCostUnit = this.fieldInput({ 'name': 'field_unitcost[]', 'type': 'text', 'readOnly': true, 'value': data.cost_unit ?? '' });
+    const fieldCostUnit = this.fieldInput({ 'name': 'field_unitcost[]', 'type': 'text', 'readOnly': true, 'className' : 'inp-rigth', 'value': Utilities.formatNumber(data.cost_unit ?? '0') });
     tr.append(fieldCostUnit);
-    const fieldTotal = this.fieldInput({ 'name': 'field_total[]', 'type': 'text', 'readOnly': true, 'value': data.field_total ?? '' });
+    const fieldTotal = this.fieldInput({ 'name': 'field_total[]', 'type': 'text', 'readOnly': true, 'className' : 'inp-rigth', 'value': Utilities.formatNumber(data.field_total ?? '0') });
     tr.append(fieldTotal);
     const fieldCompany = this.fieldSelect({ 'name': 'field_company[]', 'value': data.field_company ?? '' }, this.rfqs);
     tr.append(fieldCompany);
@@ -125,17 +126,17 @@ export class QuoteUi {
     tr.append(fieldIncoterm);
     const fieldBrand = this.fieldSelect({ 'name': 'field_brand[]', 'value': data.field_brand ?? '' }, this.brand_line);
     tr.append(fieldBrand);
-    const fieldTax = this.fieldInput({ 'name': 'field_tax[]', 'type': 'text', 'readOnly': true, 'value': data.field_taxs ?? '' });
+    const fieldTax = this.fieldInput({ 'name': 'field_tax[]', 'type': 'text', 'readOnly': true, 'className' : 'inp-rigth', 'value': Utilities.formatNumber(data.field_tax ?? '0') });
     tr.append(fieldTax);
-    const fieldCost = this.fieldInput({ 'name': 'field_cost[]', 'type': 'text', 'readOnly': true, 'value': data.field_cost ?? '' });
+    const fieldCost = this.fieldInput({ 'name': 'field_cost[]', 'type': 'text', 'readOnly': true, 'className' : 'inp-rigth', 'value': Utilities.formatNumber(data.field_cost ?? '0') });
     tr.append(fieldCost);
-    const fieldTotalCost = this.fieldInput({ 'name': 'field_total_cost[]', 'type': 'text', 'readOnly': true, 'value': data.field_total_cost ?? '' });
+    const fieldTotalCost = this.fieldInput({ 'name': 'field_total_cost[]', 'type': 'text', 'readOnly': true, 'className' : 'inp-rigth', 'value': Utilities.formatNumber(data.field_total_cost ?? '0') });
     tr.append(fieldTotalCost);
     const fieldAssessment = this.fieldSelect({ 'name': 'field_assessment[]', 'value': data.field_assessment ?? '' }, this.assessment);
     tr.append(fieldAssessment);
     const fieldMargin = this.fieldSelect({ 'name': 'field_margin[]', 'value': data.field_margin ?? '' }, this.margin);
     tr.append(fieldMargin);
-    const fieldLandedCost = this.fieldInput({ 'name': 'field_landed_cost[]', 'type': 'text', 'value': data.field_landed_cost ?? '' });
+    const fieldLandedCost = this.fieldInput({ 'name': 'field_landed_cost[]', 'type': 'text', 'className' : 'inp-rigth', 'value': Utilities.formatNumber(data.field_landed_cost ?? '0') });
     tr.append(fieldLandedCost);
     const fieldShippingMethod = this.fieldSelect({ 'name': 'field_shipping_method[]', 'value': data.field_shipping_method ?? '' }, this.shipping_method);
     tr.append(fieldShippingMethod);
@@ -148,11 +149,11 @@ export class QuoteUi {
     const fieldContainerDelivery = this.fieldSelect({ 'name': 'field_container_delivery[]', 'value': data.field_container_delivery ?? '', 'disabled': true }, this.container_delivery);
     fieldContainerDelivery.classList.add('td-mar');
     tr.append(fieldContainerDelivery);
-    const fieldUnitSale = this.fieldInput({ 'name': 'field_unit_sale[]', 'type': 'text', 'readOnly': true, 'value': data.field_unit_sale ?? '' });
+    const fieldUnitSale = this.fieldInput({ 'name': 'field_unit_sale[]', 'type': 'text', 'readOnly': true, 'className' : 'inp-rigth', 'value': Utilities.formatNumber(data.field_unit_sale ?? '0') });
     tr.append(fieldUnitSale);
-    const fieldTotalSale = this.fieldInput({ 'name': 'field_total_sale[]', 'type': 'text', 'readOnly': true, 'value': data.field_total_sale ?? '' });
+    const fieldTotalSale = this.fieldInput({ 'name': 'field_total_sale[]', 'type': 'text', 'readOnly': true, 'className' : 'inp-rigth', 'value': Utilities.formatNumber(data.field_total_sale ?? '0') });
     tr.append(fieldTotalSale);
-    const fieldSaleFactor = this.fieldInput({ 'name': 'field_sale_factor[]', 'type': 'text', 'readOnly': true, 'value': data.field_sale_factor ?? '' });
+    const fieldSaleFactor = this.fieldInput({ 'name': 'field_sale_factor[]', 'type': 'text', 'readOnly': true, 'className' : 'inp-rigth', 'value': Utilities.formatNumber(data.field_sale_factor ?? '0') });
     tr.append(fieldSaleFactor);
     const fieldDeliveryTime = this.fieldInput({ 'name': 'field_delivery_time[]', 'type': 'text', 'value': data.field_delivery_time ?? '' });
     tr.append(fieldDeliveryTime);

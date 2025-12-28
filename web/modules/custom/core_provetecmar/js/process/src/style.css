@@ -467,3 +467,7 @@
   position: sticky;
   right: 10px;
 }
+
+.inp-rigth {
+  text-align: right;
+}

@@ -2,7 +2,7 @@
 import { FormQuote } from "../FormProducts";
 import { QuoteUi } from "./quote-ui";
 import { Services } from "./services";
-
+import { Utilities } from "./utilities";
 
 /**
  * Clas for utilities quote
@@ -19,25 +19,18 @@ export class Calculate {
     this.ui = this.formQuote.ui;
   }
 
-  formatNumber(number){
-    if (number == undefined || number == null || number == "") {
-      return 0;
-    }
-    return parseFloat(number).toLocaleString('es-CO');
-  }
-
   weightTotal(indexLine) {
     const fieldWeight = this.containerRow.querySelector(
       '[name*="field_weight_total"]'
     );
     this.formQuote.lines[indexLine].weight_total = this.formQuote.lines[indexLine].field_cant * this.dataProduct.weight;
-    fieldWeight.value = this.formQuote.lines[indexLine].weight_total;
+    fieldWeight.value = Utilities.formatNumber(this.formQuote.lines[indexLine].weight_total);
   }
 
   costTotal(indexLine) {
     const fieldTotal = this.containerRow.querySelector('[name*="field_total"]');
     this.formQuote.lines[indexLine].field_total = this.formQuote.lines[indexLine].field_cant * this.dataProduct.cost_unit;
-    fieldTotal.value = this.formatNumber(this.formQuote.lines[indexLine].field_total);
+    fieldTotal.value = Utilities.formatNumber(this.formQuote.lines[indexLine].field_total);
   }
 
   taxCalculate(indexLine) {
@@ -53,7 +46,7 @@ export class Calculate {
         }
       }
     }
-    this.containerRow.querySelector('[name*="field_tax"]').value = this.formQuote.lines[indexLine].field_tax;
+    this.containerRow.querySelector('[name*="field_tax"]').value = Utilities.formatNumber( this.formQuote.lines[indexLine].field_tax );
   }
 
   vrCosttUsd(indexLine) {
@@ -62,18 +55,19 @@ export class Calculate {
     if (trm == undefined) {
       return;
     }
+    this.formQuote.lines[indexLine].name_currency = trm.name;
     if (result > 0) {
       result = parseFloat(result / trm.factor);
       const tax = this.formQuote.lines[indexLine].field_tax;
       result = result * (1 + tax / 100);
     }
     this.formQuote.lines[indexLine].field_cost = result;
-    this.containerRow.querySelector('[name*="field_cost"]').value = this.formatNumber(this.formQuote.lines[indexLine].field_cost);
+    this.containerRow.querySelector('[name*="field_cost"]').value = Utilities.formatNumber(this.formQuote.lines[indexLine].field_cost);
 
     const fieldCant = this.formQuote.lines[indexLine].field_cant;
     if (fieldCant != "") {
       this.formQuote.lines[indexLine].field_total_cost = parseFloat(result * fieldCant);
-      this.containerRow.querySelector('[name*="field_total_cost"]').value = this.formatNumber(this.formQuote.lines[indexLine].field_total_cost);
+      this.containerRow.querySelector('[name*="field_total_cost"]').value = Utilities.formatNumber(this.formQuote.lines[indexLine].field_total_cost);
     }
   }
 
@@ -117,7 +111,7 @@ export class Calculate {
       }
 
     }
-    landed.value = this.formQuote.lines[indexLine].field_landed_cost;
+    landed.value = Utilities.formatNumber(this.formQuote.lines[indexLine].field_landed_cost);
   }
 
   getTrm() {
@@ -223,7 +217,7 @@ export class Calculate {
   vrUnitUsd(indexLine) {
     const cant = this.formQuote.lines[indexLine].field_cant;
     const factCost = this.formQuote.lines[indexLine].field_landed_cost ?? 0;
-    const costUnit = this.formQuote.lines[indexLine].field_cost != '' ? this.formQuote.lines[indexLine].field_cost : 1;
+    const costUnit = this.formQuote.lines[indexLine].field_cost ?? 1;
     const margin_ = this.containerRow.querySelector('[name*="field_margin"]');
     const vrUnit_ = this.containerRow.querySelector('[name*="field_unit_sale"]');
     const vrTotal_ = this.containerRow.querySelector('[name*="field_total_sale"]');
@@ -235,11 +229,11 @@ export class Calculate {
     if (factCost > 0 && costUnit > 0)
       vrUnitRes = (parseFloat(factCost) * parseFloat(costUnit)) / (1 - (parseFloat(optionMargin.textContent) / 100));
     this.formQuote.lines[indexLine].field_unit_sale = vrUnitRes;
-    this.formQuote.lines[indexLine].field_total_sales = (parseFloat(cant) * vrUnitRes);
+    this.formQuote.lines[indexLine].field_total_sale = (parseFloat(cant) * vrUnitRes);
     this.formQuote.lines[indexLine].field_sale_factor = (parseFloat(vrUnitRes) / parseFloat(costUnit));
-    vrUnit_.value = this.formatNumber(vrUnitRes);
-    vrTotal_.value = this.formatNumber((parseFloat(cant) * vrUnitRes));
-    factSale_.value = (parseFloat(vrUnitRes) / parseFloat(costUnit)).toFixed(2);
+    vrUnit_.value = Utilities.formatNumber(vrUnitRes);
+    vrTotal_.value = Utilities.formatNumber((parseFloat(cant) * vrUnitRes));
+    factSale_.value = Utilities.formatNumber((parseFloat(vrUnitRes) / parseFloat(costUnit)));
   }
 
   async handleGetProduct() {

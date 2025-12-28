@@ -1,5 +1,6 @@
 import { Calculate } from "./paragraphs/calculate";
 import { QuoteUi } from "./paragraphs/quote-ui";
+import { Utilities } from "./paragraphs/utilities";
 
 export class FormQuote {
     lines = [];
@@ -136,6 +137,7 @@ export class FormQuote {
             return;
         }
         try {
+            console.log(this.lines);
             await this.sendLines();
             const tempInput = document.createElement('input');
             tempInput.type = 'hidden';

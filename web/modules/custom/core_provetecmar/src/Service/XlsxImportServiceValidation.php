@@ -106,7 +106,7 @@ class XlsxImportServiceValidation {
       }
       
       
-      if (!$file) {
+      if (empty($file)) {
         return ['success' => TRUE, 'message' => ''];
       }
         
