@@ -82,7 +82,7 @@ export class FormQuote {
         this.calc.dataProduct = this.getObjLine(this.calc.nid);
         this.calc.dataProduct.currency = tr.querySelector('[name*="field_currency_line"]').value;
         this.calc.process();
-        obj = this.instanceField(tr);
+        //obj = this.instanceField(tr);
         obj['nid'] = tr.dataset.id;
         this.setLine(obj);
     }

@@ -19,6 +19,13 @@ export class Calculate {
     this.ui = this.formQuote.ui;
   }
 
+  formatNumber(number){
+    if (number == undefined || number == null || number == "") {
+      return 0;
+    }
+    return parseFloat(number).toLocaleString('es-CO');
+  }
+
   weightTotal(indexLine) {
     const fieldWeight = this.containerRow.querySelector(
       '[name*="field_weight_total"]'
@@ -30,21 +37,19 @@ export class Calculate {
   costTotal(indexLine) {
     const fieldTotal = this.containerRow.querySelector('[name*="field_total"]');
     this.formQuote.lines[indexLine].field_total = this.formQuote.lines[indexLine].field_cant * this.dataProduct.cost_unit;
-    fieldTotal.value = this.formQuote.lines[indexLine].field_total;
+    fieldTotal.value = this.formatNumber(this.formQuote.lines[indexLine].field_total);
   }
 
   taxCalculate(indexLine) {
     const rfq = this.formQuote.lines[indexLine].field_company;
     const region = this.formQuote.lines[indexLine].field_delivery_region;
-    if (rfq && region && rfq.value > 0 && region.value > 0) {
+    if (rfq != "" && region != "") {
       if (this.parametersQuote) {
         const tax = this.parametersQuote.find(
-          (item) => item.rfq === rfq.value && item.region === region.value
+          (item) => item.rfq === rfq && item.region === region
         );
         if (tax) {
           this.formQuote.lines[indexLine].field_tax = tax.tax;
-          this.containerRow.querySelector('[name*="field_tax"]').value =
-            tax.tax;
         }
       }
     }
@@ -52,26 +57,23 @@ export class Calculate {
   }
 
   vrCosttUsd(indexLine) {
-    console.log("PRODUCT",this.dataProduct);
     let result = this.dataProduct.cost_unit ?? 0;
     const trm = this.getTrm();
     if (trm == undefined) {
       return;
     }
     if (result > 0) {
-      console.log("vrCost",result);
       result = parseFloat(result / trm.factor);
       const tax = this.formQuote.lines[indexLine].field_tax;
       result = result * (1 + tax / 100);
     }
     this.formQuote.lines[indexLine].field_cost = result;
-    this.containerRow.querySelector('[name*="field_cost"]').value =
-      this.formQuote.lines[indexLine].field_cost.toFixed(2);
+    this.containerRow.querySelector('[name*="field_cost"]').value = this.formatNumber(this.formQuote.lines[indexLine].field_cost);
 
     const fieldCant = this.formQuote.lines[indexLine].field_cant;
-    if (fieldCant && fieldCant.value != "") {
-      this.formQuote.lines[indexLine].field_total_cost = parseFloat(result * fieldCant.value);
-      this.containerRow.querySelector('[name*="field_total_cost"]').value = this.formQuote.lines[indexLine].field_total_cost;
+    if (fieldCant != "") {
+      this.formQuote.lines[indexLine].field_total_cost = parseFloat(result * fieldCant);
+      this.containerRow.querySelector('[name*="field_total_cost"]').value = this.formatNumber(this.formQuote.lines[indexLine].field_total_cost);
     }
   }
 
@@ -235,9 +237,8 @@ export class Calculate {
     this.formQuote.lines[indexLine].field_unit_sale = vrUnitRes;
     this.formQuote.lines[indexLine].field_total_sales = (parseFloat(cant) * vrUnitRes);
     this.formQuote.lines[indexLine].field_sale_factor = (parseFloat(vrUnitRes) / parseFloat(costUnit));
-    vrUnit_.value = vrUnitRes.toFixed(2);
-    vrTotal_.value = (parseFloat(cant) * vrUnitRes).toFixed(2);
-    console.log("res",[vrUnitRes,costUnit]);
+    vrUnit_.value = this.formatNumber(vrUnitRes);
+    vrTotal_.value = this.formatNumber((parseFloat(cant) * vrUnitRes));
     factSale_.value = (parseFloat(vrUnitRes) / parseFloat(costUnit)).toFixed(2);
   }
 
