@@ -121,7 +121,7 @@ class XlsxImportService {
 
       foreach ($rows as $key => $row) {
         
-        if($key > 1 && !empty($row[1]) && !empty($row[2]) && !empty($row[3]) ){
+        if($key > 0 && !empty($row[1]) && !empty($row[2]) && !empty($row[3]) ){
           
           $nids = $this->entityTypeManager
             ->getStorage('node')
@@ -212,19 +212,31 @@ class XlsxImportService {
 
   public function readXlsx(string $file_path): array {
     $rows = [];
-    $spreadsheet = IOFactory::load($file_path);
+
+    $reader = IOFactory::createReader('Xlsx');
+    $reader->setReadDataOnly(true);
+
+    $spreadsheet = $reader->load($file_path);
     $sheet = $spreadsheet->getActiveSheet();
+    
 
-    foreach ($sheet->getRowIterator() as $row) {
-      $cellIterator = $row->getCellIterator();
-      $cellIterator->setIterateOnlyExistingCells(FALSE);
+    // Limita filas (ajusta según tu archivo)
+    foreach ($sheet->getRowIterator(1, 200) as $row) {
 
+      $cellIterator = $row->getCellIterator('A', 'K'); // columnas reales
       $row_data = [];
       foreach ($cellIterator as $cell) {
-        $row_data[] = $cell->getValue();
+        $row_data[] = trim((string) $cell->getValue());
       }
-      $rows[] = $row_data;
+
+      if (array_filter($row_data)) {
+        $rows[] = $row_data;
+      }
     }
+
+    // 🔥 LIBERAR MEMORIA (clave en Drupal)
+    $spreadsheet->disconnectWorksheets();
+    unset($spreadsheet);
 
     return $rows;
   }

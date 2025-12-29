@@ -123,7 +123,7 @@ class XlsxImportServiceValidation {
       
       $message = '';
       foreach ($rows as $key => $row) {
-        if($key > 1 && !empty($row[1]) && !empty($row[2]) && !empty($row[3]) ){
+        if($key > 0 && !empty($row[1]) && !empty($row[2]) && !empty($row[3]) ){
           if(empty($row[2]))
               $message .= "<li>El nombre es obligatorio. Item #$row[0]</li>";
           if(empty($row[3]))
@@ -149,6 +149,7 @@ class XlsxImportServiceValidation {
           }  
         }
       }
+      
       if(!empty($message)){
         return ['success' => FALSE, 'message' => $message];
       }else{
@@ -178,23 +179,31 @@ class XlsxImportServiceValidation {
 
   public function readXlsx(string $file_path): array {
     $rows = [];
-    $reader = IOFactory::createReaderForFile($file_path);
-    $reader->setReadDataOnly(TRUE); // Solo valores, sin estilos
-    $reader->setReadEmptyCells(FALSE); // Ignora celdas vacías
+
+    $reader = IOFactory::createReader('Xlsx');
+    $reader->setReadDataOnly(true);
+
     $spreadsheet = $reader->load($file_path);
     $sheet = $spreadsheet->getActiveSheet();
+    
 
+    // Limita filas (ajusta según tu archivo)
+    foreach ($sheet->getRowIterator(1, 200) as $row) {
 
-    foreach ($sheet->getRowIterator() as $row) {
-      $cellIterator = $row->getCellIterator();
-      $cellIterator->setIterateOnlyExistingCells(FALSE);
-
+      $cellIterator = $row->getCellIterator('A', 'K'); // columnas reales
       $row_data = [];
       foreach ($cellIterator as $cell) {
-        $row_data[] = $cell->getValue();
+        $row_data[] = trim((string) $cell->getValue());
       }
-      $rows[] = $row_data;
+
+      if (array_filter($row_data)) {
+        $rows[] = $row_data;
+      }
     }
+
+    // 🔥 LIBERAR MEMORIA (clave en Drupal)
+    $spreadsheet->disconnectWorksheets();
+    unset($spreadsheet);
 
     return $rows;
   }

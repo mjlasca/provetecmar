@@ -33,37 +33,39 @@ function core_provetecmar_form_alter(&$form, \Drupal\Core\Form\FormStateInterfac
     $form['field_requests_send']['#prefix'] =
     '<div class="quote-app">
       <div class="quote-table-wrapper">
-        <table class="quote-table">
+        <table class="quote-table hide-colums">
           <thead>
             <tr>
               <th class="td-small td-check">
                 <span>No.</span>
                 <div class="check-succ"></div>
               </th>
-              <th class="td-product">Producto</th>
+              <th class="td-product">
+              <span id="show-column" class="svg-eye--hide">
+              </span>Producto</th>
               <th class="td-small">Cantidad</th>
               <th>Peso (kg)</th>
               <th>Peso total (kg)</th>
-              <th>Moneda</th>
+              <th>Moneda de compra</th>
               <th>Costo Unit.</th>
               <th>Total Moneda</th>
               <th class="td-medium">Empresa</th>
               <th class="td-medium">Región entrega</th>
               <th>Incoterm</th>
               <th>Marca</th>
-              <th>Impuesto (%)</th>
-              <th>Costo Unitario USD</th>
-              <th>Costo total (USD)</th>
+              <th class="hide-column">Impuesto (%)</th>
+              <th class="hide-column">Costo Unitario USD</th>
+              <th class="hide-column">Costo total (USD)</th>
               <th>Gravamen (%)</th>
               <th>Margen (%)</th>
-              <th>Factor cost</th>
+              <th class="hide-column">Factor cost</th>
               <th class="td-medium">Tipo envío</th>
-              <th class="td-mar">Tipo contenedor</th>
-              <th class="td-mar">Qty</th>
-              <th class="td-mar">Entrega contenedor</th>
+              <th class="td-mar hide-column">Tipo contenedor</th>
+              <th class="td-mar hide-column">Qty</th>
+              <th class="td-mar hide-column">Entrega contenedor</th>
               <th>Vr Unitario (USD)</th>
               <th>Vr Total (USD)</th>
-              <th>Factor</th>
+              <th class="hide-column">Factor</th>
               <th>Tiempo entrega(Prov)</th>
               <th>Tiempo entrega(Cliente)</th>
               <th>Comentarios</th>
