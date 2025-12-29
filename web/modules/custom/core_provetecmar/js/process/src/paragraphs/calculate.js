@@ -31,7 +31,6 @@ export class Calculate {
     );
     this.formQuote.lines[indexLine].field_cant = fieldCant.value;
     this.formQuote.lines[indexLine].weight_total = this.formQuote.lines[indexLine].field_cant * this.dataProduct.weight;
-    console.log("PESO TOTAL", this.formQuote.lines[indexLine].weight_total);
     fieldWeight.value = Utilities.formatNumber(this.formQuote.lines[indexLine].weight_total);
     fieldWeightUnit.value = this.dataProduct.weight;
   }
@@ -51,14 +50,11 @@ export class Calculate {
     const rfq = this.formQuote.lines[indexLine].field_company;
     const region = this.formQuote.lines[indexLine].field_delivery_region;
     if (rfq && region) {
-      console.log("paramsQuote", this.parametersQuote);
       if (this.parametersQuote) {
         const tax = this.parametersQuote.find(
           (item) => item.rfq === rfq && item.region === region
         );
-        console.log("TAX", [rfq, region, tax]);
         if (tax) {
-
           this.formQuote.lines[indexLine].field_tax = tax.tax;
         }
       }
@@ -68,7 +64,6 @@ export class Calculate {
 
   vrCosttUsd(indexLine) {
     let result = this.dataProduct.cost_unit ?? 0;
-    console.log("DATA PRODUCT", this.dataProduct);
     const trm = this.getTrm();
     if (trm == undefined) {
       return;
@@ -79,7 +74,6 @@ export class Calculate {
       const tax = this.formQuote.lines[indexLine].field_tax;
       result = result * (1 + tax / 100);
     }
-    console.log("COSTO", result);
     this.formQuote.lines[indexLine].field_cost = result;
     this.containerRow.querySelector('[name*="field_cost"]').value = Utilities.formatNumber(this.formQuote.lines[indexLine].field_cost);
 
