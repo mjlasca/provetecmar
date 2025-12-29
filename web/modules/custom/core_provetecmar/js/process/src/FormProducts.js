@@ -89,7 +89,7 @@ export class FormQuote {
     }
 
     instanceField(tr) {
-        const fields = tr.querySelectorAll('input[name*="field_"] , select[name*="field_"]');
+        const fields = tr.querySelectorAll('input[type="checkbox"] , select[name*="field_"]');
         let props = {};
         fields.forEach(el => {
             if (el.name == 'field_check[]') {

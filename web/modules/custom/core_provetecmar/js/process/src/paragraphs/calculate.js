@@ -23,34 +23,52 @@ export class Calculate {
     const fieldWeight = this.containerRow.querySelector(
       '[name*="field_weight_total"]'
     );
+    const fieldWeightUnit = this.containerRow.querySelector(
+      '[name*="field_weight_unit"]'
+    );
+    const fieldCant = this.containerRow.querySelector(
+      '[name*="field_cant"]'
+    );
+    this.formQuote.lines[indexLine].field_cant = fieldCant.value;
     this.formQuote.lines[indexLine].weight_total = this.formQuote.lines[indexLine].field_cant * this.dataProduct.weight;
+    console.log("PESO TOTAL", this.formQuote.lines[indexLine].weight_total);
     fieldWeight.value = Utilities.formatNumber(this.formQuote.lines[indexLine].weight_total);
+    fieldWeightUnit.value = this.dataProduct.weight;
   }
 
   costTotal(indexLine) {
     const fieldTotal = this.containerRow.querySelector('[name*="field_total"]');
+    const fieldCostUnit = this.containerRow.querySelector('[name*="field_unitcost"]');
     this.formQuote.lines[indexLine].field_total = this.formQuote.lines[indexLine].field_cant * this.dataProduct.cost_unit;
+    this.formQuote.lines[indexLine].field_unitcost = this.dataProduct.cost_unit;
     fieldTotal.value = Utilities.formatNumber(this.formQuote.lines[indexLine].field_total);
+    fieldCostUnit.value = Utilities.formatNumber(this.dataProduct.cost_unit);
   }
 
   taxCalculate(indexLine) {
+    this.formQuote.lines[indexLine].field_company = this.containerRow.querySelector('[name*="field_company"]').value;
+    this.formQuote.lines[indexLine].field_delivery_region = this.containerRow.querySelector('[name*="field_delivery_region"]').value;
     const rfq = this.formQuote.lines[indexLine].field_company;
     const region = this.formQuote.lines[indexLine].field_delivery_region;
-    if (rfq != "" && region != "") {
+    if (rfq && region) {
+      console.log("paramsQuote", this.parametersQuote);
       if (this.parametersQuote) {
         const tax = this.parametersQuote.find(
           (item) => item.rfq === rfq && item.region === region
         );
+        console.log("TAX", [rfq, region, tax]);
         if (tax) {
+
           this.formQuote.lines[indexLine].field_tax = tax.tax;
         }
       }
     }
-    this.containerRow.querySelector('[name*="field_tax"]').value = Utilities.formatNumber( this.formQuote.lines[indexLine].field_tax );
+    this.containerRow.querySelector('[name*="field_tax"]').value = Utilities.formatNumber(this.formQuote.lines[indexLine].field_tax);
   }
 
   vrCosttUsd(indexLine) {
     let result = this.dataProduct.cost_unit ?? 0;
+    console.log("DATA PRODUCT", this.dataProduct);
     const trm = this.getTrm();
     if (trm == undefined) {
       return;
@@ -61,6 +79,7 @@ export class Calculate {
       const tax = this.formQuote.lines[indexLine].field_tax;
       result = result * (1 + tax / 100);
     }
+    console.log("COSTO", result);
     this.formQuote.lines[indexLine].field_cost = result;
     this.containerRow.querySelector('[name*="field_cost"]').value = Utilities.formatNumber(this.formQuote.lines[indexLine].field_cost);
 
@@ -80,7 +99,7 @@ export class Calculate {
       '[name*="field_landed_cost"]'
     );
     let result = 0;
-    
+
     if (cost > 0) {
       const shipp = this.getShipping(indexLine);
       if (shipp != undefined && shipp.hasOwnProperty('type_delivery')) {
