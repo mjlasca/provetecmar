@@ -232,6 +232,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
 
     $tax = $total * ( $node->field_quote_tax->value/100) ;
     $total_fu = $total + $tax;
+    $arrTh = ["detail" => $this->t('Detalle', [], ['langcode' => 'en'])];
     $build = [
       '#theme' => 'quote_pdf',
       '#data' => [
@@ -243,6 +244,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
           'email' => $node->field_customer->entity->field_email->value,
           'currency' => $node->field_currency->entity->name->value
         ],
+        'th' => $arrTh,
         'node' => [
           'valid' => $node->field_valid->value,
           'observation' => $node->field_observaciones->value,
