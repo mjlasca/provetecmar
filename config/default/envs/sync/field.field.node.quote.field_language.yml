@@ -1,0 +1,23 @@
+uuid: fc273176-81ec-4406-b357-1f41c871000c
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_language
+    - node.type.quote
+  module:
+    - options
+id: node.quote.field_language
+field_name: field_language
+entity_type: node
+bundle: quote
+label: Lenguaje
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: en
+default_value_callback: ''
+settings: {  }
+field_type: list_string

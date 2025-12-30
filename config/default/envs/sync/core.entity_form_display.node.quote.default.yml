@@ -11,6 +11,7 @@ dependencies:
     - field.field.node.quote.field_detail_quote
     - field.field.node.quote.field_incoterms
     - field.field.node.quote.field_items_import
+    - field.field.node.quote.field_language
     - field.field.node.quote.field_observaciones
     - field.field.node.quote.field_products
     - field.field.node.quote.field_quote_tax
@@ -223,6 +224,12 @@ content:
     region: content
     settings:
       progress_indicator: throbber
+    third_party_settings: {  }
+  field_language:
+    type: options_select
+    weight: 26
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_observaciones:
     type: string_textarea

@@ -11,6 +11,7 @@ dependencies:
     - field.field.node.quote.field_detail_quote
     - field.field.node.quote.field_incoterms
     - field.field.node.quote.field_items_import
+    - field.field.node.quote.field_language
     - field.field.node.quote.field_observaciones
     - field.field.node.quote.field_products
     - field.field.node.quote.field_quote_tax
@@ -25,6 +26,7 @@ dependencies:
     - datetime
     - entity_reference_revisions
     - file
+    - options
     - text
     - user
 id: node.quote.default
@@ -99,6 +101,13 @@ content:
       use_description_as_link_text: true
     third_party_settings: {  }
     weight: 109
+    region: content
+  field_language:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 123
     region: content
   field_observaciones:
     type: basic_string
