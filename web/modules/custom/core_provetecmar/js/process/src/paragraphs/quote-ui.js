@@ -118,6 +118,7 @@ export class QuoteUi {
   }
 
   line(data) {
+    console.log("data", data);
     const tr = document.createElement('tr');
     tr.classList = ['line-product']
     const fieldCheck = this.fieldInput({ 'name': 'field_check[]', 'type': 'checkbox', 'value': '1', 'checked': data.field_check == 1 ? true : false });

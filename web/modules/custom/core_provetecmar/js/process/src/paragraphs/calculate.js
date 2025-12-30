@@ -30,8 +30,8 @@ export class Calculate {
       '[name*="field_cant"]'
     );
     this.formQuote.lines[indexLine].field_cant = fieldCant.value;
-    this.formQuote.lines[indexLine].weight_total = this.formQuote.lines[indexLine].field_cant * this.dataProduct.weight;
-    fieldWeight.value = Utilities.formatNumber(this.formQuote.lines[indexLine].weight_total);
+    this.formQuote.lines[indexLine].field_weight_total = this.formQuote.lines[indexLine].field_cant * this.dataProduct.weight;
+    fieldWeight.value = Utilities.formatNumber(this.formQuote.lines[indexLine].field_weight_total);
     fieldWeightUnit.value = this.dataProduct.weight;
   }
 
@@ -276,6 +276,15 @@ export class Calculate {
     return this.ui.quote_settings;
   }
 
+  othersValues(indexLine) {
+    this.formQuote.lines[indexLine].field_container_type = this.containerRow.querySelector('[name*="field_container_type"]').value;
+    this.formQuote.lines[indexLine].field_qty = this.containerRow.querySelector('[name*="field_qty"]').value;
+    this.formQuote.lines[indexLine].field_container_delivery = this.containerRow.querySelector('[name*="field_container_delivery"]').value;
+    this.formQuote.lines[indexLine].field_delivery_time = this.containerRow.querySelector('[name*="field_delivery_time"]').value;
+    this.formQuote.lines[indexLine].field_delivery_time_client = this.containerRow.querySelector('[name*="field_delivery_time_client"]').value;
+    this.formQuote.lines[indexLine].field_comments = this.containerRow.querySelector('[name*="field_comments"]').value;
+  }
+
   process() {
     if (this.containerRow && this.nid && this.containerRow.dataset.num !== undefined) {
       const indexLine = this.containerRow.dataset.num - 1;
@@ -285,6 +294,7 @@ export class Calculate {
       this.vrCosttUsd(indexLine);
       this.landedCostFactor(indexLine);
       this.vrUnitUsd(indexLine);
+      this.othersValues(indexLine);
       console.log(this.formQuote.lines[indexLine]);
       /*
       this.ui.parametersMarkup(this.formQuote.totalResults());*/
