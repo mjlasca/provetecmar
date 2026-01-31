@@ -3,16 +3,21 @@ langcode: es
 status: true
 dependencies:
   config:
+    - field.field.node.quote.field_client_files
+    - field.field.node.quote.field_contact_name_client
+    - field.field.node.quote.field_contact_phone
     - field.field.node.quote.field_currency
     - field.field.node.quote.field_current_state
     - field.field.node.quote.field_customer
     - field.field.node.quote.field_date_limit
     - field.field.node.quote.field_description
     - field.field.node.quote.field_detail_quote
+    - field.field.node.quote.field_email_client
     - field.field.node.quote.field_incoterms
     - field.field.node.quote.field_items_import
     - field.field.node.quote.field_language
     - field.field.node.quote.field_observaciones
+    - field.field.node.quote.field_position
     - field.field.node.quote.field_products
     - field.field.node.quote.field_quote_tax
     - field.field.node.quote.field_quoter
@@ -37,8 +42,8 @@ third_party_settings:
       children:
         - group_datos_generales
         - group_insumos
-        - group_configuracion
         - group_detalle_del_cliente
+        - group_configuracion
       label: Cotización
       region: content
       parent_name: ''
@@ -61,6 +66,7 @@ third_party_settings:
         - field_items_import
         - field_valid
         - field_observaciones
+        - field_language
       label: 'Datos Generales'
       region: content
       parent_name: group_cotizacion
@@ -80,7 +86,7 @@ third_party_settings:
       label: Insumos
       region: content
       parent_name: group_cotizacion
-      weight: 5
+      weight: 4
       format_type: tab
       format_settings:
         classes: ''
@@ -92,9 +98,14 @@ third_party_settings:
         required_fields: true
     group_detalle_del_cliente:
       children:
+        - field_contact_name_client
+        - field_position
+        - field_email_client
+        - field_contact_phone
+        - field_client_files
         - field_detail_quote
       label: 'Detalle del cliente'
-      region: hidden
+      region: content
       parent_name: group_cotizacion
       weight: 5
       format_type: tab
@@ -174,6 +185,29 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_client_files:
+    type: file_generic
+    weight: 6
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+  field_contact_name_client:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_contact_phone:
+    type: string_textfield
+    weight: 5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_currency:
     type: options_select
     weight: 11
@@ -206,11 +240,19 @@ content:
     third_party_settings: {  }
   field_detail_quote:
     type: text_textarea
-    weight: 8
+    weight: 7
     region: content
     settings:
       rows: 5
       placeholder: ''
+    third_party_settings: {  }
+  field_email_client:
+    type: email_default
+    weight: 4
+    region: content
+    settings:
+      placeholder: ''
+      size: 60
     third_party_settings: {  }
   field_incoterms:
     type: options_select
@@ -227,7 +269,7 @@ content:
     third_party_settings: {  }
   field_language:
     type: options_select
-    weight: 26
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -238,6 +280,12 @@ content:
     settings:
       rows: 5
       placeholder: ''
+    third_party_settings: {  }
+  field_position:
+    type: options_select
+    weight: 3
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_quote_tax:
     type: number

@@ -1,11 +1,3 @@
-core_provetecmar.send_mail_requests:
-  path: '/send-mail-requests'
-  defaults:
-    _controller: '\Drupal\core_provetecmar\Controller\QuoteController::sendMailRequests'
-    _title: 'Send mail requests'
-  requirements:
-    _permission: 'access content'
-
 core_provetecmar.get_product_for_quote:
   path: '/get-product-quote/{keyword}'
   defaults:

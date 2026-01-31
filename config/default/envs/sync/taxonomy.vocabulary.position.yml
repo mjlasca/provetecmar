@@ -1,0 +1,9 @@
+uuid: 6c243fb5-74b8-4b79-96c2-5cb0a9278a09
+langcode: es
+status: true
+dependencies: {  }
+name: Cargo
+vid: position
+description: null
+weight: 0
+new_revision: false

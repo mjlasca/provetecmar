@@ -1,0 +1,27 @@
+uuid: 40ac95b2-0f2d-4b3a-85f9-3c7fc5fc2066
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_client_files
+    - node.type.quote
+  module:
+    - file
+id: node.quote.field_client_files
+field_name: field_client_files
+entity_type: node
+bundle: quote
+label: 'Archivos para el cliente'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'xlsx docx pdf zip png jpg jpeg pptx'
+  max_filesize: 5MB
+  description_field: false
+field_type: file

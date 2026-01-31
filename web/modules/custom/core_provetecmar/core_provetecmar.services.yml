@@ -30,3 +30,11 @@ services:
   core_provetecmar.save_lines_quote:
     class: Drupal\core_provetecmar\Service\SetLinesQuoteService
     arguments: ['@http_client', '@logger.factory', '@entity_type.manager', '@file.repository', '@file_url_generator', '@file_system']
+
+  core_provetecmar.get_path_files:
+    class: Drupal\core_provetecmar\Service\GetPathFilesService
+    arguments: ['@file_system']
+
+  core_provetecmar.send_qoute_client:
+    class: Drupal\core_provetecmar\Service\SendQouteClient
+    arguments: ['@renderer', '@file_system', '@messenger', '@core_provetecmar.mailer','@core_provetecmar.get_path_files', '@string_translation']

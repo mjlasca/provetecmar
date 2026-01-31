@@ -240,6 +240,13 @@ function core_provetecmar_theme($existing, $type, $theme, $path) {
 function core_provetecmar_mail($key, &$message, $params) {
   $message['subject'] = $params['subject'] ?? '';
   $message['body'][] = $params['body'] ?? '';
+  if (!empty($params['attachments'])) {
+    if(isset($params['attachments'][0])){
+      $message['params']['attachments'] = $params['attachments'][0];
+    }else{
+      $message['params']['attachments'] = $params['attachments'];
+    }
+  }
   if (!empty($params['headers']) && is_array($params['headers'])) {
     $message['headers'] = array_merge($message['headers'], $params['headers']);
   }

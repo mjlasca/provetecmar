@@ -3,16 +3,21 @@ langcode: es
 status: true
 dependencies:
   config:
+    - field.field.node.quote.field_client_files
+    - field.field.node.quote.field_contact_name_client
+    - field.field.node.quote.field_contact_phone
     - field.field.node.quote.field_currency
     - field.field.node.quote.field_current_state
     - field.field.node.quote.field_customer
     - field.field.node.quote.field_date_limit
     - field.field.node.quote.field_description
     - field.field.node.quote.field_detail_quote
+    - field.field.node.quote.field_email_client
     - field.field.node.quote.field_incoterms
     - field.field.node.quote.field_items_import
     - field.field.node.quote.field_language
     - field.field.node.quote.field_observaciones
+    - field.field.node.quote.field_position
     - field.field.node.quote.field_products
     - field.field.node.quote.field_quote_tax
     - field.field.node.quote.field_quoter
@@ -38,6 +43,30 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: -20
+    region: content
+  field_client_files:
+    type: file_default
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    weight: 128
+    region: content
+  field_contact_name_client:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 124
+    region: content
+  field_contact_phone:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 127
     region: content
   field_currency:
     type: entity_reference_label
@@ -86,6 +115,13 @@ content:
     third_party_settings: {  }
     weight: 108
     region: content
+  field_email_client:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 126
+    region: content
   field_incoterms:
     type: entity_reference_label
     label: above
@@ -115,6 +151,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 116
+    region: content
+  field_position:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 125
     region: content
   field_products:
     type: entity_reference_revisions_entity_view

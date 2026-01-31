@@ -1,0 +1,29 @@
+uuid: 68d18289-d103-49b4-b81a-4afba188c66f
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_position
+    - node.type.quote
+    - taxonomy.vocabulary.position
+id: node.quote.field_position
+field_name: field_position
+entity_type: node
+bundle: quote
+label: Cargo
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      position: position
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

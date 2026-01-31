@@ -21,6 +21,7 @@ use Drupal\core_provetecmar\Service\CreatePurchaseOrderService;
 use Drupal\core_provetecmar\Service\MailSendRequests;
 use Drupal\core_provetecmar\Service\SetLinesQuoteService;
 use Symfony\Component\HttpFoundation\Request;
+use Drupal\core_provetecmar\Service\SendQouteClient;
 
 
 /**
@@ -78,6 +79,12 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
    */
   protected $setLine;
 
+  /**
+   * Service send qoute client
+   * @var \Drupal\core_provetecmar\Service\SendQouteClient
+   */
+  protected $sendQouteClient;
+
 
   public function __construct(
     MailerProv $mailer,
@@ -88,7 +95,8 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     MessengerInterface $messenger,
     CreatePurchaseOrderService $createPurchaseService,
     MailSendRequests $mailSendRequests,
-    SetLinesQuoteService $setLinesQuote
+    SetLinesQuoteService $setLinesQuote,
+    SendQouteClient $sendQouteClient
     ) {
     $this->mailer = $mailer;
     $this->languageManager = $language_manager;
@@ -99,6 +107,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
     $this->createPurchaseService = $createPurchaseService;
     $this->mailSendRequests = $mailSendRequests;
     $this->setLine = $setLinesQuote;
+    $this->sendQouteClient = $sendQouteClient;
   }
 
   public static function create(ContainerInterface $container) {
@@ -112,26 +121,8 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
       $container->get('core_provetecmar.quote_create_purchase'),
       $container->get('core_provetecmar.mailsendrequest'),
       $container->get('core_provetecmar.save_lines_quote'),
+      $container->get('core_provetecmar.send_qoute_client'),
     );
-  }
-
-  /**
-   * Send mail requests
-   * @param array $items
-   * @return array $results
-   */
-  public function sendMailRequests($items) : array {
-    $result = ['success' => false];
-    foreach ($items as $key => $item) {
-
-    }
-    if($this->mailer->sendMail(
-      'mjlasca@gmail.com',
-      'Saludo desde controller',
-      '<div><h1>Hola si</h1></div>',
-    )){
-    }
-    return $result;
   }
 
   /**
@@ -200,100 +191,7 @@ class QuoteController extends ControllerBase implements ContainerInjectionInterf
    */
   public function download($nid, $return = 'pdf') : Response {
     $node = $this->entityTypeManager->getStorage('node')->load($nid);
-
-    if(!empty($node->created->value)){
-      $dt = new DrupalDateTime("@".$node->created->value);
-      $date = $dt->format("d \\d\\e F \\d\\e\\l Y");
-    }
-
-    $paragraphs =  $node->field_products->referencedEntities();
-    $items = [];
-    $total = 0;
-    foreach ($paragraphs as $k => $paragraph) {
-      $items[] = [
-        'title' => $paragraph->field_product->entity->title->value,
-        'part' => $paragraph->field_product->entity->field_part->value,
-        'description' => $paragraph->field_product->entity->field_description->value,
-        'cant' => $paragraph->field_cant->value,
-        'unit' => $paragraph->field_product->entity->field_unit->entity->name->value,
-        'price' => $paragraph->field_unit_sale->value,
-        'price_total' => $paragraph->field_total_sale->value
-      ];
-      if(!empty( $paragraph->field_total_sale->value )){
-        $total +=  $paragraph->field_total_sale->value;
-      }
-    }
-    $base_path = \Drupal::service('extension.list.module')->getPath('core_provetecmar');
-    $base64Logo = 'data:image/jpeg;base64,' . base64_encode(file_get_contents("$base_path/assets/banner-provetecmar.jpg"));
-    if(!empty($node->field_rfq->target_id && !empty($node->field_rfq->entity->field_image->entity))){
-      $urlImageSecond = $node->field_rfq->entity->field_image->entity->getFileUri();
-      $base64Logo =  'data:image/jpeg;base64,' . base64_encode(file_get_contents($urlImageSecond));
-    }
-
-    $tax = $total * ( $node->field_quote_tax->value/100) ;
-    $total_fu = $total + $tax;
-    $arrTh = ["detail" => $this->t('Detalle', [], ['langcode' => 'en'])];
-    $build = [
-      '#theme' => 'quote_pdf',
-      '#data' => [
-        'nid' => $node->nid->value,
-        'date' => $date,
-        'client' => [
-          'name' => $node->field_customer->entity->title->value,
-          'phone' => $node->field_customer->entity->field_phone->value,
-          'email' => $node->field_customer->entity->field_email->value,
-          'currency' => $node->field_currency->entity->name->value
-        ],
-        'th' => $arrTh,
-        'node' => [
-          'valid' => $node->field_valid->value,
-          'observation' => $node->field_observaciones->value,
-          'tax' => $node->field_quote_tax->value,
-          'trm' => $node->field_trm->value,
-          'incoterm' => $node->field_incoterms->entity->name->value
-        ],
-        'items' => $items,
-        'subtotal' => $total,
-        'tax_total' => $tax,
-        'total' => $total_fu,
-        'base64Logo' => $base64Logo,
-      ],
-    ];
-    $htmlPdf = $this->renderer->renderPlain($build);
-
-    $options = new Options();
-    $options->set('isRemoteEnabled', TRUE);
-
-    $dompdf = new Dompdf($options);
-    $dompdf->loadHtml($htmlPdf);
-    $dompdf->setPaper('A4', 'portrait');
-    $dompdf->render();
-
-    $pdfContent = $dompdf->output();
-
-
-    if($return == 'mail'){
-      $pdfPath = 'public://cotización-' . $node->nid->value . '.pdf';
-      file_put_contents($this->fileSystem->realpath($pdfPath), $pdfContent);
-      $attach = [
-        'filepath' => $pdfPath,
-        'filename' => 'Cotización-' . $node->nid->value . '.pdf',
-        'filemime' => 'application/pdf',
-      ];
-      $to = $node->field_customer->entity->field_email->value;
-
-      if($this->mailer->sendMail($to, "Cotización-{$node->nid->value}", $htmlPdf, $attach)){
-        $response = new RedirectResponse("/node/{$node->nid->value}");
-         $this->messenger->addMessage("Se ha enviado PDF de cotización correctamente a {$to}");
-        $response->send();
-      }
-
-    }else{
-      $response = new Response($pdfContent);
-      $response->headers->set('Content-Type', 'application/pdf');
-      $response->headers->set('Content-Disposition', 'inline; filename="archivo.pdf"');
-    }
-
+    $response = $this->sendQouteClient->sendQouteClient($node, $return);
     return $response;
   }
 
