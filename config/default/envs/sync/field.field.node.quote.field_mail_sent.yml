@@ -1,0 +1,23 @@
+uuid: 05ba6e88-e5ca-42df-a332-052d953fcf86
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mail_sent
+    - node.type.quote
+id: node.quote.field_mail_sent
+field_name: field_mail_sent
+entity_type: node
+bundle: quote
+label: 'Correos recordación'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

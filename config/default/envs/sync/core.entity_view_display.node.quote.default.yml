@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.quote.field_incoterms
     - field.field.node.quote.field_items_import
     - field.field.node.quote.field_language
+    - field.field.node.quote.field_mail_sent
     - field.field.node.quote.field_observaciones
     - field.field.node.quote.field_position
     - field.field.node.quote.field_products
@@ -145,6 +146,15 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 123
+    region: content
+  field_mail_sent:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 130
     region: content
   field_observaciones:
     type: basic_string

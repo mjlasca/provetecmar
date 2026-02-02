@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Render\Markup;
+use Drupal\node\Entity\Node;
 
 /**
  * Implementa hook_form_alter().
@@ -283,4 +284,83 @@ function core_provetecmar_preprocess_node(array &$variables) {
   $account = \Drupal::currentUser();
   $can_edit = $node->access('update', $account);
   $variables['can_edit'] = $can_edit;
+}
+
+
+
+/**
+ * Implements hook_cron().
+ */
+function core_provetecmar_cron() {
+  $now = new \DateTime('now', new \DateTimeZone('UTC'));
+
+  // 48 horas desde ahora
+  $limit = clone $now;
+  $limit->modify('+48 hours');
+
+  $now_timestamp = $now->getTimestamp();
+  $limit_timestamp = $limit->getTimestamp();
+
+  $query = \Drupal::entityQuery('node')
+    ->condition('type', 'quote')
+    ->condition('status', 1)
+
+    // Fecha límite dentro de las próximas 48h
+    ->condition('field_date_limit.value', $now_timestamp, '>')
+    ->condition('field_date_limit.value', $limit_timestamp, '<=')
+
+    // Máximo 3 envíos
+    ->condition('field_mail_sent', 3, '<')
+
+    // Excluir estados de moderación
+    ->condition('moderation_state', ['offer_ready', 'published'], 'NOT IN')
+
+    ->accessCheck(FALSE);
+
+  $nids = $query->execute();
+
+  if (empty($nids)) {
+    return;
+  }
+
+  $nodes = Node::loadMultiple($nids);
+
+  /** @var \Drupal\core_provetecmar\Services\MailerProv $mailer */
+  $mailer = \Drupal::service('mailer_prov');
+
+  foreach ($nodes as $node) {
+
+    if (
+      !$node->hasField('field_date_limit') ||
+      $node->get('field_date_limit')->isEmpty()
+    ) {
+      continue;
+    }
+
+    $to = $node->getOwner()->getEmail();
+    if (!$to) {
+      continue;
+    }
+
+    $date_limit = $node->get('field_date_limit')->date;
+    $formatted_date = $date_limit->format('Y-m-d H:i');
+
+    $sent_count = (int) $node->get('field_mail_sent')->value;
+
+    $subject = 'Aviso: cotización próxima a vencer';
+
+    $body = '
+      <p>Hola,</p>
+      <p>La cotización <strong>' . $node->label() . '</strong> está próxima a vencer.</p>
+      <p><strong>Fecha límite:</strong> ' . $formatted_date . '</p>
+      <p>Aviso <strong>' . ($sent_count + 1) . '</strong> de 3.</p>
+    ';
+
+    $result = $mailer->sendMail($to, $subject, $body);
+
+    if (!empty($result['result'])) {
+      $node->set('field_mail_sent', $sent_count + 1);
+      $node->save();
+    }
+  }
 }
