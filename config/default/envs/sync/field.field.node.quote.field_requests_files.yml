@@ -1,0 +1,27 @@
+uuid: 450b6eaf-02ad-425c-8750-53ed804feb35
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_requests_files
+    - node.type.quote
+  module:
+    - file
+id: node.quote.field_requests_files
+field_name: field_requests_files
+entity_type: node
+bundle: quote
+label: 'Archivos para solicitudes'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'xlsx docx pdf zip png jpg jpeg pptx'
+  max_filesize: 5MB
+  description_field: false
+field_type: file

@@ -11,6 +11,7 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\taxonomy\Entity\Term;
 use Psy\Readline\Hoa\Console;
+use Drupal\core_provetecmar\Service\GetPathFilesService;
 
 
 class MailSendRequests {
@@ -33,6 +34,11 @@ class MailSendRequests {
   protected $fileSystem;
 
   /**
+   * Drupal\core_provetecmar\Service\GetPathFilesService
+   */
+  protected $getPathFilesService;
+
+  /**
    * @param Drupal\core_provetecmar\Service\MailerProv
    *  Class manage send email
    * @param Drupal\Core\Render\RendererInterface
@@ -44,12 +50,14 @@ class MailSendRequests {
     MailerProv $mailer,
     RendererInterface $renderer,
     AccountProxyInterface $current_user,
-    FileSystemInterface $file_system
+    FileSystemInterface $file_system,
+    GetPathFilesService $getPath
     ) {
     $this->mailer = $mailer;
     $this->renderer = $renderer;
     $this->currentUser = $current_user;
     $this->fileSystem = $file_system;
+    $this->getPathFilesService = $getPath;
   }
 
   /**
@@ -122,7 +130,12 @@ class MailSendRequests {
 
         $pdfPath = 'public://rfq-' . $node->nid->value . '.pdf';
         file_put_contents($this->fileSystem->realpath($pdfPath), $pdfContent);
-        $attach = [
+        $attach = [];
+        $filesContact = $this->getPathFilesService->getPathFiles($node, 'field_requests_files');
+        if (!empty($filesContact)) {
+          $attach = $filesContact;
+        }
+        $attach[] = [
           'filepath' => $pdfPath,
           'filename' => 'RFQ-' . $node->nid->value . '.pdf',
           'filemime' => 'application/pdf',

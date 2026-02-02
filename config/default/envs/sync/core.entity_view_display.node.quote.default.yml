@@ -21,6 +21,7 @@ dependencies:
     - field.field.node.quote.field_products
     - field.field.node.quote.field_quote_tax
     - field.field.node.quote.field_quoter
+    - field.field.node.quote.field_requests_files
     - field.field.node.quote.field_requests_send
     - field.field.node.quote.field_rfq
     - field.field.node.quote.field_trm
@@ -187,6 +188,14 @@ content:
       link: true
     third_party_settings: {  }
     weight: 111
+    region: content
+  field_requests_files:
+    type: file_default
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    weight: 129
     region: content
   field_requests_send:
     type: boolean

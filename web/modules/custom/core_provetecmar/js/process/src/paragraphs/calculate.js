@@ -282,7 +282,7 @@ export class Calculate {
     this.formQuote.lines[indexLine].field_container_delivery = this.containerRow.querySelector('[name*="field_container_delivery"]').value;
     this.formQuote.lines[indexLine].field_delivery_time = this.containerRow.querySelector('[name*="field_delivery_time"]').value;
     this.formQuote.lines[indexLine].field_delivery_time_client = this.containerRow.querySelector('[name*="field_delivery_time_client"]').value;
-    this.formQuote.lines[indexLine].field_comments < = this.containerRow.querySelector('[name*="field_comments"]').value;
+    this.formQuote.lines[indexLine].field_comments <= this.containerRow.querySelector('[name*="field_comments"]').value;
   }
 
   process() {

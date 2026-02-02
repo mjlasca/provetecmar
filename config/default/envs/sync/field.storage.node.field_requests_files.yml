@@ -1,0 +1,23 @@
+uuid: 831b7e12-e54b-4ef8-b7e4-adec884c7977
+langcode: es
+status: true
+dependencies:
+  module:
+    - file
+    - node
+id: node.field_requests_files
+field_name: field_requests_files
+entity_type: node
+type: file
+settings:
+  target_type: file
+  display_field: false
+  display_default: false
+  uri_scheme: public
+module: file
+locked: false
+cardinality: 3
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

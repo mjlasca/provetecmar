@@ -21,6 +21,7 @@ dependencies:
     - field.field.node.quote.field_products
     - field.field.node.quote.field_quote_tax
     - field.field.node.quote.field_quoter
+    - field.field.node.quote.field_requests_files
     - field.field.node.quote.field_requests_send
     - field.field.node.quote.field_rfq
     - field.field.node.quote.field_trm
@@ -82,6 +83,7 @@ third_party_settings:
         required_fields: true
     group_insumos:
       children:
+        - field_requests_files
         - field_requests_send
       label: Insumos
       region: content
@@ -304,9 +306,16 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_requests_files:
+    type: file_generic
+    weight: 1
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
   field_requests_send:
     type: boolean_checkbox
-    weight: 8
+    weight: 2
     region: content
     settings:
       display_label: true
@@ -354,7 +363,7 @@ content:
     third_party_settings: {  }
   langcode:
     type: language_select
-    weight: 1
+    weight: 2
     region: content
     settings:
       include_locked: true

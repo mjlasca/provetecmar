@@ -548,3 +548,17 @@ td.hide-column {
   pointer-events: none;
   max-width: 20px;
 }
+
+#edit-field-requests-files-ajax-wrapper{
+  display: flex;
+  justify-content: center;
+}
+
+.field--name-field-requests-files{
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+}

@@ -13,7 +13,7 @@ services:
 
   core_provetecmar.mailsendrequest:
     class: Drupal\core_provetecmar\Service\MailSendRequests
-    arguments: ['@core_provetecmar.mailer', '@renderer', '@current_user', '@file_system']
+    arguments: ['@core_provetecmar.mailer', '@renderer', '@current_user', '@file_system','@core_provetecmar.get_path_files']
 
   core_provetecmar.validate_quote:
     class: Drupal\core_provetecmar\Service\ValidateQuoteService

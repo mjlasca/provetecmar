@@ -92,7 +92,6 @@ class SetLinesQuoteService {
      *  array
      */
     function saveLines($data) : array {
-
       $node = $data['node'];
       $paragraph = [];
       $arrayParagraph = [];
